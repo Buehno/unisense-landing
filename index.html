@@ -1,0 +1,1146 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UniSense — Inteligência que cuida do seu campus</title>
+<meta name="description" content="UniSense: sensores contam cada entrada nos banheiros do campus, abrem chamados no limite certo e mostram tudo em um mapa 3D do Campus Prof. Pedro C. Fornari, da UniAnchieta.">
+<link rel="icon" href="logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FBFBFA; --surface:#FFFFFF; --surface-2:#F7F6F3;
+  --ink:#111111; --ink-2:#2F3437; --muted:#787774; --line:#EAEAEA;
+  --brand:#13306B; --brand-2:#1F5FC9;
+  --ok-bg:#EDF3EC; --ok:#346538; --warn-bg:#FBF3DB; --warn:#956400;
+  --bad-bg:#FDEBEC; --bad:#9F2F2D; --info-bg:#E1F3FE; --info:#1F6C9F;
+  --off-bg:#F1F0EC; --off:#5F5E5A;
+  --serif:'Instrument Serif',Georgia,serif;
+  --sans:'Geist','Helvetica Neue',Arial,sans-serif;
+  --mono:'Geist Mono','SF Mono',monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --nav:68px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink-2);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--brand-2);outline-offset:3px;border-radius:4px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.narrow{max-width:1080px;margin:0 auto;padding:0 24px}
+.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:18px;height:1px;background:currentColor;opacity:.6}
+h1,h2,h3{color:var(--ink);font-weight:400}
+.serif{font-family:var(--serif);letter-spacing:-.025em;line-height:1.04}
+h2.serif{font-size:clamp(38px,4.8vw,64px);margin:18px 0;max-width:17ch}
+h2.serif em,h1 em{font-style:italic;color:var(--brand)}
+.lead{font-size:18px;color:var(--muted);max-width:60ch}
+.sec{padding:136px 0;position:relative}
+.rule{border-top:1px solid var(--line)}
+.dotgrid{background-image:radial-gradient(rgba(19,48,107,.09) 1px,transparent 1px);background-size:22px 22px}
+.ambient{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.ambient::before{content:"";position:absolute;width:900px;height:900px;left:-10%;top:30%;border-radius:50%;background:radial-gradient(circle,rgba(31,95,201,.045),transparent 65%);animation:drift 30s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate(50vw,-30vh)}}
+main,header,footer{position:relative;z-index:1}
+
+/* nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:60;height:var(--nav);background:rgba(251,251,250,.84);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line)}
+.nav .wrap{max-width:none;display:flex;align-items:center;justify-content:space-between;height:100%;gap:24px;padding:0 32px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{height:40px;width:auto;mix-blend-mode:multiply}
+.brand span{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;border-left:1px solid var(--line);padding-left:12px}
+.nav-links{display:flex;gap:26px;font-size:14px;color:var(--muted)}
+.nav-links a{transition:color .15s;padding:10px 0}
+.nav-links a:hover,.nav-links a.cur{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:6px;font-size:14px;font-weight:500;transition:background .18s,transform .12s,border-color .18s}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--ink);color:#fff}
+.btn-primary:hover{background:#333}
+.btn-ghost{border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.btn-ghost:hover{border-color:#D5D4D0}
+.btn svg{width:16px;height:16px}
+.menu-btn{display:none;width:44px;height:44px;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+.menu-btn svg{width:20px;height:20px}
+
+/* badges */
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:9999px;white-space:nowrap;line-height:1.45}
+.badge svg{width:11px;height:11px}
+.b-ok{background:var(--ok-bg);color:var(--ok)}.b-warn{background:var(--warn-bg);color:var(--warn)}
+.b-bad{background:var(--bad-bg);color:var(--bad)}.b-off{background:var(--off-bg);color:var(--off)}.b-info{background:var(--info-bg);color:var(--info)}
+
+/* ========== STORY (hero + sticky 3D) ========== */
+.story{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);padding-top:var(--nav)}
+.steps{padding:0 56px 0 max(24px,calc((100vw - 1200px)/2 + 24px));position:relative;z-index:2}
+.step{min-height:88vh;display:flex;flex-direction:column;justify-content:center;padding:64px 0;max-width:520px}
+.step.hero-step{min-height:calc(100vh - var(--nav))}
+.step .k{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--muted);display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.step .k b{font-weight:500;color:var(--ink)}
+.step .k i{flex:1;max-width:80px;height:1px;background:var(--line)}
+.step h2{font-family:var(--serif);font-size:clamp(34px,3.6vw,52px);letter-spacing:-.025em;line-height:1.05;margin-bottom:18px}
+.step p{color:var(--muted);font-size:17px}
+.step .facts{margin-top:28px;border-top:1px solid var(--line)}
+.step .facts div{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px}
+.step .facts div span:first-child{color:var(--muted)}
+.step .facts div span:last-child{color:var(--ink);text-align:right}
+.hero-step h1{font-family:var(--serif);font-size:clamp(50px,6vw,94px);letter-spacing:-.03em;line-height:.98;margin:22px 0 26px}
+.hero-step p.sub{font-size:19px;color:var(--muted);max-width:44ch;margin-bottom:32px}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.live-pill{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ok);background:var(--ok-bg);padding:4px 12px;border-radius:9999px;align-self:flex-start}
+.live-pill i{width:6px;height:6px;border-radius:50%;background:currentColor;animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.25}}
+.scroll-cue{margin-top:56px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:12px}
+.scroll-cue span{width:1px;height:36px;background:linear-gradient(var(--ink),transparent);animation:cue 2.2s var(--ease) infinite;transform-origin:top}
+@keyframes cue{0%{transform:scaleY(0)}60%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+.mini-check{list-style:none;margin-top:24px;display:flex;flex-direction:column;gap:10px}
+.mini-check li{display:flex;gap:12px;align-items:center;font-size:15px;color:var(--ink-2)}
+.mini-check .bx{width:18px;height:18px;border-radius:4px;border:1px solid #CFCDC8;display:flex;align-items:center;justify-content:center;flex:none}
+.mini-check .bx svg{width:12px;height:12px;color:#fff}
+.mini-check .bx.on{background:var(--ink);border-color:var(--ink)}
+
+.sticky{position:sticky;top:var(--nav);height:calc(100vh - var(--nav));border-left:1px solid var(--line);background:#FCFCFB;overflow:hidden}
+.sticky canvas{display:block;width:100%;height:100%;cursor:grab;touch-action:pan-y}
+.sticky canvas:active{cursor:grabbing}
+.hud-top{position:absolute;left:24px;right:24px;top:20px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;pointer-events:none}
+.place{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);line-height:1.6}
+.place b{display:block;color:var(--ink);font-weight:500;font-size:12px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.chip{font-family:var(--mono);font-size:11px;color:var(--ink-2);background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:4px;padding:4px 8px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.chip em{font-style:normal;color:var(--muted)}
+.hud-bottom{position:absolute;left:24px;right:24px;bottom:18px;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;pointer-events:none}
+.attr{font-family:var(--mono);font-size:10px;color:var(--muted);pointer-events:auto}
+.attr a{text-decoration:underline;text-underline-offset:2px}
+.progress{display:flex;gap:6px;pointer-events:auto}
+.progress button{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;color:var(--muted);border:1px solid var(--line);border-radius:4px;background:rgba(255,255,255,.9);transition:all .2s}
+.progress button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.legend-mini{display:flex;flex-direction:column;gap:5px;font-size:11.5px;color:var(--muted);background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:6px;padding:10px 12px;pointer-events:none}
+.legend-mini span{display:flex;align-items:center;gap:8px}
+.legend-mini svg{width:12px;height:12px}
+#labels{position:absolute;inset:0;pointer-events:none}
+.blabel{position:absolute;left:0;top:0;font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;color:var(--brand);background:rgba(255,255,255,.94);border:1px solid var(--line);padding:2px 7px;border-radius:4px;white-space:nowrap;transition:opacity .4s;will-change:transform}
+.callout{position:absolute;left:0;top:0;width:250px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;box-shadow:0 10px 30px -12px rgba(19,48,107,.18);opacity:0;transition:opacity .45s var(--ease);pointer-events:none;will-change:transform}
+.callout.on{opacity:1}
+.callout::after{content:"";position:absolute;left:24px;bottom:-26px;width:1px;height:26px;background:var(--ink)}
+.callout .t{font-weight:500;color:var(--ink);font-size:14px}
+.callout .s{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:10px}
+.callout .cnt{display:flex;align-items:baseline;justify-content:space-between;margin:10px 0 4px}
+.callout .cnt b{font-family:var(--mono);font-size:30px;font-weight:500;color:var(--ink);line-height:1;font-variant-numeric:tabular-nums}
+.callout .cnt span{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.meter{height:4px;background:var(--surface-2);border-radius:2px;position:relative;margin:8px 0 4px}
+.meter span{position:absolute;inset:0 auto 0 0;border-radius:2px;background:var(--ink);transition:width .3s}
+.meter i{position:absolute;top:-3px;width:1px;height:10px;background:#BDBBB6}
+.callout .tk{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:12px;color:var(--ink-2);display:none}
+.callout .tk.on{display:block}
+.tip{position:absolute;left:0;top:0;pointer-events:none;min-width:200px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12.5px;box-shadow:0 8px 24px rgba(0,0,0,.06);opacity:0;transition:opacity .12s;z-index:5}
+.tip.on{opacity:1}
+.tip b{display:block;font-weight:500;color:var(--ink)}
+.nogl{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center;padding:24px;color:var(--muted);font-size:14px}
+
+/* ========== content sections ========== */
+.problem{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:64px;border-top:1px solid var(--line)}
+.problem article{padding:32px 32px 0 0}
+.problem article+article{padding-left:32px;border-left:1px solid var(--line)}
+.problem .n{font-family:var(--serif);font-size:56px;color:var(--ink);line-height:1;letter-spacing:-.03em}
+.problem h3{font-size:18px;font-weight:500;margin:18px 0 8px}
+.problem p{color:var(--muted);font-size:15px}
+.quote{margin-top:80px;padding:40px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;grid-template-columns:200px 1fr;gap:40px;align-items:start}
+.quote blockquote{font-family:var(--serif);font-size:clamp(28px,3vw,40px);line-height:1.15;letter-spacing:-.015em;color:var(--ink)}
+
+/* numbers */
+.nums{display:grid;grid-template-columns:repeat(4,1fr);margin-top:56px;border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden}
+.nums div{padding:32px 28px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.nums div:nth-child(4n){border-right:0}
+.nums div:nth-last-child(-n+4){border-bottom:0}
+.nums b{display:block;font-family:var(--serif);font-size:64px;line-height:1;color:var(--ink);letter-spacing:-.03em;font-weight:400;font-variant-numeric:tabular-nums}
+.nums span{display:block;font-size:14px;color:var(--ink);margin-top:10px}
+.nums small{display:block;font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:2px;letter-spacing:.03em}
+
+/* levels */
+.levels-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:56px}
+.lvl{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:28px;transition:box-shadow .25s,border-color .25s,transform .25s var(--ease)}
+.lvl.active{border-color:#C9C7C2;box-shadow:0 2px 10px rgba(0,0,0,.05);transform:translateY(-3px)}
+.lvl .num{font-family:var(--serif);font-size:64px;line-height:1;color:var(--ink);letter-spacing:-.03em;margin:22px 0 4px}
+.lvl .num small{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:0;margin-left:6px}
+.lvl h3{font-size:17px;font-weight:500;margin-bottom:6px}
+.lvl p{color:var(--muted);font-size:14.5px}
+.sim-box{margin-top:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:32px;display:grid;grid-template-columns:220px 1fr;gap:44px;align-items:center}
+.counter{font-family:var(--mono);font-size:72px;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+.counter small{display:block;font-size:11.5px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-top:12px}
+.track{position:relative;padding-top:26px}
+.track .marks{position:absolute;left:11px;right:11px;top:0;height:20px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.track .marks span{position:absolute;transform:translateX(-50%)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:44px;background:transparent;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(to right,var(--ink) var(--p,0%),var(--line) var(--p,0%))}
+input[type=range]::-moz-range-track{height:4px;border-radius:2px;background:var(--line)}
+input[type=range]::-moz-range-progress{height:4px;background:var(--ink);border-radius:2px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:1px solid #CFCDC8;margin-top:-9px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:1px solid #CFCDC8}
+.sim-status{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px;font-size:14px;min-height:28px}
+.sim-actions{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+.note{font-size:13px;color:var(--muted);margin-top:18px;display:flex;gap:8px;align-items:flex-start}
+.note svg{width:16px;height:16px;flex:none;margin-top:2px}
+
+/* architecture */
+.arch{margin-top:64px;display:grid;grid-template-columns:repeat(6,1fr);gap:0;position:relative}
+.arch::before{content:"";position:absolute;left:8.33%;right:8.33%;top:27px;height:1px;background:repeating-linear-gradient(90deg,var(--ink) 0 6px,transparent 6px 12px);opacity:.35}
+.node{padding:0 14px;text-align:left;position:relative}
+.node .dot{width:54px;height:54px;border-radius:12px;background:var(--surface);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;position:relative;z-index:1;margin-bottom:22px;transition:border-color .2s}
+.node:hover .dot{border-color:var(--ink)}
+.node .dot svg{width:22px;height:22px;color:var(--ink)}
+.node .pk{position:absolute;left:14px;top:0;width:54px;height:54px;border-radius:12px;border:1px solid var(--brand-2);opacity:0;animation:packet 6s infinite;animation-delay:calc(var(--i)*1s)}
+@keyframes packet{0%{opacity:0;transform:scale(1)}4%{opacity:.8}14%{opacity:0;transform:scale(1.25)}100%{opacity:0}}
+.node .k{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.06em}
+.node h3{font-size:16px;font-weight:500;margin:6px 0 8px}
+.node ul{list-style:none;font-size:13.5px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+.cross{margin-top:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.cross div{border:1px dashed #D9D7D2;border-radius:10px;padding:18px 20px;font-size:14px;color:var(--muted)}
+.cross b{display:block;color:var(--ink);font-weight:500;margin-bottom:4px;font-size:15px}
+
+/* bento */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:56px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:32px;transition:box-shadow .2s;overflow:hidden;position:relative}
+.card:hover{box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.card h3{font-size:19px;font-weight:500;margin:18px 0 8px}
+.card p{color:var(--muted);font-size:15px;max-width:46ch}
+.card .rf{position:absolute;right:24px;top:28px;font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.ico{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.ico svg{width:20px;height:20px}
+.c-2{grid-column:span 2}.c-3{grid-column:span 3}.c-4{grid-column:span 4}
+.states{margin-top:22px;display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.states div{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.states div span:first-child{color:var(--ink)}
+.stock{margin-top:22px;display:flex;flex-direction:column;gap:14px}
+.stock div{font-size:13px}
+.stock .l{display:flex;justify-content:space-between;margin-bottom:6px}
+.stock .l span:last-child{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.stock .b{height:6px;background:var(--surface-2);border-radius:3px;position:relative}
+.stock .b i{position:absolute;inset:0 auto 0 0;border-radius:3px;background:var(--ink-2)}
+.stock .b u{position:absolute;top:-3px;width:1px;height:12px;background:var(--bad)}
+.kbd-row{margin-top:20px;display:flex;gap:6px;flex-wrap:wrap}
+kbd{font-family:var(--mono);font-size:11.5px;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;background:var(--surface-2);padding:2px 7px;color:var(--ink)}
+.res{display:grid;grid-template-columns:repeat(4,1fr);margin-top:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden}
+.res div{padding:28px;border-right:1px solid var(--line)}
+.res div:last-child{border-right:0}
+.res .k{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.06em}
+.res h3{font-size:16px;font-weight:500;margin:10px 0 6px}
+.res p{font-size:14px;color:var(--muted)}
+
+/* roles */
+.tabs{display:flex;gap:4px;margin-top:48px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tab{padding:12px 16px;font-size:14px;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;min-height:44px;transition:color .15s}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected=true]{color:var(--ink);border-bottom-color:var(--ink)}
+.panel{display:none;padding-top:44px}
+.panel.on{display:grid;grid-template-columns:1fr 1fr;gap:64px;animation:fade .45s var(--ease)}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}}
+.panel h3{font-family:var(--serif);font-size:38px;letter-spacing:-.02em;line-height:1.08;margin-bottom:16px}
+.panel p{color:var(--muted)}
+.panel .who{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;display:block}
+.olist{list-style:none;counter-reset:s;border-top:1px solid var(--line)}
+.olist li{counter-increment:s;display:flex;gap:16px;padding:15px 0;border-bottom:1px solid var(--line);font-size:15px;color:var(--ink-2)}
+.olist li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:12px;color:var(--muted);padding-top:3px}
+
+/* iso */
+.iso{margin-top:56px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.iso div{border:1px solid var(--line);border-radius:10px;padding:22px;background:var(--surface)}
+.iso b{display:block;font-weight:500;color:var(--ink);font-size:15px;margin-bottom:6px}
+.iso span{font-size:13.5px;color:var(--muted)}
+.iso i{font-style:normal;font-family:var(--mono);font-size:10.5px;color:var(--muted);display:block;margin-bottom:14px}
+
+/* audit */
+.audit{display:grid;grid-template-columns:1fr 1.1fr;gap:72px;align-items:start}
+.trail{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 28px}
+.trail-head{display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid var(--line);gap:12px;flex-wrap:wrap}
+.trail-head b{font-weight:500;color:var(--ink)}
+.trail ol{list-style:none;padding:8px 0 12px}
+.trail li{display:grid;grid-template-columns:56px 18px 1fr;gap:12px;padding:12px 0;font-size:14px}
+.trail time{font-family:var(--mono);font-size:12px;color:var(--muted);padding-top:2px}
+.trail .dot{position:relative}
+.trail .dot::before{content:"";position:absolute;left:5px;top:7px;width:8px;height:8px;border-radius:50%;background:var(--surface);border:1.5px solid var(--ink-2)}
+.trail .dot::after{content:"";position:absolute;left:9px;top:19px;bottom:-26px;width:1px;background:var(--line)}
+.trail li:last-child .dot::after{display:none}
+.trail li strong{display:block;font-weight:500;color:var(--ink)}
+.trail li span.m{color:var(--muted);font-size:13px}
+.principle{margin-top:32px;padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:var(--serif);font-size:27px;line-height:1.22;color:var(--ink)}
+
+/* roadmap */
+.road{margin-top:56px;display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
+.ph{border-top:2px solid #D5D4D0;padding-top:16px}
+.ph.mvp{border-top-color:var(--brand-2)}
+.ph .k{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.06em}
+.ph p{font-size:14px;color:var(--ink-2);margin-top:6px}
+.accept{margin-top:72px;border-top:1px solid var(--line)}
+.accept-head{display:flex;justify-content:space-between;align-items:baseline;padding:24px 0 12px;gap:16px;flex-wrap:wrap}
+.accept-head h3{font-size:20px;font-weight:500}
+.accept table{width:100%;border-collapse:collapse;font-size:14.5px}
+.accept th{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:400;text-align:left;padding:10px 0;border-bottom:1px solid var(--line)}
+.accept td{padding:14px 16px 14px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.accept td:first-child{color:var(--ink);width:44%}
+.accept td:last-child{color:var(--muted)}
+.accept td .ck{display:inline-flex;width:18px;height:18px;border-radius:4px;background:var(--ok-bg);color:var(--ok);align-items:center;justify-content:center;margin-right:10px;vertical-align:-3px}
+.accept td .ck svg{width:11px;height:11px}
+
+/* faq + cta */
+.faq{margin-top:40px;border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:22px 0;cursor:pointer;font-size:17px;color:var(--ink);min-height:44px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .pm{font-family:var(--mono);font-size:20px;color:var(--muted);width:20px;text-align:center;flex:none}
+.faq details[open] .pm::before{content:"\2212"}
+.faq details:not([open]) .pm::before{content:"+"}
+.faq details p{padding:0 48px 24px 0;color:var(--muted);max-width:72ch}
+.cta{padding:144px 0;text-align:center}
+.cta h2{margin:18px auto;max-width:15ch}
+.cta .lead{margin:0 auto 32px}
+.cta .eyebrow::before{display:none}
+footer{border-top:1px solid var(--line);padding:36px 0;font-size:13px;color:var(--muted)}
+footer .wrap{display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center}
+footer img{height:36px;mix-blend-mode:multiply}
+footer .mono{font-size:11.5px}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(12px);transition:opacity .6s var(--ease),transform .6s var(--ease);transition-delay:calc(var(--i,0)*80ms)}
+.rv.in{opacity:1;transform:none}
+
+/* responsive */
+@media (max-width:1180px){
+  .levels-grid{grid-template-columns:repeat(2,1fr)}
+  .arch{grid-template-columns:repeat(3,1fr);row-gap:48px}
+  .arch::before{display:none}
+  .road{grid-template-columns:repeat(4,1fr);row-gap:28px}
+  .nums{grid-template-columns:repeat(2,1fr)}
+  .nums div:nth-child(4n){border-right:1px solid var(--line)}
+  .nums div:nth-child(2n){border-right:0}
+  .nums div:nth-last-child(-n+4){border-bottom:1px solid var(--line)}
+  .nums div:nth-last-child(-n+2){border-bottom:0}
+  .iso{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:960px){
+  .nav-links{display:none}
+  .nav-links.open{display:flex;position:absolute;top:var(--nav);left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--line);padding:8px 24px 16px}
+  .nav-links.open a{padding:12px 0;border-bottom:1px solid var(--line)}
+  .menu-btn{display:inline-flex}
+  .nav .btn-primary{display:none}
+  .brand span{display:none}
+  .story{display:flex;flex-direction:column}
+  .sticky{order:-1;position:sticky;top:var(--nav);height:50vh;border-left:0;border-bottom:1px solid var(--line);z-index:3}
+  .steps{padding:0 24px}
+  .step{min-height:auto;padding:56px 0;max-width:none;border-bottom:1px solid var(--line)}
+  .step.hero-step{min-height:auto;padding-top:40px}
+  .legend-mini{display:none}
+  .problem{grid-template-columns:1fr}
+  .problem article,.problem article+article{padding:28px 0;border-left:0;border-bottom:1px solid var(--line)}
+  .quote{grid-template-columns:1fr;gap:16px}
+  .sim-box{grid-template-columns:1fr;gap:20px}
+  .bento{grid-template-columns:1fr}
+  .c-2,.c-3,.c-4{grid-column:auto}
+  .res{grid-template-columns:1fr 1fr}
+  .res div:nth-child(2){border-right:0}
+  .res div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .cross{grid-template-columns:1fr}
+  .audit,.panel.on{grid-template-columns:1fr;gap:32px}
+  .sec{padding:96px 0}
+  .scroll-cue{display:none}
+}
+@media (max-width:600px){
+  .wrap,.narrow,.steps{padding-left:16px;padding-right:16px}
+  .nav .wrap{padding:0 16px}
+  .sticky{height:46vh}
+  .hud-top{left:12px;right:12px;top:12px}
+  .hud-top .chips .chip:nth-child(n+2){display:none}
+  .place{display:none}
+  .hud-top{justify-content:flex-end}
+  .hud-bottom{left:12px;right:12px;bottom:10px}
+  .progress button{width:24px;height:24px}
+  .callout{width:200px;padding:11px 12px}
+  .callout .cnt b{font-size:24px}
+  .levels-grid,.iso{grid-template-columns:1fr}
+  .arch{grid-template-columns:1fr 1fr}
+  .road{grid-template-columns:1fr 1fr}
+  .res{grid-template-columns:1fr}
+  .res div{border-right:0!important;border-bottom:1px solid var(--line)}
+  .res div:last-child{border-bottom:0}
+  .nums b{font-size:48px}
+  .nums div{padding:24px 18px}
+  .card,.lvl,.sim-box{padding:24px}
+  .accept td:first-child{width:auto}
+  .accept th:last-child,.accept td:last-child{display:none}
+  .faq details p{padding-right:0}
+  footer .wrap{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .rv{opacity:1;transform:none}
+}
+</style>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+</head>
+<body>
+<div class="ambient" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-ok" viewBox="0 0 256 256"><path fill="currentColor" d="M232.5 79.5l-128 128a12 12 0 0 1-17 0l-56-56a12 12 0 0 1 17-17L96 182 215.5 62.5a12 12 0 0 1 17 17z"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 256 256"><path fill="currentColor" d="M128 20a108 108 0 1 0 108 108A108.1 108.1 0 0 0 128 20zm-12 56a12 12 0 0 1 24 0v56a12 12 0 0 1-24 0zm12 112a16 16 0 1 1 16-16 16 16 0 0 1-16 16z"/></symbol>
+    <symbol id="i-ticket" viewBox="0 0 256 256"><path fill="currentColor" d="M232 108a12 12 0 0 0 12-12V64a20 20 0 0 0-20-20H32a20 20 0 0 0-20 20v32a12 12 0 0 0 12 12 20 20 0 0 1 0 40 12 12 0 0 0-12 12v32a20 20 0 0 0 20 20h192a20 20 0 0 0 20-20v-32a12 12 0 0 0-12-12 20 20 0 0 1 0-40zm-12 61.4V188H36v-18.6a44 44 0 0 0 0-82.8V68h184v18.6a44 44 0 0 0 0 82.8z"/></symbol>
+    <symbol id="i-up" viewBox="0 0 256 256"><path fill="currentColor" d="M216.5 135.5a12 12 0 0 1-17 0L140 76v140a12 12 0 0 1-24 0V76l-59.5 59.5a12 12 0 0 1-17-17l80-80a12 12 0 0 1 17 0l80 80a12 12 0 0 1 0 17z"/></symbol>
+    <symbol id="i-off" viewBox="0 0 256 256"><path fill="currentColor" d="M56.9 39.9a12 12 0 0 0-17.8 16.2l26.5 29.1a170 170 0 0 0-49 34 12 12 0 1 0 16.8 17.1 145.8 145.8 0 0 1 49.4-32.4l17.2 18.9a106 106 0 0 0-49 26.8 12 12 0 0 0 16.6 17.4 82 82 0 0 1 49.7-22.6l63.8 70.2a12 12 0 1 0 17.8-16.2zM128 196a16 16 0 1 0 16 16 16 16 0 0 0-16-16zm111.2-76.8a170.4 170.4 0 0 0-130.5-50 12 12 0 1 0 1.6 24 146.4 146.4 0 0 1 112.1 43 12 12 0 1 0 16.8-17z"/></symbol>
+    <symbol id="i-list" viewBox="0 0 256 256"><path fill="currentColor" d="M216 36H40a20 20 0 0 0-20 20v144a20 20 0 0 0 20 20h176a20 20 0 0 0 20-20V56a20 20 0 0 0-20-20zm-4 160H44V60h168zM68 92a12 12 0 0 1 12-12h96a12 12 0 0 1 0 24H80a12 12 0 0 1-12-12zm0 36a12 12 0 0 1 12-12h96a12 12 0 0 1 0 24H80a12 12 0 0 1-12-12zm0 36a12 12 0 0 1 12-12h56a12 12 0 0 1 0 24H80a12 12 0 0 1-12-12z"/></symbol>
+    <symbol id="i-box" viewBox="0 0 256 256"><path fill="currentColor" d="M225.6 62.6l-88-48.2a20 20 0 0 0-19.2 0l-88 48.2a20 20 0 0 0-10.4 17.5v95.8a20 20 0 0 0 10.4 17.5l88 48.2a19.9 19.9 0 0 0 19.2 0l88-48.2a20 20 0 0 0 10.4-17.5V80.1a20 20 0 0 0-10.4-17.5zM128 36.6L204.3 78 128 119.4 51.7 78zM44 98.2l72 39.4v80.3l-72-39.4zm96 119.7v-80.3l72-39.4v79.3z"/></symbol>
+    <symbol id="i-team" viewBox="0 0 256 256"><path fill="currentColor" d="M125.2 155.6a60 60 0 1 0-74.4 0 99.8 99.8 0 0 0-46.4 36.5 12 12 0 1 0 19.7 13.8 76 76 0 0 1 127.8 0 12 12 0 1 0 19.7-13.8 99.8 99.8 0 0 0-46.4-36.5zM52 108a36 36 0 1 1 36 36 36 36 0 0 1-36-36zm197.5 98.8a12 12 0 0 1-16.7-3A75.6 75.6 0 0 0 172 172a12 12 0 0 1 0-24 36 36 0 1 0-13.4-69.4 12 12 0 1 1-8.9-22.3 60 60 0 0 1 59.5 103.2 99.8 99.8 0 0 1 43.3 35.5 12 12 0 0 1-3 16.8z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 256 256"><path fill="currentColor" d="M208 36H48a20 20 0 0 0-20 20v58.8c0 92.4 78.1 123 93.8 128.2a19.5 19.5 0 0 0 12.4 0C149.9 237.8 228 207.2 228 114.8V56a20 20 0 0 0-20-20zm-4 78.8c0 72.1-58.5 98.9-76 105.1-17.5-6.2-76-33-76-105.1V60h152zm-112.5 26.7a12 12 0 0 1 17-17L120 136l35.5-35.5a12 12 0 0 1 17 17l-44 44a12 12 0 0 1-17 0z"/></symbol>
+    <symbol id="i-wave" viewBox="0 0 256 256"><path fill="currentColor" d="M128 100a28 28 0 1 0 28 28 28 28 0 0 0-28-28zm0 32a4 4 0 1 1 4-4 4 4 0 0 1-4 4zm69.9-61.9a12 12 0 0 0-17 17 76 76 0 0 1 0 107.4 12 12 0 1 0 17 17 100 100 0 0 0 0-141.4zm-122.8 0a12 12 0 0 0-17 0 100 100 0 0 0 0 141.4 12 12 0 1 0 17-17 76 76 0 0 1 0-107.4 12 12 0 0 0 0-17z"/></symbol>
+    <symbol id="i-flow" viewBox="0 0 256 256"><path fill="currentColor" d="M232 92h-28.7l-25.4-25.4A20 20 0 0 0 164 60h-24V40a12 12 0 0 0-24 0v20H92a20 20 0 0 0-20 20v12H24a12 12 0 0 0 0 24h48v40H24a12 12 0 0 0 0 24h48v12a20 20 0 0 0 20 20h72a20 20 0 0 0 14-5.9l25.4-25.4H232a12 12 0 0 0 0-24h-24v-40h24a12 12 0 0 0 0-24zm-48 87.7L162.3 196H96V84h66.3l21.7 21.7z"/></symbol>
+    <symbol id="i-cube" viewBox="0 0 256 256"><path fill="currentColor" d="M226 69.4l-88-48a20 20 0 0 0-19.2 0l-88 48A20 20 0 0 0 20 87v82a20 20 0 0 0 10.8 17.6l88 48a20.3 20.3 0 0 0 19.2 0l88-48A20 20 0 0 0 236 169V87a20 20 0 0 0-10-17.6zM128 44.6L201.3 84 128 123.3 54.7 84zM44 104.2l72 38.9v77.6l-72-39.3zm96 116.5v-77.6l72-38.9v77.2z"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 256 256"><path fill="currentColor" d="M232 204h-4V40a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v36h-44a12 12 0 0 0-12 12v36H48a12 12 0 0 0-12 12v68h-12a12 12 0 0 0 0 24h208a12 12 0 0 0 0-24zM172 52h32v152h-32zm-56 48h32v104h-32zm-56 48h32v56H60z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 256 256"><path fill="currentColor" d="M224.5 136.5l-72 72a12 12 0 0 1-17-17L187 140H40a12 12 0 0 1 0-24h147l-51.5-51.5a12 12 0 0 1 17-17l72 72a12 12 0 0 1 0 17z"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 256 256"><path fill="currentColor" d="M228 128a12 12 0 0 1-12 12H40a12 12 0 0 1 0-24h176a12 12 0 0 1 12 12zM40 76h176a12 12 0 0 0 0-24H40a12 12 0 0 0 0 24zm176 104H40a12 12 0 0 0 0 24h176a12 12 0 0 0 0-24z"/></symbol>
+    <symbol id="i-info" viewBox="0 0 256 256"><path fill="currentColor" d="M108 84a16 16 0 1 1 16 16 16 16 0 0 1-16-16zm128 44A108 108 0 1 1 128 20a108.1 108.1 0 0 1 108 108zm-24 0a84 84 0 1 0-84 84 84.1 84.1 0 0 0 84-84zm-72 36.7V132a20 20 0 0 0-20-20 12 12 0 0 0-4 23.3V168a20 20 0 0 0 20 20 12 12 0 0 0 4-23.3z"/></symbol>
+  </defs>
+</svg>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="#top" class="brand" aria-label="UniSense, início"><img src="logo.jpg" alt="UniSense" width="46" height="40"><span>Campus Prof. Pedro C. Fornari</span></a>
+    <nav class="nav-links" id="navlinks" aria-label="Principal">
+      <a href="#problema">O problema</a>
+      <a href="#niveis">Níveis</a>
+      <a href="#arquitetura">Arquitetura</a>
+      <a href="#plataforma">Plataforma</a>
+      <a href="#jornadas">Jornadas</a>
+      <a href="#roadmap">Roadmap</a>
+    </nav>
+    <div style="display:flex;gap:8px;align-items:center">
+      <a href="#contato" class="btn btn-primary">Falar com o projeto</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="navlinks"><svg><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<!-- ===================== STORY ===================== -->
+<section class="story" aria-label="Apresentação do UniSense no mapa do campus">
+  <div class="steps">
+    <div class="step hero-step" data-step="0">
+      <span class="live-pill"><i></i>Projeto UniSense · 2026</span>
+      <h1>O campus avisa <em>antes</em> de alguém precisar reclamar.</h1>
+      <p class="sub">Sensores contam cada entrada nos banheiros. No limite certo, o UniSense abre o chamado, envia para a equipe responsável e mostra tudo em um mapa 3D do campus.</p>
+      <div class="hero-ctas">
+        <a href="#s1" class="btn btn-primary">Ver como funciona <svg><use href="#i-arrow"/></svg></a>
+        <a href="#arquitetura" class="btn btn-ghost">Arquitetura do sistema</a>
+      </div>
+      <div class="scroll-cue"><span></span>Role para acompanhar um ciclo no mapa</div>
+    </div>
+
+    <div class="step" data-step="1" id="s1">
+      <div class="k"><b>01</b><i></i>O sensor conta</div>
+      <h2>Cada entrada vira um evento.</h2>
+      <p>No Prédio 2, um sensor na porta do banheiro registra as entradas. Cada evento chega com data, horário e origem, e repetições do mesmo sensor são descartadas.</p>
+      <div class="facts"><div><span>Conta</span><span>entradas, não ocupação</span></div><div><span>Registra</span><span>data, horário, sensor</span></div><div><span>Requisitos</span><span class="mono">RF021 · RF022 · RN014</span></div></div>
+    </div>
+
+    <div class="step" data-step="2">
+      <div class="k"><b>02</b><i></i>Nível 1 · 20 entradas</div>
+      <h2>O mapa fica amarelo. Ainda ninguém precisa correr.</h2>
+      <p>O ambiente se aproxima do limite de inspeção. O painel sinaliza em cor, ícone e texto, para que o estado seja claro mesmo para quem não distingue cores.</p>
+      <div class="facts"><div><span>Estado</span><span><span class="badge b-warn"><svg><use href="#i-warn"/></svg>Atenção</span></span></div><div><span>Ação</span><span>apenas sinalização</span></div></div>
+    </div>
+
+    <div class="step" data-step="3">
+      <div class="k"><b>03</b><i></i>Nível 2 · 30 entradas</div>
+      <h2>O chamado se abre sozinho e já sabe para quem vai.</h2>
+      <p>O UniSense cria o chamado com o sensor e o evento de origem, e direciona para a equipe responsável pelo prédio. A contagem continua correndo.</p>
+      <div class="facts"><div><span>Chamado</span><span class="mono">UNS-4127</span></div><div><span>Origem</span><span>sensor P2-2F, evento identificado</span></div><div><span>Destino</span><span>equipe responsável pelo Prédio 2</span></div></div>
+    </div>
+
+    <div class="step" data-step="4">
+      <div class="k"><b>04</b><i></i>Nível 3 · 45 entradas</div>
+      <h2>Ninguém assumiu? A prioridade sobe.</h2>
+      <p>O mesmo chamado é escalado e a pendência fica destacada. Nenhum chamado duplicado nasce no mesmo ciclo, e a mudança de prioridade fica registrada com data, hora e motivo.</p>
+      <div class="facts"><div><span>Estado</span><span><span class="badge b-bad"><svg><use href="#i-up"/></svg>Prioridade elevada</span></span></div><div><span>Regra</span><span class="mono">RN007 · TC003</span></div></div>
+    </div>
+
+    <div class="step" data-step="5">
+      <div class="k"><b>05</b><i></i>Atendimento</div>
+      <h2>A contagem só zera quando o checklist é validado.</h2>
+      <p>O funcionário encontra o banheiro no mapa, assume o chamado e segue o checklist digital. Só depois da validação o ciclo recomeça.</p>
+      <ul class="mini-check" id="storyCheck">
+        <li><span class="bx"><svg><use href="#i-ok"/></svg></span>Piso, bancadas e vasos</li>
+        <li><span class="bx"><svg><use href="#i-ok"/></svg></span>Papel higiênico e papel toalha</li>
+        <li><span class="bx"><svg><use href="#i-ok"/></svg></span>Sabonete e álcool em gel</li>
+        <li><span class="bx"><svg><use href="#i-ok"/></svg></span>Validação do supervisor</li>
+      </ul>
+    </div>
+
+    <div class="step" data-step="6">
+      <div class="k"><b>06</b><i></i>Visão do gestor</div>
+      <h2>O campus inteiro, por onde ele mais precisa de cuidado.</h2>
+      <p>Com todos os sensores ativos, o mapa mostra onde os chamados se concentram. As manchas azuis crescem nos prédios com mais chamados no período. Gire o mapa e passe o mouse nas colunas.</p>
+      <div class="facts"><div><span>Mostra</span><span>status, chamados, prioridade</span></div><div><span>Atualiza</span><span>sem recarregar a página</span></div><div><span>Requisitos</span><span class="mono">RF061 · RF062 · RF063</span></div></div>
+    </div>
+  </div>
+
+  <div class="sticky" id="stage">
+    <canvas id="gl" role="img" aria-label="Mapa 3D do Campus Prof. Pedro C. Fornari, da UniAnchieta, com sensores nos banheiros. O texto ao lado descreve cada etapa."></canvas>
+    <div id="labels"></div>
+    <div class="callout" id="callout" aria-hidden="true">
+      <div class="t" id="coT">Prédio 2 · 2º andar</div>
+      <div class="s" id="coS">Banheiro feminino · sensor P2-2F</div>
+      <span id="coB"></span>
+      <div class="cnt"><b id="coN">0</b><span>entradas no ciclo</span></div>
+      <div class="meter"><span id="coM" style="width:0"></span><i style="left:40%"></i><i style="left:60%"></i><i style="left:90%"></i></div>
+      <div class="tk" id="coK"></div>
+    </div>
+    <div class="tip" id="tip"></div>
+    <div class="hud-top">
+      <div class="place"><b>UniAnchieta · Campus Prof. Pedro C. Fornari</b>Jundiaí · SP · contornos reais dos prédios</div>
+      <div class="chips"><span class="chip" id="clock">--:--:--</span><span class="chip"><span id="cSens">0</span> <em>sensores</em></span><span class="chip"><span id="cOpen">0</span> <em>chamados</em></span></div>
+    </div>
+    <div class="hud-bottom">
+      <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+        <div class="legend-mini" aria-label="Legenda">
+          <span><svg style="color:var(--ok)"><use href="#i-ok"/></svg>Monitorado</span>
+          <span><svg style="color:var(--warn)"><use href="#i-warn"/></svg>Nível 1 · Atenção</span>
+          <span><svg style="color:var(--bad)"><use href="#i-ticket"/></svg>Nível 2 · Chamado</span>
+          <span><svg style="color:var(--bad)"><use href="#i-up"/></svg>Nível 3 · Prioridade</span>
+          <span><svg style="color:var(--off)"><use href="#i-off"/></svg>Sem comunicação</span>
+        </div>
+        <div class="attr">Prédios © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> · sensores simulados</div>
+      </div>
+      <div class="progress" id="prog" aria-label="Etapas"></div>
+    </div>
+    <div class="nogl" id="nogl">O navegador não ativou WebGL. As etapas ao lado descrevem o mesmo ciclo.</div>
+  </div>
+</section>
+
+<!-- ===================== PROBLEMA ===================== -->
+<section class="sec rule" id="problema">
+  <div class="narrow">
+    <span class="eyebrow rv">O problema</span>
+    <h2 class="serif rv">A limpeza segue o relógio. <em>O uso, não.</em></h2>
+    <p class="lead rv">Banheiro de prédio com aula lotada e banheiro de corredor vazio recebem a mesma escala. A diferença só aparece quando alguém reclama.</p>
+    <div class="problem">
+      <article class="rv" style="--i:0"><div class="n">01</div><h3>A escala não sabe do intervalo</h3><p>Horários fixos não acompanham troca de turno, evento no anfiteatro ou dia de prova.</p></article>
+      <article class="rv" style="--i:1"><div class="n">02</div><h3>Quem avisa é quem reclama</h3><p>Falta de papel ou sabonete costuma ser descoberta pelo aluno, não pela equipe.</p></article>
+      <article class="rv" style="--i:2"><div class="n">03</div><h3>Sem registro, sem melhoria</h3><p>Sem histórico, ninguém sabe quanto tempo levou, quem atendeu ou o que foi reposto.</p></article>
+    </div>
+    <div class="quote rv">
+      <span class="eyebrow">Objetivo do sistema</span>
+      <blockquote>Quando o uso chega ao nível programado, a equipe recebe o alerta para inspecionar, limpar e repor, e tudo fica registrado.</blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== NÍVEIS ===================== -->
+<section class="sec rule" id="niveis">
+  <div class="narrow">
+    <span class="eyebrow rv">Regras de monitoramento</span>
+    <h2 class="serif rv">Três limites. <em>Nenhum chamado duplicado.</em></h2>
+    <p class="lead rv">Cada banheiro tem limites próprios, ajustados pelo administrador conforme o uso real. Abaixo, os valores padrão definidos no projeto.</p>
+    <div class="levels-grid">
+      <article class="lvl rv" data-lvl="0" style="--i:0"><span class="badge b-ok"><svg><use href="#i-ok"/></svg>Verde</span><div class="num">0<small>a 19</small></div><h3>Monitorado</h3><p>Ambiente com sensor ativo e sem alerta pendente.</p></article>
+      <article class="lvl rv" data-lvl="1" style="--i:1"><span class="badge b-warn"><svg><use href="#i-warn"/></svg>Nível 1</span><div class="num">20<small>acessos</small></div><h3>Atenção</h3><p>Aproximando do limite de inspeção. Só sinaliza.</p></article>
+      <article class="lvl rv" data-lvl="2" style="--i:2"><span class="badge b-bad"><svg><use href="#i-ticket"/></svg>Nível 2</span><div class="num">30<small>acessos</small></div><h3>Inspeção</h3><p>Chamado aberto automaticamente para a equipe responsável.</p></article>
+      <article class="lvl rv" data-lvl="3" style="--i:3"><span class="badge b-bad"><svg><use href="#i-up"/></svg>Nível 3</span><div class="num">45<small>acessos</small></div><h3>Prioridade</h3><p>Se ninguém assumiu, o mesmo chamado sobe de prioridade.</p></article>
+    </div>
+    <div class="sim-box rv">
+      <div class="counter" id="simCount">0<small>entradas no ciclo</small></div>
+      <div>
+        <div class="track">
+          <div class="marks" aria-hidden="true"><span style="left:40%">20</span><span style="left:60%">30</span><span style="left:90%">45</span></div>
+          <label for="simRange" class="sr">Simular quantidade de entradas</label>
+          <input type="range" id="simRange" min="0" max="50" value="0" aria-describedby="simStatus">
+        </div>
+        <div class="sim-status" id="simStatus" aria-live="polite"></div>
+        <div class="sim-actions">
+          <button class="btn btn-ghost" id="simPlus">+1 entrada</button>
+          <button class="btn btn-ghost" id="simPlus5">+5 entradas</button>
+          <button class="btn btn-primary" id="simDone">Concluir checklist</button>
+        </div>
+        <p class="note"><svg><use href="#i-info"/></svg>Teste a regra: abrir o chamado não zera a contagem. Ela só reinicia depois do checklist concluído e validado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== NÚMEROS ===================== -->
+<section class="sec rule dotgrid">
+  <div class="narrow">
+    <span class="eyebrow rv">Escopo do projeto</span>
+    <h2 class="serif rv">Um sistema pensado <em>ponta a ponta</em>.</h2>
+    <p class="lead rv">O levantamento de requisitos cobre do sensor ao relatório, com regras de negócio, governança e transparência documentadas.</p>
+    <div class="nums rv">
+      <div><b data-n="68">0</b><span>Requisitos funcionais</span><small>RF001 a RF068</small></div>
+      <div><b data-n="39">0</b><span>Requisitos não funcionais</span><small>desempenho, segurança, resiliência</small></div>
+      <div><b data-n="15">0</b><span>Regras de negócio</span><small>RN001 a RN015</small></div>
+      <div><b data-n="20">0</b><span>Diretrizes de governança e transparência</span><small>GOV001 a GOV010 · TC001 a TC010</small></div>
+      <div><b data-n="5">0</b><span>Perfis de acesso</span><small>do administrador ao solicitante</small></div>
+      <div><b data-n="4">0</b><span>Jornadas de usuário</span><small>automática, solicitante, limpeza, gestor</small></div>
+      <div><b data-n="7">0</b><span>Fases de entrega</span><small>desenvolvimento incremental</small></div>
+      <div><b data-n="8">0</b><span>Atributos de qualidade</span><small>ISO/IEC 25010</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ARQUITETURA ===================== -->
+<section class="sec rule" id="arquitetura">
+  <div class="narrow">
+    <span class="eyebrow rv">Arquitetura conceitual</span>
+    <h2 class="serif rv">Orientado a eventos, <em>modular por natureza</em>.</h2>
+    <p class="lead rv">Cada módulo tem responsabilidade própria e conversa com os outros por interfaces padronizadas. Dá para desenvolver, testar e evoluir cada um separadamente.</p>
+    <div class="arch">
+      <div class="node rv" style="--i:0"><span class="pk"></span><div class="dot"><svg><use href="#i-wave"/></svg></div><span class="k">01 · IOT</span><h3>Sensores</h3><ul><li>Contagem de entradas</li><li>Buffer local offline</li><li>Detecção de falha</li></ul></div>
+      <div class="node rv" style="--i:1"><span class="pk"></span><div class="dot"><svg><use href="#i-flow"/></svg></div><span class="k">02 · INGESTÃO</span><h3>Eventos</h3><ul><li>Data, hora e origem</li><li>Sem duplicidade</li><li>Reprocessamento</li></ul></div>
+      <div class="node rv" style="--i:2"><span class="pk"></span><div class="dot"><svg><use href="#i-warn"/></svg></div><span class="k">03 · REGRAS</span><h3>Níveis</h3><ul><li>Limites por banheiro</li><li>Atenção, chamado, prioridade</li><li>Ciclo de contagem</li></ul></div>
+      <div class="node rv" style="--i:3"><span class="pk"></span><div class="dot"><svg><use href="#i-ticket"/></svg></div><span class="k">04 · CHAMADOS</span><h3>Atendimento</h3><ul><li>Automáticos e manuais</li><li>Roteamento por equipe</li><li>Estados e histórico</li></ul></div>
+      <div class="node rv" style="--i:4"><span class="pk"></span><div class="dot"><svg><use href="#i-team"/></svg></div><span class="k">05 · OPERAÇÃO</span><h3>Equipes</h3><ul><li>Checklist digital</li><li>Insumos e estoque</li><li>Equipamentos</li></ul></div>
+      <div class="node rv" style="--i:5"><span class="pk"></span><div class="dot"><svg><use href="#i-cube"/></svg></div><span class="k">06 · VISÃO</span><h3>Painel 3D</h3><ul><li>Mapa do campus</li><li>Indicadores</li><li>Relatórios</li></ul></div>
+    </div>
+    <div class="cross">
+      <div class="rv" style="--i:0"><b>Identidade e permissões</b>Login, recuperação de senha, cinco perfis e senhas com hash seguro.</div>
+      <div class="rv" style="--i:1"><b>Auditoria e LGPD</b>Histórico de ações, trilha de alterações e dados pessoais tratados conforme a LGPD.</div>
+      <div class="rv" style="--i:2"><b>Resiliência de dados</b>Backup automático, recuperação após falha e integridade dos registros.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PLATAFORMA ===================== -->
+<section class="sec rule" id="plataforma">
+  <div class="narrow">
+    <span class="eyebrow rv">Plataforma</span>
+    <h2 class="serif rv">Sensores, pessoas, insumos e chamados <em>no mesmo lugar</em>.</h2>
+    <div class="bento">
+      <article class="card c-4 rv" style="--i:0">
+        <span class="rf">RF029 a RF040</span>
+        <div class="ico" style="background:var(--bad-bg);color:var(--bad)"><svg><use href="#i-ticket"/></svg></div>
+        <h3>Chamados automáticos e manuais</h3>
+        <p>Abertos pelos sensores ou por quem encontrou um problema. Todo chamado tem equipe responsável, histórico e estado atual, e pode ser reaberto se o problema voltar.</p>
+        <div class="states">
+          <div><span>Aberto</span><span class="badge b-info">automático ou manual</span></div>
+          <div><span>Aguardando atendimento</span><span class="badge b-off">na fila da equipe</span></div>
+          <div><span>Em atendimento</span><span class="badge b-warn">equipe assumiu</span></div>
+          <div><span>Aguardando insumos</span><span class="badge b-off">pausado</span></div>
+          <div><span>Concluído</span><span class="badge b-ok">checklist validado</span></div>
+          <div><span>Reaberto</span><span class="badge b-bad">problema persiste</span></div>
+        </div>
+      </article>
+      <article class="card c-2 rv" style="--i:1">
+        <span class="rf">RF054 a RF060</span>
+        <div class="ico" style="background:var(--ok-bg);color:var(--ok)"><svg><use href="#i-list"/></svg></div>
+        <h3>Checklist digital</h3>
+        <p>Itens configuráveis por ambiente. Sem os obrigatórios, o chamado não pode ser concluído.</p>
+        <ul class="mini-check">
+          <li><span class="bx on"><svg><use href="#i-ok"/></svg></span>Piso e bancadas</li>
+          <li><span class="bx on"><svg><use href="#i-ok"/></svg></span>Papel higiênico</li>
+          <li><span class="bx on"><svg><use href="#i-ok"/></svg></span>Sabonete</li>
+          <li><span class="bx"></span>Papel toalha</li>
+        </ul>
+      </article>
+      <article class="card c-2 rv" style="--i:2">
+        <span class="rf">RF041 a RF048</span>
+        <div class="ico" style="background:var(--warn-bg);color:var(--warn)"><svg><use href="#i-box"/></svg></div>
+        <h3>Insumos e estoque</h3>
+        <p>Entradas, saídas, consumo por ambiente e equipe, e alerta antes de faltar.</p>
+        <div class="stock">
+          <div><div class="l"><span>Papel toalha</span><span>abaixo do mínimo</span></div><div class="b"><i style="width:18%"></i><u style="left:25%"></u></div></div>
+          <div><div class="l"><span>Sabonete líquido</span><span>ok</span></div><div class="b"><i style="width:64%"></i><u style="left:25%"></u></div></div>
+          <div><div class="l"><span>Papel higiênico</span><span>ok</span></div><div class="b"><i style="width:47%"></i><u style="left:25%"></u></div></div>
+        </div>
+      </article>
+      <article class="card c-2 rv" style="--i:3">
+        <span class="rf">RF008 a RF013</span>
+        <div class="ico" style="background:var(--info-bg);color:var(--info)"><svg><use href="#i-team"/></svg></div>
+        <h3>Equipes e equipamentos</h3>
+        <p>Equipes ligadas a prédios e ambientes, com supervisores, disponibilidade e manutenção dos equipamentos.</p>
+      </article>
+      <article class="card c-2 rv" style="--i:4">
+        <span class="rf">RF001 a RF007</span>
+        <div class="ico" style="background:var(--surface-2);color:var(--ink)"><svg><use href="#i-shield"/></svg></div>
+        <h3>Perfis e permissões</h3>
+        <p>Cada perfil vê e altera só o que pode. Ações ficam no histórico.</p>
+        <div class="kbd-row"><kbd>Administrador</kbd><kbd>Gestor</kbd><kbd>Supervisor</kbd><kbd>Limpeza</kbd><kbd>Solicitante</kbd></div>
+      </article>
+    </div>
+    <div class="res">
+      <div class="rv" style="--i:0"><span class="k">RNF018</span><h3>A internet caiu?</h3><p>O dispositivo guarda os eventos e envia tudo quando a conexão volta, sem perder nem duplicar contagens.</p></div>
+      <div class="rv" style="--i:1"><span class="k">RNF014</span><h3>Sem contagem dupla</h3><p>Eventos repetidos do mesmo sensor não geram chamados duplicados.</p></div>
+      <div class="rv" style="--i:2"><span class="k">RNF020</span><h3>Um sensor falha, os outros seguem</h3><p>O painel mostra quais ambientes estão sem monitoramento e desde quando.</p></div>
+      <div class="rv" style="--i:3"><span class="k">RNF002</span><h3>Tempo real</h3><p>Indicadores atualizam sozinhos, no computador, tablet ou celular.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== JORNADAS ===================== -->
+<section class="sec rule" id="jornadas">
+  <div class="narrow">
+    <span class="eyebrow rv">Jornadas do usuário</span>
+    <h2 class="serif rv">Feito para quem limpa, quem gere <em>e quem usa</em>.</h2>
+    <div class="tabs rv" role="tablist" aria-label="Jornadas">
+      <button class="tab" role="tab" aria-selected="true" aria-controls="p1" id="t1">Monitoramento automático</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p2" id="t2" tabindex="-1">Funcionário de limpeza</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p3" id="t3" tabindex="-1">Gestor operacional</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p4" id="t4" tabindex="-1">Aluno, professor ou servidor</button>
+    </div>
+    <div class="panel on" role="tabpanel" id="p1" aria-labelledby="t1">
+      <div><span class="who">Jornada 1 · Sistema</span><h3>O ciclo inteiro, sem ninguém precisar lembrar.</h3><p>Do primeiro evento do sensor ao registro da conclusão, cada passo acontece por regra e fica documentado.</p></div>
+      <ol class="olist"><li>Sensor registra os acessos</li><li>Nível 1: ambiente perto do limite</li><li>Nível 2: chamado aberto e equipe identificada</li><li>Nível 3: prioridade elevada se seguir pendente</li><li>Equipe recebe e executa o checklist</li><li>Registro de insumos e conclusão</li></ol>
+    </div>
+    <div class="panel" role="tabpanel" id="p2" aria-labelledby="t2" hidden>
+      <div><span class="who">Jornada 3 · Equipe de limpeza</span><h3>Sabe para onde ir e o que fazer lá.</h3><p>Recebe o chamado no celular, encontra o banheiro no mapa 3D e segue o checklist. Registra o que repôs e o que faltou.</p></div>
+      <ol class="olist"><li>Recebe a notificação do chamado</li><li>Consulta a localização no mapa 3D</li><li>Assume o atendimento</li><li>Executa o checklist digital</li><li>Registra reposição e ocorrências</li><li>Finaliza o atendimento</li></ol>
+    </div>
+    <div class="panel" role="tabpanel" id="p3" aria-labelledby="t3" hidden>
+      <div><span class="who">Jornada 4 · Gestão</span><h3>O campus inteiro em uma tela.</h3><p>Chamados por status e prioridade, equipes disponíveis, consumo de insumos e tempo de atendimento. Relatórios por período, prédio, ambiente e equipe.</p></div>
+      <ol class="olist"><li>Acessa o dashboard geral</li><li>Vê ambientes e chamados pendentes</li><li>Acompanha equipes, prioridades e indicadores</li><li>Analisa produtividade, consumo e tempo</li><li>Ajusta a operação e acompanha o resultado</li></ol>
+    </div>
+    <div class="panel" role="tabpanel" id="p4" aria-labelledby="t4" hidden>
+      <div><span class="who">Jornada 2 · Solicitante</span><h3>Viu um problema? Leva segundos.</h3><p>Escolhe o prédio e o banheiro, descreve a situação e pronto. O chamado vai para a equipe certa, independente da contagem do sensor.</p></div>
+      <ol class="olist"><li>Acessa o UniSense</li><li>Seleciona o prédio e o banheiro</li><li>Informa a irregularidade</li><li>O sistema registra e abre o chamado</li><li>A equipe responsável recebe</li><li>Acompanha o andamento</li></ol>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TRANSPARÊNCIA ===================== -->
+<section class="sec rule" id="transparencia">
+  <div class="narrow audit">
+    <div>
+      <span class="eyebrow rv">Transparência e compliance</span>
+      <h2 class="serif rv">Cada chamado conta <em>a própria história</em>.</h2>
+      <p class="lead rv">Quantos acessos foram contados, quando o alerta disparou, quem atendeu, o que foi verificado e quais insumos saíram do estoque. Tudo verificável, conforme o perfil de quem consulta.</p>
+      <p class="principle rv">Toda ocorrência tem origem identificada, responsável pelo atendimento, histórico e situação atual.</p>
+    </div>
+    <div class="trail rv" style="--i:2">
+      <div class="trail-head"><div><b>Prédio 2 · 2º andar · Feminino</b><div class="mono" style="font-size:11.5px;color:var(--muted)">exemplo de histórico de um ciclo</div></div><span class="badge b-ok"><svg><use href="#i-ok"/></svg>Concluído</span></div>
+      <ol>
+        <li><time>09:12</time><span class="dot"></span><div><strong>Nível 1 · Atenção</strong><span class="m">20 entradas contadas pelo sensor P2-2F</span></div></li>
+        <li><time>09:41</time><span class="dot"></span><div><strong>Chamado aberto automaticamente</strong><span class="m">30 entradas · origem: sensor P2-2F · equipe do Prédio 2</span></div></li>
+        <li><time>09:58</time><span class="dot"></span><div><strong>Atendimento assumido</strong><span class="m">Funcionário identificado · status: em atendimento</span></div></li>
+        <li><time>10:14</time><span class="dot"></span><div><strong>Checklist executado</strong><span class="m">4 de 4 itens · reposição: papel toalha e sabonete</span></div></li>
+        <li><time>10:20</time><span class="dot"></span><div><strong>Validado pelo supervisor</strong><span class="m">Contagem reiniciada para o próximo ciclo</span></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== QUALIDADE ===================== -->
+<section class="sec rule">
+  <div class="narrow">
+    <span class="eyebrow rv">Qualidade de software</span>
+    <h2 class="serif rv">Construído sobre a <em>ISO/IEC 25010</em>.</h2>
+    <div class="iso">
+      <div class="rv" style="--i:0"><i>01</i><b>Adequação funcional</b><span>Todas as funcionalidades previstas entregues.</span></div>
+      <div class="rv" style="--i:1"><i>02</i><b>Confiabilidade</b><span>Operação consistente mesmo diante de falhas.</span></div>
+      <div class="rv" style="--i:2"><i>03</i><b>Eficiência</b><span>Eventos processados e painéis atualizados rápido.</span></div>
+      <div class="rv" style="--i:3"><i>04</i><b>Usabilidade</b><span>Fácil para cada perfil, com poucos cliques.</span></div>
+      <div class="rv" style="--i:4"><i>05</i><b>Segurança</b><span>Dados protegidos e permissões controladas.</span></div>
+      <div class="rv" style="--i:5"><i>06</i><b>Manutenibilidade</b><span>Código modular, orientado a objetos e documentado.</span></div>
+      <div class="rv" style="--i:6"><i>07</i><b>Compatibilidade</b><span>Integra sensores IoT e sistemas institucionais.</span></div>
+      <div class="rv" style="--i:7"><i>08</i><b>Portabilidade</b><span>Implantação em diferentes infraestruturas.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ROADMAP ===================== -->
+<section class="sec rule" id="roadmap">
+  <div class="narrow">
+    <span class="eyebrow rv">Desenvolvimento incremental</span>
+    <h2 class="serif rv">Sete fases. <em>Valor desde a primeira.</em></h2>
+    <p class="lead rv">A integração com sensores físicos começa por simulação de eventos, validando a lógica antes de investir em hardware.</p>
+    <div class="road">
+      <div class="ph mvp rv" style="--i:0"><span class="k">MVP · FASE 1</span><p>Usuários, permissões, prédios, banheiros e equipes</p></div>
+      <div class="ph rv" style="--i:1"><span class="k">FASE 2</span><p>Sensores simulados ou integrados e níveis de alerta</p></div>
+      <div class="ph rv" style="--i:2"><span class="k">FASE 3</span><p>Chamados automáticos e manuais</p></div>
+      <div class="ph rv" style="--i:3"><span class="k">FASE 4</span><p>Funcionários, checklists e encerramento</p></div>
+      <div class="ph rv" style="--i:4"><span class="k">FASE 5</span><p>Insumos, produtos e equipamentos</p></div>
+      <div class="ph rv" style="--i:5"><span class="k">FASE 6</span><p>Dashboard e visualização 3D</p></div>
+      <div class="ph rv" style="--i:6"><span class="k">FASE 7</span><p>Relatórios, auditoria, resiliência e testes</p></div>
+    </div>
+    <div class="accept rv">
+      <div class="accept-head"><h3>Critérios de aceitação</h3><span class="mono" style="font-size:11.5px;color:var(--muted)">10 cenários</span></div>
+      <table>
+        <thead><tr><th>Cenário</th><th>Resultado esperado</th></tr></thead>
+        <tbody>
+          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Sensor atinge nível 1</td><td>Painel sinaliza atenção</td></tr>
+          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Sensor atinge nível 2</td><td>Chamado automático é criado</td></tr>
+          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Sensor atinge nível 3</td><td>Prioridade do chamado existente aumenta</td></tr>
+          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Usuário identifica irregularidade</td><td>Chamado manual é registrado</td></tr>
+          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Funcionário assume chamado</td><td>Status muda para em atendimento</td></tr>
+          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Checklist é concluído</td><td>Sistema registra a execução</td></tr>
+          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Insumo é utilizado</td><td>Estoque é atualizado</td></tr>
+          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Sensor perde comunicação</td><td>Painel sinaliza indisponibilidade</td></tr>
+          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Servidor apresenta falha</td><td>Dados recuperáveis pela política de backup</td></tr>
+          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Usuário sem permissão tenta função restrita</td><td>Sistema bloqueia a operação</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section class="sec rule">
+  <div class="narrow">
+    <span class="eyebrow rv">Perguntas frequentes</span>
+    <h2 class="serif rv">O que costumam perguntar.</h2>
+    <div class="faq rv">
+      <details><summary>O sensor conta pessoas dentro do banheiro ou entradas?<span class="pm" aria-hidden="true"></span></summary><p>Entradas. O objetivo é saber quantas vezes o ambiente foi usado desde a última limpeza, não quantas pessoas estão lá agora.</p></details>
+      <details><summary>Os limites de 20, 30 e 45 acessos são fixos?<span class="pm" aria-hidden="true"></span></summary><p>Não. O administrador ajusta os limites de cada banheiro individualmente, de acordo com o uso real, e as regras de abertura e escalonamento ficam documentadas.</p></details>
+      <details><summary>Quando a contagem volta a zero?<span class="pm" aria-hidden="true"></span></summary><p>Só depois que a equipe conclui o checklist e o atendimento é validado. Abrir o chamado não zera nada.</p></details>
+      <details><summary>E se um sensor parar de responder?<span class="pm" aria-hidden="true"></span></summary><p>O painel sinaliza o ambiente como sem comunicação e registra o período sem monitoramento. Os demais banheiros seguem funcionando.</p></details>
+      <details><summary>Precisa de hardware para começar?<span class="pm" aria-hidden="true"></span></summary><p>Não. O desenvolvimento começa com simulação de eventos para validar a lógica. Os sensores físicos entram depois, por interfaces padronizadas.</p></details>
+      <details><summary>Como os dados pessoais são tratados?<span class="pm" aria-hidden="true"></span></summary><p>Senhas com hash seguro, comunicação via HTTPS, acesso por perfil e trilha de auditoria. O tratamento de dados segue a LGPD.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CTA ===================== -->
+<section class="cta rule dotgrid" id="contato">
+  <div class="narrow">
+    <span class="eyebrow rv">UniSense · Inteligência que cuida do seu campus</span>
+    <h2 class="serif rv">Vamos levar o UniSense <em>para o campus</em>.</h2>
+    <p class="lead rv">Começamos pela simulação de eventos no mapa real do Campus Prof. Pedro C. Fornari, sem hardware no primeiro dia.</p>
+    <div class="hero-ctas rv" style="justify-content:center">
+      <a class="btn btn-primary" id="ctaMail" href="#contato">Falar com o projeto <svg><use href="#i-arrow"/></svg></a>
+      <a class="btn btn-ghost" href="#top">Rever o ciclo no mapa</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <img src="logo.jpg" alt="UniSense" width="41" height="36">
+    <span>UniSense · Gestão operacional inteligente para o campus · Análise de requisitos por Igor Machado, novembro de 2026</span>
+    <span class="mono">Mapa: © OpenStreetMap · sensores simulados</span>
+  </div>
+</footer>
+
+<script>
+/* troque pelo e-mail do projeto */
+window.UNISENSE_CONTACT = '';
+</script>
+
+<script>
+(function(){
+  const mb=document.getElementById('menuBtn'),nl=document.getElementById('navlinks');
+  mb.addEventListener('click',()=>{const o=nl.classList.toggle('open');mb.setAttribute('aria-expanded',o)});
+  nl.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nl.classList.remove('open');mb.setAttribute('aria-expanded',false)}));
+
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+  // count-up
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const cio=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;cio.unobserve(e.target);
+    e.target.querySelectorAll('b[data-n]').forEach(b=>{const n=+b.dataset.n;if(reduce){b.textContent=n;return}const t0=performance.now();
+      (function f(t){const k=Math.min(1,(t-t0)/1400),v=Math.round(n*(1-Math.pow(1-k,3)));b.textContent=v;if(k<1)requestAnimationFrame(f)})(t0)})}),{threshold:.3});
+  document.querySelectorAll('.nums').forEach(n=>cio.observe(n));
+
+  // tabs
+  const tabs=[...document.querySelectorAll('.tab')];
+  function sel(t){tabs.forEach(x=>{const on=x===t;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1;const p=document.getElementById(x.getAttribute('aria-controls'));p.hidden=!on;p.classList.toggle('on',on)})}
+  tabs.forEach((t,i)=>{t.addEventListener('click',()=>sel(t));t.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){const n=tabs[(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length];sel(n);n.focus();e.preventDefault()}})});
+
+  // nav current section
+  const links=[...nl.querySelectorAll('a')];
+  const sio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('cur',a.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-45% 0px -50% 0px'});
+  links.forEach(a=>{const s=document.querySelector(a.getAttribute('href'));if(s)sio.observe(s)});
+
+  // contact
+  const c=window.UNISENSE_CONTACT,cta=document.getElementById('ctaMail');
+  if(c)cta.href='mailto:'+c+'?subject='+encodeURIComponent('Projeto UniSense');
+
+  // level simulator
+  const r=document.getElementById('simRange'),cnt=document.getElementById('simCount'),st=document.getElementById('simStatus');
+  const cards=[...document.querySelectorAll('.lvl')];let ticket=null;
+  function render(){
+    const v=+r.value;r.style.setProperty('--p',(v/50*100)+'%');cnt.firstChild.nodeValue=v;
+    let lvl=v>=45?3:v>=30?2:v>=20?1:0;
+    if(lvl>=2&&!ticket)ticket='UNS-'+(4100+Math.floor(Math.random()*800));
+    if(ticket&&lvl<2)lvl=2;
+    const msg=[
+      '<span class="badge b-ok"><svg><use href="#i-ok"/></svg>Monitorado</span><span>Uso dentro do esperado.</span>',
+      '<span class="badge b-warn"><svg><use href="#i-warn"/></svg>Nível 1 · Atenção</span><span>Aproximando do limite de inspeção.</span>',
+      '<span class="badge b-bad"><svg><use href="#i-ticket"/></svg>Chamado aberto</span><span>Chamado <b class="mono">'+ticket+'</b> enviado à equipe do prédio. A contagem continua.</span>',
+      '<span class="badge b-bad"><svg><use href="#i-up"/></svg>Prioridade elevada</span><span>O chamado <b class="mono">'+ticket+'</b> subiu de prioridade. Nenhum chamado novo foi criado.</span>'];
+    st.innerHTML=msg[lvl];cards.forEach(c=>c.classList.toggle('active',+c.dataset.lvl===lvl));
+  }
+  r.addEventListener('input',render);
+  document.getElementById('simPlus').onclick=()=>{r.value=Math.min(50,+r.value+1);render()};
+  document.getElementById('simPlus5').onclick=()=>{r.value=Math.min(50,+r.value+5);render()};
+  document.getElementById('simDone').onclick=()=>{
+    if(!ticket){st.innerHTML='<span class="badge b-info"><svg><use href="#i-info"/></svg>Sem chamado</span><span>Não há chamado para concluir. A contagem segue em '+r.value+'.</span>';return}
+    const t=ticket;ticket=null;r.value=0;render();
+    st.innerHTML='<span class="badge b-ok"><svg><use href="#i-ok"/></svg>Concluído</span><span>Checklist de <b class="mono">'+t+'</b> validado. Contagem reiniciada.</span>';
+  };
+  render();
+})();
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+const CAMPUS={"boundary":[[-23.5,-34.2],[-27.1,-19.8],[-26.2,-4.8],[-14.5,17.1],[-12.6,18.8],[-11.4,20.9],[-11.1,22.1],[-9.7,22.2],[-10.2,19.4],[-4.2,23.5],[8.2,32.2],[9.6,36.7],[11.3,39.5],[12.9,41.9],[14.6,44.1],[16.8,44.9],[19.3,45.3],[22.6,43.0],[25.2,41.7],[25.7,37.9],[30.4,9.4],[36.8,-4.9],[29.9,-8.4],[24.7,3.8],[21.8,3.5],[22.8,8.5],[19.7,8.0],[17.3,7.4],[14.1,5.1],[-2.9,-14.1],[-15.0,-28.7]],"b":[{"n":"Prédio 1","l":2,"p":[[6.6,2.5],[8.4,5.0],[9.5,4.1],[4.8,-1.9],[3.8,-1.1],[5.2,0.9],[4.8,1.2],[3.2,-0.8],[2.2,-0.1],[6.8,6.2],[8.0,5.3],[6.2,2.8]]},{"n":"Cantina","l":1,"p":[[2.9,-3.2],[0.6,-1.6],[0.0,-2.4],[2.1,-4.1]]},{"n":"Prédio Administrativo","l":1,"p":[[-1.5,-3.9],[1.6,-6.4],[2.3,-5.4],[-0.8,-2.9]]},{"n":"Edifício anexo","l":3,"p":[[-5.2,-13.5],[-3.2,-11.4],[-5.8,-9.1],[-7.9,-11.2]]},{"n":"Prédio 2","l":4,"p":[[-8.5,-18.6],[-4.9,-14.2],[-8.4,-11.3],[-12.0,-15.5],[-11.1,-16.4],[-11.4,-16.8],[-11.1,-17.1],[-11.0,-17.0],[-9.9,-17.9],[-9.9,-18.1],[-9.7,-18.3],[-9.3,-17.9]]},{"n":"Prédio 3","l":2,"p":[[-10.1,-8.0],[-7.0,-4.7],[-6.7,-4.8],[-6.0,-4.2],[-6.3,-3.8],[-3.5,-0.4],[-4.3,0.4],[-7.3,-2.9],[-7.9,-2.4],[-5.1,1.0],[-6.1,2.2],[-9.2,-1.3],[-9.2,-1.2],[-10.0,-2.0],[-9.8,-2.2],[-12.9,-5.3],[-11.8,-6.3],[-8.6,-3.3],[-8.0,-3.8],[-11.0,-7.2]]},{"n":"Cantina","l":1,"p":[[-5.7,1.8],[-4.4,3.3],[-5.5,4.3],[-6.7,2.8],[-6.1,2.2]]},{"n":"Prédio 4","l":2,"p":[[-17.3,-3.3],[-8.4,7.2],[-9.4,8.1],[-12.1,5.0],[-12.4,5.3],[-9.8,8.3],[-11.0,9.4],[-19.0,0.9],[-17.7,-0.3],[-16.1,1.6],[-15.6,1.0],[-18.4,-2.2]]},{"n":"Anfiteatro","l":1,"p":[[11.4,10.8],[7.2,11.9],[7.5,13.7],[11.8,12.8],[11.8,11.7]]},{"n":"Clínica","l":1,"p":[[31.7,3.0],[28.6,7.0],[29.4,7.5],[32.5,3.7]]},{"n":"Cantina","l":1,"p":[[-21.7,-12.1],[-21.3,-10.4],[-23.2,-10.0],[-23.6,-11.8]]},{"n":"Arquibancada","l":1,"p":[[11.8,15.6],[15.4,16.2],[14.9,19.4],[11.3,18.8]]}],"roads":[[[32.4,-2.2],[32.6,-3.6],[32.6,-4.2],[32.6,-4.9]],[[26.0,39.9],[25.3,40.1],[24.4,40.4],[22.4,41.5],[21.4,41.5],[20.1,41.1],[19.2,40.4],[17.0,37.9],[12.4,33.4],[11.7,32.3],[11.4,31.2],[11.3,28.9],[11.6,27.4],[12.7,25.5],[14.1,22.9],[15.0,21.2],[16.5,17.6],[16.6,16.6],[16.5,15.8],[16.1,15.3],[14.3,13.6]],[[37.6,-5.4],[37.2,-5.0],[36.0,-3.7]],[[-14.1,-25.3],[-13.3,-25.2],[-13.0,-25.1],[-12.6,-24.8],[-12.3,-24.6],[-11.8,-24.3],[-11.6,-24.2],[-11.3,-23.9],[-10.8,-23.4],[-10.1,-22.7],[-9.4,-21.9],[-8.0,-20.3],[-7.3,-18.5],[-4.9,-15.7],[-2.8,-13.2],[-1.9,-12.1],[-1.1,-11.3],[11.4,3.4],[13.0,5.1],[14.9,7.2],[16.9,8.5],[18.3,9.0],[19.9,9.4],[20.7,9.7],[21.8,9.8],[22.3,9.8],[22.9,9.6],[23.9,8.9],[25.0,7.7],[27.2,4.9],[29.1,2.8],[31.3,0.3],[31.9,-0.4],[32.2,-1.2],[32.3,-1.9],[32.4,-2.2]],[[33.7,-1.2],[33.2,-0.6],[32.2,0.5],[31.1,1.8],[28.1,5.0],[24.1,9.8],[23.3,10.7],[22.7,11.3],[22.3,11.6],[21.8,11.7],[21.1,11.8],[20.4,11.7],[19.5,11.5],[17.1,11.2],[16.6,11.1],[16.0,11.1],[15.2,11.1],[15.1,11.9],[14.8,12.7],[14.6,13.2],[14.3,13.6],[13.7,13.8],[12.5,14.4],[10.6,14.6],[8.4,14.9],[7.6,14.9],[6.4,15.2],[4.0,15.0],[2.6,14.3],[1.8,13.9],[0.9,13.3],[0.0,12.4],[-0.7,11.9],[-1.5,11.2],[-2.1,10.5],[-3.2,8.2],[-3.4,6.8],[-3.6,6.1],[-3.4,5.2],[-3.3,4.3],[-3.1,3.6],[-2.9,3.1],[-2.3,2.4],[-1.5,1.7],[-0.9,1.0],[-0.8,0.6],[-0.8,0.1],[-0.9,-0.5],[-1.2,-1.1],[-2.4,-2.8],[-3.7,-4.4],[-4.8,-5.6],[-7.4,-8.8],[-8.8,-10.3],[-9.6,-11.3],[-11.2,-13.1],[-12.3,-14.5],[-12.7,-15.2],[-12.9,-15.8],[-12.9,-16.3],[-12.6,-17.1]],[[-16.4,-24.9],[-17.0,-24.5],[-17.7,-23.8],[-18.3,-23.2],[-18.9,-22.3],[-19.6,-20.6],[-19.9,-18.6],[-20.0,-16.2],[-19.9,-13.9],[-19.6,-12.3],[-19.2,-11.2],[-18.7,-10.1],[-16.8,-7.0],[-15.9,-6.0],[-13.7,-3.1],[-10.9,0.3],[-8.8,3.0],[-8.2,3.7],[-7.3,5.4],[-6.9,5.8],[-6.6,7.3],[-6.6,9.4],[-6.8,10.8],[-7.2,13.3],[-7.2,15.2],[-7.2,16.1],[-6.7,17.3],[-6.0,18.4],[-4.7,19.9],[-3.2,21.3],[-1.6,22.2],[0.2,22.9],[2.6,23.6],[4.2,24.2],[5.1,24.6],[6.1,24.9],[7.2,25.7],[8.2,26.6],[9.3,27.5],[10.4,28.4],[11.3,28.9]],[[-12.6,-17.1],[-12.1,-17.9],[-11.5,-18.5],[-10.8,-18.8],[-10.0,-19.3],[-9.7,-19.7],[-9.5,-20.4],[-9.5,-20.7],[-9.7,-21.0],[-10.0,-21.4],[-10.4,-21.9],[-11.2,-22.8],[-11.9,-23.6],[-12.4,-24.0],[-13.0,-24.3],[-13.7,-24.3]],[[-15.0,-13.7],[-13.9,-12.6],[-12.5,-11.2],[-11.9,-10.3],[-11.7,-9.4],[-11.8,-8.9],[-12.2,-8.4],[-12.6,-8.4],[-13.5,-8.6],[-14.2,-9.3],[-14.6,-9.9],[-15.0,-11.1],[-15.0,-12.2],[-15.0,-13.7]],[[14.9,7.2],[14.1,9.9],[15.2,11.1]],[[-13.7,-19.0],[-14.1,-18.4],[-14.5,-17.3],[-15.0,-15.1],[-15.0,-13.7]],[[-16.4,-24.9],[-16.0,-23.7],[-15.8,-23.1],[-15.6,-22.6],[-15.5,-22.2],[-15.3,-21.7],[-15.0,-21.0],[-14.7,-20.5],[-14.3,-19.9],[-13.7,-19.0]],[[-11.8,-20.9],[-11.9,-21.1],[-12.1,-21.5],[-12.4,-22.1],[-12.7,-22.6],[-13.1,-23.3],[-13.5,-24.0],[-13.7,-24.3]],[[-13.7,-19.0],[-12.3,-20.1],[-11.8,-20.6],[-11.8,-20.7],[-11.8,-20.9]],[[-14.1,-25.3],[-14.7,-25.3],[-15.4,-25.2],[-16.4,-24.9]],[[-13.7,-24.3],[-14.1,-25.3]],[[22.7,11.3],[22.6,10.8],[22.4,10.3],[22.3,9.8]],[[36.0,-3.7],[35.4,-3.0],[34.9,-2.5],[33.7,-1.2]],[[32.4,-2.2],[32.7,-1.9],[33.2,-1.6],[33.7,-1.2]],[[36.0,-3.7],[36.0,-4.4],[35.7,-5.0],[35.2,-5.5],[34.5,-5.7],[33.8,-5.7],[33.1,-5.5],[32.6,-4.9]],[[32.6,-4.9],[31.6,-8.7]],[[-12.6,-17.1],[-11.9,-17.7],[-11.4,-18.0],[-10.9,-18.3],[-10.4,-18.6],[-9.9,-18.9],[-9.6,-19.0],[-9.2,-19.1],[-8.8,-19.2],[-8.4,-19.2],[-7.8,-18.9],[-7.3,-18.5]],[[4.0,15.0],[3.1,15.9],[1.6,17.6],[1.0,19.0],[0.5,21.2]],[[0.9,9.2],[2.2,7.7],[3.8,6.6]],[[0.9,9.2],[0.3,9.7],[-1.5,11.2]],[[0.0,12.4],[0.7,10.1],[0.9,9.2]],[[25.0,7.7],[25.1,6.4],[25.3,5.1],[30.4,-4.2]],[[-3.1,-10.3],[-4.6,-8.9],[-1.3,-5.1]],[[-3.1,-10.3],[-2.6,-9.8],[-1.1,-8.4]],[[-1.1,-11.3],[-2.6,-9.8]],[[6.4,15.2],[6.2,12.7],[6.1,11.6],[6.3,11.0],[6.8,10.4],[10.1,7.6],[13.0,5.1]]],"areas":[{"k":"pitch","p":[[18.5,19.1],[16.5,28.8],[23.4,30.2],[25.2,20.6]]},{"k":"swimming_pool","p":[[6.5,21.6],[8.7,22.3],[8.1,23.4],[6.1,22.7]]},{"k":"pitch","p":[[8.1,15.7],[7.8,17.2],[10.5,17.7],[10.9,16.2]]},{"k":"track","p":[[24.4,30.1],[26.0,20.6],[25.9,19.5],[25.5,18.7],[24.7,17.8],[23.8,17.2],[22.9,16.7],[22.0,16.4],[20.9,16.4],[19.7,16.7],[18.8,17.1],[18.1,18.0],[17.7,19.0],[16.0,28.8],[16.1,30.0],[16.5,30.9],[17.3,31.5],[17.9,32.0],[18.8,32.4],[19.8,32.7],[20.7,32.6],[21.9,32.4],[23.2,31.8],[23.9,31.0]]}]};
+
+
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $=id=>document.getElementById(id);
+const stage=$('stage'),canvas=$('gl');
+const LV={ok:{c:0x5E9B69,cls:'b-ok',ico:'i-ok',txt:'Monitorado'},l1:{c:0xD9A22B,cls:'b-warn',ico:'i-warn',txt:'Atenção'},
+  l2:{c:0xC9473F,cls:'b-bad',ico:'i-ticket',txt:'Chamado aberto'},l3:{c:0xA8302A,cls:'b-bad',ico:'i-up',txt:'Prioridade elevada'},off:{c:0xB9B7B1,cls:'b-off',ico:'i-off',txt:'Sem comunicação'}};
+const badge=l=>`<span class="badge ${LV[l].cls}"><svg><use href="#${LV[l].ico}"/></svg>${LV[l].txt}</span>`;
+const FH=1.35;
+
+/* buildings */
+const B=CAMPUS.b.map((b,i)=>{const xs=b.p.map(p=>p[0]),zs=b.p.map(p=>p[1]);
+  return {...b,i,cx:(Math.min(...xs)+Math.max(...xs))/2,cz:(Math.min(...zs)+Math.max(...zs))/2,w:Math.max(...xs)-Math.min(...xs),d:Math.max(...zs)-Math.min(...zs),top:Math.max(1,b.l)*FH,calls:0}});
+const byName=n=>B.find(b=>b.n===n);
+function inside(pt,poly){let c=false;for(let i=0,j=poly.length-1;i<poly.length;j=i++){const[xi,zi]=poly[i],[xj,zj]=poly[j];if(((zi>pt[1])!==(zj>pt[1]))&&(pt[0]<(xj-xi)*(pt[1]-zi)/(zj-zi)+xi))c=!c}return c}
+
+/* sensors on real buildings */
+const SPEC=[['Prédio 1','Térreo · Fem.'],['Prédio 1','Térreo · Masc.'],['Prédio 1','2º andar · Acessível'],
+  ['Prédio 2','Térreo · Masc.'],['Prédio 2','2º andar · Fem.','P2-2F'],['Prédio 2','3º andar · Masc.'],['Prédio 2','4º andar · Fem.'],
+  ['Prédio 3','Térreo · Fem.'],['Prédio 3','Térreo · Masc.'],['Prédio 3','2º andar · Misto'],
+  ['Prédio 4','Térreo · Fem.'],['Prédio 4','Térreo · Masc.'],['Prédio 4','2º andar · Acessível'],
+  ['Prédio Administrativo','Térreo · Misto'],['Edifício anexo','2º andar · Misto'],['Anfiteatro','Foyer · Fem.'],['Anfiteatro','Foyer · Masc.'],['Clínica','Recepção · Misto']];
+const RATE={'Prédio 1':1,'Prédio 2':1.3,'Prédio 3':1.1,'Prédio 4':1.2,'Prédio Administrativo':.4,'Edifício anexo':.5,'Anfiteatro':.8,'Clínica':.5};
+const per={};
+const sensors=SPEC.map(([bn,label,code])=>{
+  const b=byName(bn);if(!b)return null;const k=per[bn]=(per[bn]||0)+1;
+  const tot=SPEC.filter(s=>s[0]===bn).length;
+  let x=b.cx,z=b.cz;
+  const off=[[-.22,-.18],[.22,.2],[-.18,.24],[.2,-.22]][(k-1)%4];
+  const cand=[b.cx+off[0]*b.w,b.cz+off[1]*b.d];
+  if(tot>1&&inside(cand,b.p)){x=cand[0];z=cand[1]}
+  const id=code||(bn.replace('Prédio ','P').replace('Prédio Administrativo','ADM').slice(0,3).toUpperCase().replace(' ','')+'-'+k);
+  return {id,b,label,x,z,count:Math.floor(Math.random()*24),th:[20,30,45],online:true,buffer:0,offFor:0,ticket:null,level:'ok',rate:RATE[bn]||.6};
+}).filter(Boolean);
+const focus=sensors.find(s=>s.id==='P2-2F');focus.count=0;
+const tickets=[];let seq=4128;
+function levelOf(s){if(!s.online)return'off';if(s.ticket&&s.count>=s.th[2])return'l3';if(s.ticket)return'l2';if(s.count>=s.th[0])return'l1';return'ok'}
+function evaluate(s){if(!s.online)return;if(s.count>=s.th[1]&&!s.ticket){const tk={id:'UNS-'+(seq++),s,status:'Aguardando',prio:'Normal',age:0};s.ticket=tk;tickets.push(tk);s.b.calls++}
+  if(s.ticket&&s.count>=s.th[2])s.ticket.prio='Elevada'}
+function closeT(s){const tk=s.ticket;if(!tk)return;tickets.splice(tickets.indexOf(tk),1);s.ticket=null;s.count=0}
+sensors.forEach(s=>{if(s!==focus)evaluate(s)});
+// historic seed so the manager view has a spread (simulated)
+sensors.forEach(s=>{if(s!==focus)s.b.calls+=Math.floor(Math.random()*3*s.rate)});
+
+/* story state */
+let step=0;const STEP_COUNT=7;
+const FOCUS_TARGET=[null,16,24,33,46,0,null];
+let checkT=0;
+function setFocusTicket(on,prio){
+  if(on&&!focus.ticket){const tk={id:'UNS-4127',s:focus,status:'Aguardando',prio:'Normal',age:0};focus.ticket=tk;tickets.push(tk);focus.b.calls++}
+  if(!on&&focus.ticket){tickets.splice(tickets.indexOf(focus.ticket),1);focus.ticket=null}
+  if(focus.ticket)focus.ticket.prio=prio||'Normal';
+}
+const checks=[...document.querySelectorAll('#storyCheck .bx')];
+
+/* sim tick */
+const weighted=[];sensors.forEach(s=>{if(s!==focus)for(let i=0;i<Math.round(s.rate*5);i++)weighted.push(s)});
+let ticks=0;
+function tick(){
+  ticks++;
+  const burst=step===6||step===0?3:1;
+  for(let k=0;k<burst;k++){const s=weighted[Math.floor(Math.random()*weighted.length)];if(s.online){s.count++;evaluate(s)}else s.buffer++}
+  tickets.slice().forEach(tk=>{if(tk.s===focus)return;tk.age++;
+    if(tk.status==='Aguardando'&&tk.age>5&&Math.random()<.07)tk.status='Em atendimento';
+    else if(tk.status==='Em atendimento'&&Math.random()<.12)closeT(tk.s)});
+  sensors.forEach(s=>{if(!s.online&&--s.offFor<=0){s.online=true;s.count+=s.buffer;s.buffer=0;evaluate(s)}});
+  if(ticks%30===10){const c=sensors.filter(s=>s!==focus&&s.online&&!s.ticket);const s=c[Math.floor(Math.random()*c.length)];if(s){s.online=false;s.offFor=10+Math.floor(Math.random()*6)}}
+  // focus sensor driven by story
+  const tgt=FOCUS_TARGET[step];
+  if(tgt!==null){
+    if(step===5){ // attending: tick checklist then reset
+      checkT++;const n=Math.min(4,Math.floor(checkT/2));checks.forEach((c,i)=>c.classList.toggle('on',i<n));
+      if(focus.ticket)focus.ticket.status='Em atendimento';
+      if(n>=4&&checkT>9){setFocusTicket(false);focus.count=0}
+    }else{
+      checkT=0;checks.forEach(c=>c.classList.remove('on'));
+      if(focus.count<tgt)focus.count=Math.min(tgt,focus.count+(tgt-focus.count>4?2:1));
+      else if(focus.count>tgt)focus.count=Math.max(tgt,focus.count-4);
+      if(step>=3&&focus.count>=30)setFocusTicket(true,focus.count>=45?'Elevada':'Normal');else if(step<3)setFocusTicket(false);
+    }
+  }else if(step===6){ // manager: focus behaves like the rest
+    if(Math.random()<.3){focus.count++;}if(focus.count>=30&&!focus.ticket)setFocusTicket(true);if(focus.ticket&&Math.random()<.05){setFocusTicket(false);focus.count=0}
+  }
+  sensors.forEach(s=>s.level=levelOf(s));
+  $('cSens').textContent=sensors.filter(s=>s.online).length+'/'+sensors.length;
+  $('cOpen').textContent=tickets.length;
+  updateCallout();
+}
+function updateCallout(){
+  $('coN').textContent=focus.count;
+  $('coM').style.width=Math.min(100,focus.count/50*100)+'%';
+  $('coB').innerHTML=badge(focus.level);
+  const k=$('coK');
+  if(step===5&&!focus.ticket&&focus.count===0){k.innerHTML='Checklist validado · contagem reiniciada';k.classList.add('on')}
+  else if(focus.ticket){k.innerHTML=`<b class="mono">${focus.ticket.id}</b> · ${focus.ticket.status==='Em atendimento'?'em atendimento':'aguardando equipe'} · prioridade ${focus.ticket.prio.toLowerCase()}`;k.classList.add('on')}
+  else k.classList.remove('on');
+}
+
+/* step observer */
+const prog=$('prog');
+for(let i=0;i<STEP_COUNT;i++){const b=document.createElement('button');b.textContent=String(i).padStart(2,'0');b.setAttribute('aria-label','Ir para etapa '+i);
+  b.onclick=()=>document.querySelector(`.step[data-step="${i}"]`).scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});prog.appendChild(b)}
+function setStep(n){step=n;[...prog.children].forEach((b,i)=>b.classList.toggle('on',i===n));
+  if(n>=1&&n<=4){const tg=FOCUS_TARGET[n];focus.count=Math.max(Math.min(focus.count,tg),tg-6);}
+  if(n<3)setFocusTicket(false);
+  $('callout').classList.toggle('on',n>=1&&n<=5);}
+const stepIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)setStep(+e.target.dataset.step)}),{rootMargin:matchMedia('(max-width:960px)').matches?'-62% 0px -30% 0px':'-45% 0px -45% 0px'});
+document.querySelectorAll('.step').forEach(s=>stepIO.observe(s));
+setStep(0);
+
+/* clock + loop */
+const now=()=>new Date().toLocaleTimeString('pt-BR',{hour12:false});
+setInterval(()=>$('clock').textContent=now(),1000);$('clock').textContent=now();
+let visible=true;new IntersectionObserver(es=>{visible=es[0].isIntersecting}).observe(stage);
+setInterval(()=>{if(!document.hidden)tick()},reduce?1600:700);
+tick();
+
+/* ---------- three ---------- */
+let renderer;
+try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true})}catch(e){$('nogl').style.display='flex';canvas.style.display='none'}
+if(renderer){
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  const scene=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(30,1,1,800);
+  const controls=new OrbitControls(cam,canvas);
+  controls.enableZoom=false;controls.enablePan=false;controls.enableDamping=true;controls.dampingFactor=.07;
+  controls.minPolarAngle=.45;controls.maxPolarAngle=1.15;controls.rotateSpeed=.6;
+  let userDrag=false;controls.addEventListener('start',()=>{userDrag=true});controls.addEventListener('end',()=>{setTimeout(()=>userDrag=false,2500)});
+
+  scene.add(new THREE.HemisphereLight(0xffffff,0xd6d4cc,1.7));
+  const dl=new THREE.DirectionalLight(0xffffff,1.15);dl.position.set(-30,60,25);scene.add(dl);
+
+  const toShape=pts=>{const s=new THREE.Shape();pts.forEach(([x,z],i)=>i?s.lineTo(x,-z):s.moveTo(x,-z));s.closePath();return s};
+  const flat=(pts,color,y,op=1)=>{const g=new THREE.ShapeGeometry(toShape(pts));const m=new THREE.Mesh(g,new THREE.MeshBasicMaterial({color,transparent:op<1,opacity:op,depthWrite:op>=1}));m.rotation.x=-Math.PI/2;m.position.y=y;scene.add(m);return m};
+
+  // ground + campus lot
+  const gnd=new THREE.Mesh(new THREE.PlaneGeometry(300,300),new THREE.MeshBasicMaterial({color:0xF7F6F2}));gnd.rotation.x=-Math.PI/2;gnd.position.y=-.02;scene.add(gnd);
+  const grid=new THREE.GridHelper(300,120,0xEDECE7,0xEDECE7);grid.position.y=-.01;scene.add(grid);
+  flat(CAMPUS.boundary,0xFFFFFF,0);
+  const bl=CAMPUS.boundary.map(([x,z])=>new THREE.Vector3(x,.03,z));bl.push(bl[0].clone());
+  const bLine=new THREE.Line(new THREE.BufferGeometry().setFromPoints(bl),new THREE.LineDashedMaterial({color:0x13306B,dashSize:.8,gapSize:.6,transparent:true,opacity:.45}));bLine.computeLineDistances();scene.add(bLine);
+  // areas
+  CAMPUS.areas.forEach(a=>{const c=a.k==='swimming_pool'?0xDCEBF7:a.k==='track'?0xF1E7DE:0xE6EFE3;flat(a.p,c,.02);
+    const pts=a.p.map(([x,z])=>new THREE.Vector3(x,.04,z));pts.push(pts[0].clone());scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:0xC9C6BE})))});
+  // roads
+  const rMat=new THREE.LineBasicMaterial({color:0xC9C6BE});
+  CAMPUS.roads.forEach(r=>{scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(r.map(([x,z])=>new THREE.Vector3(x,.05,z))),rMat))});
+
+  // buildings (real footprints, stacked floors)
+  const bMat=new THREE.MeshLambertMaterial({color:0xFFFFFF});
+  const fMat=new THREE.MeshLambertMaterial({color:0xFBFAF7});
+  const eMat=new THREE.LineBasicMaterial({color:0x13306B,transparent:true,opacity:.6});
+  const eSoft=new THREE.LineBasicMaterial({color:0x13306B,transparent:true,opacity:.18});
+  B.forEach(b=>{
+    const shape=toShape(b.p);const fl=Math.max(1,b.l);
+    for(let i=0;i<fl;i++){
+      const g=new THREE.ExtrudeGeometry(shape,{depth:FH*.97,bevelEnabled:false});g.rotateX(-Math.PI/2);
+      const m=new THREE.Mesh(g,i===fl-1?bMat:fMat);m.position.y=i*FH;scene.add(m);
+      const ed=new THREE.LineSegments(new THREE.EdgesGeometry(g,25),i===fl-1?eMat:eSoft);ed.position.copy(m.position);scene.add(ed);
+    }
+    const hm=new THREE.Mesh(new THREE.CircleGeometry(1,56),new THREE.MeshBasicMaterial({color:0x1F5FC9,transparent:true,opacity:0,depthWrite:false}));
+    hm.rotation.x=-Math.PI/2;hm.position.set(b.cx,.06,b.cz);hm.scale.setScalar(.01);scene.add(hm);b.heat=hm;
+    if(/^Prédio|Anfiteatro|Clínica/.test(b.n)){const el=document.createElement('div');el.className='blabel';el.textContent=b.n.replace('Prédio Administrativo','Administrativo');$('labels').appendChild(el);b.el=el}
+  });
+
+  // sensors
+  const colGeo=new THREE.CylinderGeometry(.34,.34,1,20);colGeo.translate(0,.5,0);
+  const capGeo=new THREE.SphereGeometry(.34,16,12);
+  const ringGeo=new THREE.RingGeometry(.55,.68,40);
+  const pick=[];
+  sensors.forEach(s=>{
+    const mat=new THREE.MeshLambertMaterial({color:LV.ok.c,transparent:true,opacity:.95});
+    const col=new THREE.Mesh(colGeo,mat);col.position.set(s.x,s.b.top,s.z);col.userData.s=s;scene.add(col);
+    const cap=new THREE.Mesh(capGeo,mat);cap.userData.s=s;scene.add(cap);
+    const ring=new THREE.Mesh(ringGeo,new THREE.MeshBasicMaterial({color:LV.l2.c,transparent:true,opacity:0,side:THREE.DoubleSide,depthWrite:false}));ring.rotation.x=-Math.PI/2;ring.position.set(s.x,s.b.top+.03,s.z);scene.add(ring);
+    const base=new THREE.Mesh(new THREE.CircleGeometry(.6,24),new THREE.MeshBasicMaterial({color:0x13306B,transparent:true,opacity:.12,depthWrite:false}));base.rotation.x=-Math.PI/2;base.position.set(s.x,s.b.top+.02,s.z);scene.add(base);
+    s.m={col,cap,ring,mat,h:.4};pick.push(col,cap);
+  });
+
+  // dispatch arc: team base (Administrativo) -> focus
+  const adm=byName('Prédio Administrativo')||B[0];
+  const a0=new THREE.Vector3(adm.cx,adm.top+.2,adm.cz),a1=new THREE.Vector3(focus.x,focus.b.top+.2,focus.z);
+  const mid=a0.clone().lerp(a1,.5);mid.y+=9;
+  const curve=new THREE.QuadraticBezierCurve3(a0,mid,a1);
+  const arc=new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(60)),new THREE.LineDashedMaterial({color:0x1F5FC9,dashSize:.5,gapSize:.35,transparent:true,opacity:0}));arc.computeLineDistances();scene.add(arc);
+  const runner=new THREE.Mesh(new THREE.SphereGeometry(.28,12,10),new THREE.MeshBasicMaterial({color:0x1F5FC9,transparent:true,opacity:0}));scene.add(runner);
+  const teamEl=document.createElement('div');teamEl.className='blabel';teamEl.style.color='var(--info)';teamEl.textContent='Equipe responsável';$('labels').appendChild(teamEl);
+
+  // camera presets
+  const allX=B.map(b=>b.cx),allZ=B.map(b=>b.cz);
+  const C=new THREE.Vector3((Math.min(...allX)+Math.max(...allX))/2,0,(Math.min(...allZ)+Math.max(...allZ))/2+4);
+  const F=new THREE.Vector3(focus.x,focus.b.top,focus.z);
+  let aspect=1;
+  const preset=n=>{
+    const far=aspect<.8?1.45:aspect<1.1?1.2:1;
+    if(n>=1&&n<=5){const d=(n===3||n===4?34:26)*far;const dir=F.clone().sub(C).setY(0).normalize();const side=new THREE.Vector3(-dir.z,0,dir.x);
+      return{t:F.clone().add(new THREE.Vector3(0,2,0)),p:F.clone().add(dir.multiplyScalar(d*.8)).add(side.multiplyScalar(d*.45)).add(new THREE.Vector3(0,d*.62,0))}}
+    const d=(n===6?62:70)*far;return{t:C.clone(),p:C.clone().add(new THREE.Vector3(d*.62,d*.6,d*.72))};
+  };
+  {const p=preset(0);cam.position.copy(p.p);controls.target.copy(p.t)}
+  let orbit=0;
+
+  function size(){const w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);cam.aspect=w/h;aspect=w/h;cam.updateProjectionMatrix()}
+  new ResizeObserver(size).observe(stage);size();
+
+  // hover tooltip
+  const ray=new THREE.Raycaster(),mp=new THREE.Vector2(),tip=$('tip');
+  canvas.addEventListener('pointermove',e=>{const r=canvas.getBoundingClientRect();mp.x=((e.clientX-r.left)/r.width)*2-1;mp.y=-((e.clientY-r.top)/r.height)*2+1;ray.setFromCamera(mp,cam);
+    const h=ray.intersectObjects(pick)[0];
+    if(h){const s=h.object.userData.s;tip.innerHTML=`<b>${s.b.n} · ${s.label}</b><div class="mono" style="font-size:11px;color:var(--muted);margin:2px 0 8px">sensor ${s.id} · ${s.online?s.count+' entradas':'buffer: '+s.buffer+' eventos'}</div>${badge(s.level)}`;
+      let x=e.clientX-r.left+14,y=e.clientY-r.top+14;if(x+230>r.width)x-=250;if(y+100>r.height)y-=110;tip.style.transform=`translate(${x}px,${y}px)`;tip.classList.add('on');canvas.style.cursor='pointer'}
+    else{tip.classList.remove('on');canvas.style.cursor=''}});
+  canvas.addEventListener('pointerleave',()=>tip.classList.remove('on'));
+
+  const v=new THREE.Vector3(),col=new THREE.Color(),tmpP=new THREE.Vector3(),tmpT=new THREE.Vector3();
+  const clock=new THREE.Clock();const callout=$('callout');
+  function place(el,pos,dx=0,dy=0){v.copy(pos).project(cam);const x=(v.x*.5+.5)*stage.clientWidth,y=(-v.y*.5+.5)*stage.clientHeight;el.style.transform=`translate(${x+dx}px,${y+dy}px)`;return v.z<1}
+  function frame(){
+    requestAnimationFrame(frame);
+    if(!visible||document.hidden)return;
+    const t=clock.getElapsedTime();
+    // camera
+    const p=preset(step);
+    if(!userDrag){
+      orbit+=reduce?0:(step===0||step===6?.0012:.0005);
+      tmpP.copy(p.p).sub(p.t);tmpP.applyAxisAngle(new THREE.Vector3(0,1,0),Math.sin(orbit)*.5);tmpP.add(p.t);
+      cam.position.lerp(tmpP,.035);controls.target.lerp(p.t,.05);
+    }
+    controls.update();
+    // sensors
+    sensors.forEach(s=>{const m=s.m;const target=s.online?.4+s.count*.12:.4;m.h+=(target-m.h)*.08;m.col.scale.y=m.h;m.cap.position.set(s.x,s.b.top+m.h,s.z);
+      col.setHex(LV[s.level].c);m.mat.color.lerp(col,.12);m.mat.opacity=s.online?.95:.45;
+      if(s.level==='l2'||s.level==='l3'){const sp=s.level==='l3'?1.2:.6;const ph=reduce?.5:(t*sp+s.x)%1;m.ring.scale.setScalar(1+ph*(s.level==='l3'?2.8:1.6));m.ring.material.opacity=(1-ph)*(s.level==='l3'?.75:.4);m.ring.material.color.setHex(LV[s.level].c)}else m.ring.material.opacity=0;
+      const dim=(step>=1&&step<=5&&s!==focus)?.35:1;m.mat.opacity*=dim;});
+    // heat (manager view)
+    const max=Math.max(1,...B.map(b=>b.calls));
+    B.forEach(b=>{const k=step===6?b.calls/max:0;const r=Math.max(b.w,b.d)*(.5+k*.7)+.01;b.heat.scale.x+=(r-b.heat.scale.x)*.05;b.heat.scale.y=b.heat.scale.x;b.heat.material.opacity+=(k*.2-b.heat.material.opacity)*.06;
+      if(b.el){const on=place(b.el,tmpT.set(b.cx,b.top+.6,b.cz));b.el.style.transform+=' translate(-50%,-100%)';b.el.style.opacity=(step>=1&&step<=5&&b!==focus.b)?.35:on?1:0}});
+    // dispatch arc
+    const showArc=step===3||step===4||step===5;
+    arc.material.opacity+=((showArc?.85:0)-arc.material.opacity)*.08;
+    runner.material.opacity=arc.material.opacity;
+    if(showArc){runner.position.copy(curve.getPoint(reduce?.5:(t*.35)%1))}
+    place(teamEl,a0.clone().add(new THREE.Vector3(0,.6,0)));teamEl.style.transform+=' translate(-50%,-100%)';teamEl.style.opacity=arc.material.opacity;
+    // callout anchored above focus column
+    v.set(focus.x,focus.b.top+focus.m.h+.3,focus.z).project(cam);
+    {const W=stage.clientWidth,H=stage.clientHeight,cw=callout.offsetWidth,ch=callout.offsetHeight;
+     let x=(v.x*.5+.5)*W-24,y=(-v.y*.5+.5)*H-ch-26;
+     x=Math.max(12,Math.min(W-cw-12,x));y=Math.max(74,Math.min(H-ch-60,y));
+     callout.style.transform=`translate(${x}px,${y}px)`;}
+    renderer.render(scene,cam);
+  }
+  frame();
+}
+</script>
+</body>
+</html>
