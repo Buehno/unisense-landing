@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>UniSense — Inteligência que cuida do seu campus</title>
 <meta name="description" content="UniSense: sensores contam cada entrada nos banheiros do campus, abrem chamados no limite certo e mostram tudo em um mapa 3D do Campus Prof. Pedro C. Fornari, da UniAnchieta.">
-<link rel="icon" href="logo.jpg">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -52,8 +52,10 @@ main,header,footer{position:relative;z-index:1}
 .nav{position:fixed;top:0;left:0;right:0;z-index:60;height:var(--nav);background:rgba(251,251,250,.84);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line)}
 .nav .wrap{max-width:none;display:flex;align-items:center;justify-content:space-between;height:100%;gap:24px;padding:0 32px}
 .brand{display:flex;align-items:center;gap:12px}
-.brand img{height:40px;width:auto;mix-blend-mode:multiply}
-.brand span{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;border-left:1px solid var(--line);padding-left:12px}
+.brand .mark{width:38px;height:38px;flex:none;border-radius:50%;box-shadow:0 0 0 4px rgba(31,95,201,.08)}
+.brand .word{font-weight:600;font-size:19px;letter-spacing:-.02em;color:var(--brand)}
+.brand .word b{font-weight:600;color:var(--brand-2)}
+.brand span:not(.word){font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;border-left:1px solid var(--line);padding-left:12px}
 .nav-links{display:flex;gap:26px;font-size:14px;color:var(--muted)}
 .nav-links a{transition:color .15s;padding:10px 0}
 .nav-links a:hover,.nav-links a.cur{color:var(--ink)}
@@ -87,13 +89,16 @@ main,header,footer{position:relative;z-index:1}
 .step .facts div{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px}
 .step .facts div span:first-child{color:var(--muted)}
 .step .facts div span:last-child{color:var(--ink);text-align:right}
-.hero-step h1{font-family:var(--serif);font-size:clamp(50px,6vw,94px);letter-spacing:-.03em;line-height:.98;margin:22px 0 26px}
+.hero-step h1{font-family:var(--serif);font-size:clamp(52px,6.2vw,100px);letter-spacing:-.035em;line-height:.95;margin:26px 0 28px}
+.hero-meta{display:grid;grid-template-columns:repeat(3,auto);gap:36px;margin-top:48px;padding-top:22px;border-top:1px solid var(--line);justify-content:start}
+.hero-meta b{display:block;font-family:var(--serif);font-size:42px;line-height:1;color:var(--ink);letter-spacing:-.02em;font-weight:400}
+.hero-meta span{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .hero-step p.sub{font-size:19px;color:var(--muted);max-width:44ch;margin-bottom:32px}
 .hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
 .live-pill{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ok);background:var(--ok-bg);padding:4px 12px;border-radius:9999px;align-self:flex-start}
 .live-pill i{width:6px;height:6px;border-radius:50%;background:currentColor;animation:blink 1.6s infinite}
 @keyframes blink{50%{opacity:.25}}
-.scroll-cue{margin-top:56px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:12px}
+.scroll-cue{margin-top:40px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:12px}
 .scroll-cue span{width:1px;height:36px;background:linear-gradient(var(--ink),transparent);animation:cue 2.2s var(--ease) infinite;transform-origin:top}
 @keyframes cue{0%{transform:scaleY(0)}60%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
 .mini-check{list-style:none;margin-top:24px;display:flex;flex-direction:column;gap:10px}
@@ -102,29 +107,33 @@ main,header,footer{position:relative;z-index:1}
 .mini-check .bx svg{width:12px;height:12px;color:#fff}
 .mini-check .bx.on{background:var(--ink);border-color:var(--ink)}
 
-.sticky{position:sticky;top:var(--nav);height:calc(100vh - var(--nav));border-left:1px solid var(--line);background:#FCFCFB;overflow:hidden}
+.sticky{position:sticky;top:var(--nav);height:calc(100vh - var(--nav));background:radial-gradient(120% 90% at 60% 35%,#13265A 0%,#0A1430 55%,#070E24 100%);overflow:hidden;color:#CFE0FF}
+.sticky::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(127,178,255,.025) 0 1px,transparent 1px 4px)}
+.sticky .scan{position:absolute;left:0;right:0;height:140px;top:-140px;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(127,178,255,.06),transparent);animation:scan 8s linear infinite;z-index:1}
+@keyframes scan{to{transform:translateY(calc(100vh + 140px))}}
 .sticky canvas{display:block;width:100%;height:100%;cursor:grab;touch-action:pan-y}
 .sticky canvas:active{cursor:grabbing}
 .hud-top{position:absolute;left:24px;right:24px;top:20px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;pointer-events:none}
-.place{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);line-height:1.6}
-.place b{display:block;color:var(--ink);font-weight:500;font-size:12px}
+.place{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#7F93C4;line-height:1.6}
+.place b{display:block;color:#EAF2FF;font-weight:500;font-size:12px}
 .chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-.chip{font-family:var(--mono);font-size:11px;color:var(--ink-2);background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:4px;padding:4px 8px;white-space:nowrap;font-variant-numeric:tabular-nums}
-.chip em{font-style:normal;color:var(--muted)}
+.chip{font-family:var(--mono);font-size:11px;color:#EAF2FF;background:rgba(10,20,48,.7);border:1px solid rgba(127,178,255,.22);backdrop-filter:blur(6px);border-radius:4px;padding:4px 8px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.chip em{font-style:normal;color:#7F93C4}
 .hud-bottom{position:absolute;left:24px;right:24px;bottom:18px;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;pointer-events:none}
-.attr{font-family:var(--mono);font-size:10px;color:var(--muted);pointer-events:auto}
+.attr{font-family:var(--mono);font-size:10px;color:#6F82B3;pointer-events:auto}
 .attr a{text-decoration:underline;text-underline-offset:2px}
 .progress{display:flex;gap:6px;pointer-events:auto}
-.progress button{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;color:var(--muted);border:1px solid var(--line);border-radius:4px;background:rgba(255,255,255,.9);transition:all .2s}
-.progress button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
-.legend-mini{display:flex;flex-direction:column;gap:5px;font-size:11.5px;color:var(--muted);background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:6px;padding:10px 12px;pointer-events:none}
+.progress button{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;color:#7F93C4;border:1px solid rgba(127,178,255,.22);border-radius:4px;background:rgba(10,20,48,.7);transition:all .2s}
+.progress button:hover{color:#EAF2FF}
+.progress button.on{background:#EAF2FF;color:#0A1430;border-color:#EAF2FF}
+.legend-mini{display:flex;flex-direction:column;gap:5px;font-size:11.5px;color:#B6C6EA;background:rgba(10,20,48,.7);border:1px solid rgba(127,178,255,.2);backdrop-filter:blur(6px);border-radius:6px;padding:10px 12px;pointer-events:none}
 .legend-mini span{display:flex;align-items:center;gap:8px}
 .legend-mini svg{width:12px;height:12px}
 #labels{position:absolute;inset:0;pointer-events:none}
-.blabel{position:absolute;left:0;top:0;font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;color:var(--brand);background:rgba(255,255,255,.94);border:1px solid var(--line);padding:2px 7px;border-radius:4px;white-space:nowrap;transition:opacity .4s;will-change:transform}
-.callout{position:absolute;left:0;top:0;width:250px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;box-shadow:0 10px 30px -12px rgba(19,48,107,.18);opacity:0;transition:opacity .45s var(--ease);pointer-events:none;will-change:transform}
+.blabel{position:absolute;left:0;top:0;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:#DCE8FF;background:rgba(10,20,48,.78);border:1px solid rgba(127,178,255,.3);backdrop-filter:blur(4px);padding:2px 7px;border-radius:4px;white-space:nowrap;transition:opacity .4s;will-change:transform}
+.callout{position:absolute;left:0;top:0;width:256px;background:rgba(255,255,255,.97);border:1px solid rgba(255,255,255,.6);border-radius:12px;padding:15px 17px;box-shadow:0 18px 50px -12px rgba(0,0,0,.55),0 0 0 1px rgba(127,178,255,.15);z-index:4;opacity:0;transition:opacity .45s var(--ease);pointer-events:none;will-change:transform}
 .callout.on{opacity:1}
-.callout::after{content:"";position:absolute;left:24px;bottom:-26px;width:1px;height:26px;background:var(--ink)}
+.callout::after{content:"";position:absolute;left:24px;bottom:-26px;width:1px;height:26px;background:linear-gradient(#fff,rgba(255,255,255,0))}
 .callout .t{font-weight:500;color:var(--ink);font-size:14px}
 .callout .s{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:10px}
 .callout .cnt{display:flex;align-items:baseline;justify-content:space-between;margin:10px 0 4px}
@@ -138,7 +147,7 @@ main,header,footer{position:relative;z-index:1}
 .tip{position:absolute;left:0;top:0;pointer-events:none;min-width:200px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12.5px;box-shadow:0 8px 24px rgba(0,0,0,.06);opacity:0;transition:opacity .12s;z-index:5}
 .tip.on{opacity:1}
 .tip b{display:block;font-weight:500;color:var(--ink)}
-.nogl{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center;padding:24px;color:var(--muted);font-size:14px}
+.nogl{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center;padding:24px;color:#B6C6EA;font-size:14px}
 
 /* ========== content sections ========== */
 .problem{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:64px;border-top:1px solid var(--line)}
@@ -293,13 +302,21 @@ kbd{font-family:var(--mono);font-size:11.5px;border:1px solid var(--line);border
 .faq details[open] .pm::before{content:"\2212"}
 .faq details:not([open]) .pm::before{content:"+"}
 .faq details p{padding:0 48px 24px 0;color:var(--muted);max-width:72ch}
-.cta{padding:144px 0;text-align:center}
+.cta{padding:150px 0;text-align:center;background:radial-gradient(90% 120% at 50% 0%,#13265A 0%,#0A1430 60%,#070E24 100%);color:#B6C6EA}
+.cta h2{color:#F3F7FF}
+.cta h2 em{color:#8FC1FF!important}
+.cta .lead{color:#9DB0DA}
+.cta .eyebrow{color:#7F93C4}
+.cta .btn-primary{background:#fff;color:#0A1430}
+.cta .btn-primary:hover{background:#DCE8FF}
+.cta .btn-ghost{background:transparent;color:#EAF2FF;border-color:rgba(127,178,255,.35)}
+.cta .btn-ghost:hover{border-color:#8FC1FF}
 .cta h2{margin:18px auto;max-width:15ch}
 .cta .lead{margin:0 auto 32px}
 .cta .eyebrow::before{display:none}
 footer{border-top:1px solid var(--line);padding:36px 0;font-size:13px;color:var(--muted)}
 footer .wrap{display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center}
-footer img{height:36px;mix-blend-mode:multiply}
+footer .brand .mark{width:32px;height:32px}
 footer .mono{font-size:11.5px}
 
 /* reveal */
@@ -325,7 +342,7 @@ footer .mono{font-size:11.5px}
   .nav-links.open a{padding:12px 0;border-bottom:1px solid var(--line)}
   .menu-btn{display:inline-flex}
   .nav .btn-primary{display:none}
-  .brand span{display:none}
+  .brand span:not(.word){display:none}
   .story{display:flex;flex-direction:column}
   .sticky{order:-1;position:sticky;top:var(--nav);height:50vh;border-left:0;border-bottom:1px solid var(--line);z-index:3}
   .steps{padding:0 24px}
@@ -407,7 +424,7 @@ footer .mono{font-size:11.5px}
 
 <header class="nav" id="nav">
   <div class="wrap">
-    <a href="#top" class="brand" aria-label="UniSense, início"><img src="logo.jpg" alt="UniSense" width="46" height="40"><span>Campus Prof. Pedro C. Fornari</span></a>
+    <a href="#top" class="brand" aria-label="UniSense, início"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#13306B"/><circle cx="32" cy="32" r="30.5" fill="none" stroke="#2F5FB8" stroke-width="1"/><text x="27" y="42.5" text-anchor="middle" font-family="Geist,Arial,sans-serif" font-weight="700" font-size="25" letter-spacing="-1.4" fill="#fff">US</text><path d="M40.6 24.2 L45.2 18.4" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round"/><circle cx="46" cy="17.4" r="2.1" fill="#7FB2FF"/><path d="M46 12.6 A4.8 4.8 0 0 1 50.8 17.4" fill="none" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round"/><path d="M46 8.8 A8.6 8.6 0 0 1 54.6 17.4" fill="none" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round" opacity=".7"/></svg><span class="word">Uni<b>Sense</b></span><span>Campus Prof. Pedro C. Fornari</span></a>
     <nav class="nav-links" id="navlinks" aria-label="Principal">
       <a href="#problema">O problema</a>
       <a href="#niveis">Níveis</a>
@@ -435,6 +452,7 @@ footer .mono{font-size:11.5px}
         <a href="#s1" class="btn btn-primary">Ver como funciona <svg><use href="#i-arrow"/></svg></a>
         <a href="#arquitetura" class="btn btn-ghost">Arquitetura do sistema</a>
       </div>
+      <div class="hero-meta"><div><b>20</b><span>atenção</span></div><div><b>30</b><span>chamado</span></div><div><b>45</b><span>prioridade</span></div></div>
       <div class="scroll-cue"><span></span>Role para acompanhar um ciclo no mapa</div>
     </div>
 
@@ -487,6 +505,7 @@ footer .mono{font-size:11.5px}
   </div>
 
   <div class="sticky" id="stage">
+    <div class="scan" aria-hidden="true"></div>
     <canvas id="gl" role="img" aria-label="Mapa 3D do Campus Prof. Pedro C. Fornari, da UniAnchieta, com sensores nos banheiros. O texto ao lado descreve cada etapa."></canvas>
     <div id="labels"></div>
     <div class="callout" id="callout" aria-hidden="true">
@@ -799,7 +818,7 @@ footer .mono{font-size:11.5px}
 </section>
 
 <!-- ===================== CTA ===================== -->
-<section class="cta rule dotgrid" id="contato">
+<section class="cta" id="contato">
   <div class="narrow">
     <span class="eyebrow rv">UniSense · Inteligência que cuida do seu campus</span>
     <h2 class="serif rv">Vamos levar o UniSense <em>para o campus</em>.</h2>
@@ -814,7 +833,7 @@ footer .mono{font-size:11.5px}
 
 <footer>
   <div class="wrap">
-    <img src="logo.jpg" alt="UniSense" width="41" height="36">
+    <a href="#top" class="brand" aria-label="UniSense"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#13306B"/><circle cx="32" cy="32" r="30.5" fill="none" stroke="#2F5FB8" stroke-width="1"/><text x="27" y="42.5" text-anchor="middle" font-family="Geist,Arial,sans-serif" font-weight="700" font-size="25" letter-spacing="-1.4" fill="#fff">US</text><path d="M40.6 24.2 L45.2 18.4" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round"/><circle cx="46" cy="17.4" r="2.1" fill="#7FB2FF"/><path d="M46 12.6 A4.8 4.8 0 0 1 50.8 17.4" fill="none" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round"/><path d="M46 8.8 A8.6 8.6 0 0 1 54.6 17.4" fill="none" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round" opacity=".7"/></svg><span class="word">Uni<b>Sense</b></span></a>
     <span>UniSense · Gestão operacional inteligente para o campus · Análise de requisitos por Igor Machado, novembro de 2026</span>
     <span class="mono">Mapa: © OpenStreetMap · sensores simulados</span>
   </div>
@@ -892,8 +911,8 @@ const CAMPUS={"boundary":[[-23.5,-34.2],[-27.1,-19.8],[-26.2,-4.8],[-14.5,17.1],
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $=id=>document.getElementById(id);
 const stage=$('stage'),canvas=$('gl');
-const LV={ok:{c:0x5E9B69,cls:'b-ok',ico:'i-ok',txt:'Monitorado'},l1:{c:0xD9A22B,cls:'b-warn',ico:'i-warn',txt:'Atenção'},
-  l2:{c:0xC9473F,cls:'b-bad',ico:'i-ticket',txt:'Chamado aberto'},l3:{c:0xA8302A,cls:'b-bad',ico:'i-up',txt:'Prioridade elevada'},off:{c:0xB9B7B1,cls:'b-off',ico:'i-off',txt:'Sem comunicação'}};
+const LV={ok:{c:0x4FD08A,cls:'b-ok',ico:'i-ok',txt:'Monitorado'},l1:{c:0xF5B83D,cls:'b-warn',ico:'i-warn',txt:'Atenção'},
+  l2:{c:0xFF5A4E,cls:'b-bad',ico:'i-ticket',txt:'Chamado aberto'},l3:{c:0xFF2E5B,cls:'b-bad',ico:'i-up',txt:'Prioridade elevada'},off:{c:0x5D6B8F,cls:'b-off',ico:'i-off',txt:'Sem comunicação'}};
 const badge=l=>`<span class="badge ${LV[l].cls}"><svg><use href="#${LV[l].ico}"/></svg>${LV[l].txt}</span>`;
 const FH=1.35;
 
@@ -1016,30 +1035,31 @@ if(renderer){
   controls.minPolarAngle=.45;controls.maxPolarAngle=1.15;controls.rotateSpeed=.6;
   let userDrag=false;controls.addEventListener('start',()=>{userDrag=true});controls.addEventListener('end',()=>{setTimeout(()=>userDrag=false,2500)});
 
-  scene.add(new THREE.HemisphereLight(0xffffff,0xd6d4cc,1.7));
-  const dl=new THREE.DirectionalLight(0xffffff,1.15);dl.position.set(-30,60,25);scene.add(dl);
+  scene.fog=new THREE.Fog(0x0A1430,95,230);
+  scene.add(new THREE.HemisphereLight(0x9DB8FF,0x0A1430,1.4));
+  const dl=new THREE.DirectionalLight(0xCFE0FF,1.25);dl.position.set(-30,60,25);scene.add(dl);
 
   const toShape=pts=>{const s=new THREE.Shape();pts.forEach(([x,z],i)=>i?s.lineTo(x,-z):s.moveTo(x,-z));s.closePath();return s};
   const flat=(pts,color,y,op=1)=>{const g=new THREE.ShapeGeometry(toShape(pts));const m=new THREE.Mesh(g,new THREE.MeshBasicMaterial({color,transparent:op<1,opacity:op,depthWrite:op>=1}));m.rotation.x=-Math.PI/2;m.position.y=y;scene.add(m);return m};
 
   // ground + campus lot
-  const gnd=new THREE.Mesh(new THREE.PlaneGeometry(300,300),new THREE.MeshBasicMaterial({color:0xF7F6F2}));gnd.rotation.x=-Math.PI/2;gnd.position.y=-.02;scene.add(gnd);
-  const grid=new THREE.GridHelper(300,120,0xEDECE7,0xEDECE7);grid.position.y=-.01;scene.add(grid);
-  flat(CAMPUS.boundary,0xFFFFFF,0);
+  const gnd=new THREE.Mesh(new THREE.PlaneGeometry(300,300),new THREE.MeshBasicMaterial({color:0x0A1430}));gnd.rotation.x=-Math.PI/2;gnd.position.y=-.02;scene.add(gnd);
+  const grid=new THREE.GridHelper(300,120,0x16285A,0x122150);grid.position.y=-.01;scene.add(grid);
+  flat(CAMPUS.boundary,0x0E1C44,0);
   const bl=CAMPUS.boundary.map(([x,z])=>new THREE.Vector3(x,.03,z));bl.push(bl[0].clone());
-  const bLine=new THREE.Line(new THREE.BufferGeometry().setFromPoints(bl),new THREE.LineDashedMaterial({color:0x13306B,dashSize:.8,gapSize:.6,transparent:true,opacity:.45}));bLine.computeLineDistances();scene.add(bLine);
+  const bLine=new THREE.Line(new THREE.BufferGeometry().setFromPoints(bl),new THREE.LineDashedMaterial({color:0x7FB2FF,dashSize:.8,gapSize:.6,transparent:true,opacity:.55}));bLine.computeLineDistances();scene.add(bLine);
   // areas
-  CAMPUS.areas.forEach(a=>{const c=a.k==='swimming_pool'?0xDCEBF7:a.k==='track'?0xF1E7DE:0xE6EFE3;flat(a.p,c,.02);
-    const pts=a.p.map(([x,z])=>new THREE.Vector3(x,.04,z));pts.push(pts[0].clone());scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:0xC9C6BE})))});
+  CAMPUS.areas.forEach(a=>{const c=a.k==='swimming_pool'?0x15407A:a.k==='track'?0x1A2550:0x112C46;flat(a.p,c,.02);
+    const pts=a.p.map(([x,z])=>new THREE.Vector3(x,.04,z));pts.push(pts[0].clone());scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:0x2D4580})))});
   // roads
-  const rMat=new THREE.LineBasicMaterial({color:0xC9C6BE});
+  const rMat=new THREE.LineBasicMaterial({color:0x2D4580,transparent:true,opacity:.8});
   CAMPUS.roads.forEach(r=>{scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(r.map(([x,z])=>new THREE.Vector3(x,.05,z))),rMat))});
 
   // buildings (real footprints, stacked floors)
-  const bMat=new THREE.MeshLambertMaterial({color:0xFFFFFF});
-  const fMat=new THREE.MeshLambertMaterial({color:0xFBFAF7});
-  const eMat=new THREE.LineBasicMaterial({color:0x13306B,transparent:true,opacity:.6});
-  const eSoft=new THREE.LineBasicMaterial({color:0x13306B,transparent:true,opacity:.18});
+  const bMat=new THREE.MeshLambertMaterial({color:0x22366E});
+  const fMat=new THREE.MeshLambertMaterial({color:0x1A2B5C});
+  const eMat=new THREE.LineBasicMaterial({color:0x9CC4FF,transparent:true,opacity:.85});
+  const eSoft=new THREE.LineBasicMaterial({color:0x7FB2FF,transparent:true,opacity:.28});
   B.forEach(b=>{
     const shape=toShape(b.p);const fl=Math.max(1,b.l);
     for(let i=0;i<fl;i++){
@@ -1047,7 +1067,7 @@ if(renderer){
       const m=new THREE.Mesh(g,i===fl-1?bMat:fMat);m.position.y=i*FH;scene.add(m);
       const ed=new THREE.LineSegments(new THREE.EdgesGeometry(g,25),i===fl-1?eMat:eSoft);ed.position.copy(m.position);scene.add(ed);
     }
-    const hm=new THREE.Mesh(new THREE.CircleGeometry(1,56),new THREE.MeshBasicMaterial({color:0x1F5FC9,transparent:true,opacity:0,depthWrite:false}));
+    const hm=new THREE.Mesh(new THREE.CircleGeometry(1,56),new THREE.MeshBasicMaterial({color:0x3D8BFF,transparent:true,opacity:0,depthWrite:false,blending:THREE.AdditiveBlending}));
     hm.rotation.x=-Math.PI/2;hm.position.set(b.cx,.06,b.cz);hm.scale.setScalar(.01);scene.add(hm);b.heat=hm;
     if(/^Prédio|Anfiteatro|Clínica/.test(b.n)){const el=document.createElement('div');el.className='blabel';el.textContent=b.n.replace('Prédio Administrativo','Administrativo');$('labels').appendChild(el);b.el=el}
   });
@@ -1058,11 +1078,11 @@ if(renderer){
   const ringGeo=new THREE.RingGeometry(.55,.68,40);
   const pick=[];
   sensors.forEach(s=>{
-    const mat=new THREE.MeshLambertMaterial({color:LV.ok.c,transparent:true,opacity:.95});
+    const mat=new THREE.MeshBasicMaterial({color:LV.ok.c,transparent:true,opacity:.95});
     const col=new THREE.Mesh(colGeo,mat);col.position.set(s.x,s.b.top,s.z);col.userData.s=s;scene.add(col);
     const cap=new THREE.Mesh(capGeo,mat);cap.userData.s=s;scene.add(cap);
-    const ring=new THREE.Mesh(ringGeo,new THREE.MeshBasicMaterial({color:LV.l2.c,transparent:true,opacity:0,side:THREE.DoubleSide,depthWrite:false}));ring.rotation.x=-Math.PI/2;ring.position.set(s.x,s.b.top+.03,s.z);scene.add(ring);
-    const base=new THREE.Mesh(new THREE.CircleGeometry(.6,24),new THREE.MeshBasicMaterial({color:0x13306B,transparent:true,opacity:.12,depthWrite:false}));base.rotation.x=-Math.PI/2;base.position.set(s.x,s.b.top+.02,s.z);scene.add(base);
+    const ring=new THREE.Mesh(ringGeo,new THREE.MeshBasicMaterial({color:LV.l2.c,transparent:true,opacity:0,side:THREE.DoubleSide,depthWrite:false,blending:THREE.AdditiveBlending}));ring.rotation.x=-Math.PI/2;ring.position.set(s.x,s.b.top+.03,s.z);scene.add(ring);
+    const base=new THREE.Mesh(new THREE.CircleGeometry(.6,24),new THREE.MeshBasicMaterial({color:0x7FB2FF,transparent:true,opacity:.14,depthWrite:false}));base.rotation.x=-Math.PI/2;base.position.set(s.x,s.b.top+.02,s.z);scene.add(base);
     s.m={col,cap,ring,mat,h:.4};pick.push(col,cap);
   });
 
@@ -1071,9 +1091,9 @@ if(renderer){
   const a0=new THREE.Vector3(adm.cx,adm.top+.2,adm.cz),a1=new THREE.Vector3(focus.x,focus.b.top+.2,focus.z);
   const mid=a0.clone().lerp(a1,.5);mid.y+=9;
   const curve=new THREE.QuadraticBezierCurve3(a0,mid,a1);
-  const arc=new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(60)),new THREE.LineDashedMaterial({color:0x1F5FC9,dashSize:.5,gapSize:.35,transparent:true,opacity:0}));arc.computeLineDistances();scene.add(arc);
-  const runner=new THREE.Mesh(new THREE.SphereGeometry(.28,12,10),new THREE.MeshBasicMaterial({color:0x1F5FC9,transparent:true,opacity:0}));scene.add(runner);
-  const teamEl=document.createElement('div');teamEl.className='blabel';teamEl.style.color='var(--info)';teamEl.textContent='Equipe responsável';$('labels').appendChild(teamEl);
+  const arc=new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(60)),new THREE.LineDashedMaterial({color:0x8FC1FF,dashSize:.5,gapSize:.35,transparent:true,opacity:0}));arc.computeLineDistances();scene.add(arc);
+  const runner=new THREE.Mesh(new THREE.SphereGeometry(.28,12,10),new THREE.MeshBasicMaterial({color:0xBFDBFF,transparent:true,opacity:0}));scene.add(runner);
+  const teamEl=document.createElement('div');teamEl.className='blabel';teamEl.style.color='#8FC1FF';teamEl.textContent='Equipe responsável';$('labels').appendChild(teamEl);
 
   // camera presets
   const allX=B.map(b=>b.cx),allZ=B.map(b=>b.cz);
@@ -1123,7 +1143,7 @@ if(renderer){
       const dim=(step>=1&&step<=5&&s!==focus)?.35:1;m.mat.opacity*=dim;});
     // heat (manager view)
     const max=Math.max(1,...B.map(b=>b.calls));
-    B.forEach(b=>{const k=step===6?b.calls/max:0;const r=Math.max(b.w,b.d)*(.5+k*.7)+.01;b.heat.scale.x+=(r-b.heat.scale.x)*.05;b.heat.scale.y=b.heat.scale.x;b.heat.material.opacity+=(k*.2-b.heat.material.opacity)*.06;
+    B.forEach(b=>{const k=step===6?b.calls/max:0;const r=Math.max(b.w,b.d)*(.5+k*.7)+.01;b.heat.scale.x+=(r-b.heat.scale.x)*.05;b.heat.scale.y=b.heat.scale.x;b.heat.material.opacity+=(k*.18-b.heat.material.opacity)*.06;
       if(b.el){const on=place(b.el,tmpT.set(b.cx,b.top+.6,b.cz));b.el.style.transform+=' translate(-50%,-100%)';b.el.style.opacity=(step>=1&&step<=5&&b!==focus.b)?.35:on?1:0}});
     // dispatch arc
     const showArc=step===3||step===4||step===5;
