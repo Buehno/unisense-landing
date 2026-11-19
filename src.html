@@ -57,7 +57,7 @@ main,header,footer{position:relative;z-index:1}
 .nav{position:fixed;top:0;left:0;right:0;z-index:60;height:var(--nav);background:rgba(251,251,250,.84);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line)}
 .nav .wrap{max-width:none;display:flex;align-items:center;justify-content:space-between;height:100%;gap:24px;padding:0 32px}
 .brand{display:flex;align-items:center;gap:12px}
-.brand .mark{width:38px;height:38px;flex:none;border-radius:50%;box-shadow:0 0 0 4px rgba(31,95,201,.08)}
+.brand .mark{width:40px;height:40px;flex:none;border-radius:50%}
 .brand .word{font-weight:600;font-size:19px;letter-spacing:-.02em;color:var(--brand)}
 .brand .word b{font-weight:600;color:var(--brand-2)}
 .brand span:not(.word){font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;border-left:1px solid var(--line);padding-left:12px}
@@ -444,7 +444,7 @@ footer .mono{font-size:11.5px}
 
 <header class="nav" id="nav">
   <div class="wrap">
-    <a href="#top" class="brand" aria-label="UniSense, início"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#13306B"/><circle cx="32" cy="32" r="30.5" fill="none" stroke="#2F5FB8" stroke-width="1"/><text x="27" y="42.5" text-anchor="middle" font-family="Geist,Arial,sans-serif" font-weight="700" font-size="25" letter-spacing="-1.4" fill="#fff">US</text><path d="M40.6 24.2 L45.2 18.4" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round"/><circle cx="46" cy="17.4" r="2.1" fill="#7FB2FF"/><path d="M46 12.6 A4.8 4.8 0 0 1 50.8 17.4" fill="none" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round"/><path d="M46 8.8 A8.6 8.6 0 0 1 54.6 17.4" fill="none" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round" opacity=".7"/></svg><span class="word">Uni<b>Sense</b></span><span>Campus Prof. Pedro C. Fornari</span></a>
+    <a href="#top" class="brand" aria-label="UniSense, início"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="#FFFFFF" stroke="#13306B" stroke-width="2"/><text y="46.2" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="26.5" letter-spacing="-1.2"><tspan x="12.4" fill="#13306B">U</tspan><tspan fill="#1F5FC9">S</tspan></text><path d="M44.3 21.5 L45.8 19" stroke="#1F5FC9" stroke-width="2.4" stroke-linecap="round"/><circle cx="46.4" cy="17.7" r="2.3" fill="#1F5FC9"/><path d="M46.4 13.3 A4.4 4.4 0 0 1 50.8 17.7" fill="none" stroke="#1F5FC9" stroke-width="2.3" stroke-linecap="round"/><path d="M46.4 9.9 A7.8 7.8 0 0 1 54.2 17.7" fill="none" stroke="#1F5FC9" stroke-width="2.3" stroke-linecap="round" opacity=".8"/></svg><span class="word">Uni<b>Sense</b></span><span>Campus Prof. Pedro C. Fornari</span></a>
     <nav class="nav-links" id="navlinks" aria-label="Principal">
       <a href="#s1">Como funciona</a>
       <a href="#niveis">Níveis</a>
@@ -854,7 +854,7 @@ footer .mono{font-size:11.5px}
 
 <footer>
   <div class="wrap">
-    <a href="#top" class="brand" aria-label="UniSense"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#13306B"/><circle cx="32" cy="32" r="30.5" fill="none" stroke="#2F5FB8" stroke-width="1"/><text x="27" y="42.5" text-anchor="middle" font-family="Geist,Arial,sans-serif" font-weight="700" font-size="25" letter-spacing="-1.4" fill="#fff">US</text><path d="M40.6 24.2 L45.2 18.4" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round"/><circle cx="46" cy="17.4" r="2.1" fill="#7FB2FF"/><path d="M46 12.6 A4.8 4.8 0 0 1 50.8 17.4" fill="none" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round"/><path d="M46 8.8 A8.6 8.6 0 0 1 54.6 17.4" fill="none" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round" opacity=".7"/></svg><span class="word">Uni<b>Sense</b></span></a>
+    <a href="#top" class="brand" aria-label="UniSense"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="#FFFFFF" stroke="#13306B" stroke-width="2"/><text y="46.2" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="26.5" letter-spacing="-1.2"><tspan x="12.4" fill="#13306B">U</tspan><tspan fill="#1F5FC9">S</tspan></text><path d="M44.3 21.5 L45.8 19" stroke="#1F5FC9" stroke-width="2.4" stroke-linecap="round"/><circle cx="46.4" cy="17.7" r="2.3" fill="#1F5FC9"/><path d="M46.4 13.3 A4.4 4.4 0 0 1 50.8 17.7" fill="none" stroke="#1F5FC9" stroke-width="2.3" stroke-linecap="round"/><path d="M46.4 9.9 A7.8 7.8 0 0 1 54.2 17.7" fill="none" stroke="#1F5FC9" stroke-width="2.3" stroke-linecap="round" opacity=".8"/></svg><span class="word">Uni<b>Sense</b></span></a>
     <nav class="foot-links" aria-label="Rodapé"><a href="#s1">Como funciona</a><a href="#niveis">Níveis</a><a href="#arquitetura">Arquitetura</a><a href="#roadmap">Roadmap</a><a href="https://github.com/Buehno/unisense-landing" target="_blank" rel="noopener">GitHub</a></nav>
     <a href="#top" class="mono" style="font-size:11.5px">Voltar ao topo</a>
     <div class="meta"><span>UniSense · Gestão operacional inteligente para o campus · Análise de requisitos por Igor Machado, novembro de 2026</span><span class="mono" style="font-size:11.5px">Mapa: © OpenStreetMap · sensores simulados</span></div>
