@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>UniSense — Inteligência que cuida do seu campus</title>
 <meta name="description" content="UniSense: sensores contam cada entrada nos banheiros do campus, abrem chamados no limite certo e mostram tudo em um mapa 3D do Campus Prof. Pedro C. Fornari, da UniAnchieta.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="UniSense — Inteligência que cuida do seu campus">
+<meta property="og:description" content="Sensores contam cada entrada nos banheiros do campus, abrem chamados no limite certo e mostram tudo em um mapa 3D.">
+<meta name="theme-color" content="#0A1430">
+<!--HREFLANG-->
 <link rel="icon" href="logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,7 +62,20 @@ main,header,footer{position:relative;z-index:1}
 .brand .word b{font-weight:600;color:var(--brand-2)}
 .brand span:not(.word){font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;border-left:1px solid var(--line);padding-left:12px}
 .nav-links{display:flex;gap:26px;font-size:14px;color:var(--muted)}
-.nav-links a{transition:color .15s;padding:10px 0}
+.nav-links a{transition:color .15s;padding:10px 0;position:relative}
+.nav-links a.cur::after{content:"";position:absolute;left:0;right:0;bottom:4px;height:1px;background:var(--ink)}
+section[id],.step{scroll-margin-top:var(--nav)}
+.skip{position:absolute;left:16px;top:-60px;z-index:100;background:var(--ink);color:#fff;padding:10px 14px;border-radius:6px;font-size:14px;transition:top .2s}
+.skip:focus{top:12px}
+.lang{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;font-family:var(--mono);font-size:11px;letter-spacing:.06em;background:var(--surface)}
+.lang a,.lang span{display:inline-flex;align-items:center;justify-content:center;min-width:38px;min-height:36px;padding:0 8px;color:var(--muted);transition:color .15s,background .15s}
+.lang a:hover{color:var(--ink);background:var(--surface-2)}
+.lang span{color:#fff;background:var(--ink)}
+.foot-links{display:flex;gap:20px;flex-wrap:wrap;font-size:13px}
+.foot-links a:hover{color:var(--ink)}
+.to-top{position:fixed;right:20px;bottom:20px;z-index:40;width:44px;height:44px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .25s,transform .25s}
+.to-top.on{opacity:1;transform:none;pointer-events:auto}
+.to-top svg{width:18px;height:18px}
 .nav-links a:hover,.nav-links a.cur{color:var(--ink)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:6px;font-size:14px;font-weight:500;transition:background .18s,transform .12s,border-color .18s}
 .btn:active{transform:scale(.98)}
@@ -315,7 +333,8 @@ kbd{font-family:var(--mono);font-size:11.5px;border:1px solid var(--line);border
 .cta .lead{margin:0 auto 32px}
 .cta .eyebrow::before{display:none}
 footer{border-top:1px solid var(--line);padding:36px 0;font-size:13px;color:var(--muted)}
-footer .wrap{display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center}
+footer .wrap{display:grid;grid-template-columns:auto 1fr auto;gap:16px 32px;align-items:center}
+footer .meta{grid-column:1/-1;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:18px;border-top:1px solid var(--line)}
 footer .brand .mark{width:32px;height:32px}
 footer .mono{font-size:11.5px}
 
@@ -399,6 +418,7 @@ footer .mono{font-size:11.5px}
 </script>
 </head>
 <body>
+<a class="skip" href="#problema">Pular para o conteúdo</a>
 <div class="ambient" aria-hidden="true"></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -426,7 +446,7 @@ footer .mono{font-size:11.5px}
   <div class="wrap">
     <a href="#top" class="brand" aria-label="UniSense, início"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#13306B"/><circle cx="32" cy="32" r="30.5" fill="none" stroke="#2F5FB8" stroke-width="1"/><text x="27" y="42.5" text-anchor="middle" font-family="Geist,Arial,sans-serif" font-weight="700" font-size="25" letter-spacing="-1.4" fill="#fff">US</text><path d="M40.6 24.2 L45.2 18.4" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round"/><circle cx="46" cy="17.4" r="2.1" fill="#7FB2FF"/><path d="M46 12.6 A4.8 4.8 0 0 1 50.8 17.4" fill="none" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round"/><path d="M46 8.8 A8.6 8.6 0 0 1 54.6 17.4" fill="none" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round" opacity=".7"/></svg><span class="word">Uni<b>Sense</b></span><span>Campus Prof. Pedro C. Fornari</span></a>
     <nav class="nav-links" id="navlinks" aria-label="Principal">
-      <a href="#problema">O problema</a>
+      <a href="#s1">Como funciona</a>
       <a href="#niveis">Níveis</a>
       <a href="#arquitetura">Arquitetura</a>
       <a href="#plataforma">Plataforma</a>
@@ -434,6 +454,7 @@ footer .mono{font-size:11.5px}
       <a href="#roadmap">Roadmap</a>
     </nav>
     <div style="display:flex;gap:8px;align-items:center">
+      <!--LANGSWITCH-->
       <a href="#contato" class="btn btn-primary">Falar com o projeto</a>
       <button class="menu-btn" id="menuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="navlinks"><svg><use href="#i-menu"/></svg></button>
     </div>
@@ -456,35 +477,35 @@ footer .mono{font-size:11.5px}
       <div class="scroll-cue"><span></span>Role para acompanhar um ciclo no mapa</div>
     </div>
 
-    <div class="step" data-step="1" id="s1">
+    <div class="step" data-step="1" id="s1" data-nav="#s1">
       <div class="k"><b>01</b><i></i>O sensor conta</div>
       <h2>Cada entrada vira um evento.</h2>
       <p>No Prédio 2, um sensor na porta do banheiro registra as entradas. Cada evento chega com data, horário e origem, e repetições do mesmo sensor são descartadas.</p>
       <div class="facts"><div><span>Conta</span><span>entradas, não ocupação</span></div><div><span>Registra</span><span>data, horário, sensor</span></div><div><span>Requisitos</span><span class="mono">RF021 · RF022 · RN014</span></div></div>
     </div>
 
-    <div class="step" data-step="2">
+    <div class="step" data-step="2" data-nav="#s1">
       <div class="k"><b>02</b><i></i>Nível 1 · 20 entradas</div>
       <h2>O mapa fica amarelo. Ainda ninguém precisa correr.</h2>
       <p>O ambiente se aproxima do limite de inspeção. O painel sinaliza em cor, ícone e texto, para que o estado seja claro mesmo para quem não distingue cores.</p>
       <div class="facts"><div><span>Estado</span><span><span class="badge b-warn"><svg><use href="#i-warn"/></svg>Atenção</span></span></div><div><span>Ação</span><span>apenas sinalização</span></div></div>
     </div>
 
-    <div class="step" data-step="3">
+    <div class="step" data-step="3" data-nav="#s1">
       <div class="k"><b>03</b><i></i>Nível 2 · 30 entradas</div>
       <h2>O chamado se abre sozinho e já sabe para quem vai.</h2>
       <p>O UniSense cria o chamado com o sensor e o evento de origem, e direciona para a equipe responsável pelo prédio. A contagem continua correndo.</p>
       <div class="facts"><div><span>Chamado</span><span class="mono">UNS-4127</span></div><div><span>Origem</span><span>sensor P2-2F, evento identificado</span></div><div><span>Destino</span><span>equipe responsável pelo Prédio 2</span></div></div>
     </div>
 
-    <div class="step" data-step="4">
+    <div class="step" data-step="4" data-nav="#s1">
       <div class="k"><b>04</b><i></i>Nível 3 · 45 entradas</div>
       <h2>Ninguém assumiu? A prioridade sobe.</h2>
       <p>O mesmo chamado é escalado e a pendência fica destacada. Nenhum chamado duplicado nasce no mesmo ciclo, e a mudança de prioridade fica registrada com data, hora e motivo.</p>
       <div class="facts"><div><span>Estado</span><span><span class="badge b-bad"><svg><use href="#i-up"/></svg>Prioridade elevada</span></span></div><div><span>Regra</span><span class="mono">RN007 · TC003</span></div></div>
     </div>
 
-    <div class="step" data-step="5">
+    <div class="step" data-step="5" data-nav="#s1">
       <div class="k"><b>05</b><i></i>Atendimento</div>
       <h2>A contagem só zera quando o checklist é validado.</h2>
       <p>O funcionário encontra o banheiro no mapa, assume o chamado e segue o checklist digital. Só depois da validação o ciclo recomeça.</p>
@@ -496,7 +517,7 @@ footer .mono{font-size:11.5px}
       </ul>
     </div>
 
-    <div class="step" data-step="6">
+    <div class="step" data-step="6" data-nav="#s1">
       <div class="k"><b>06</b><i></i>Visão do gestor</div>
       <h2>O campus inteiro, por onde ele mais precisa de cuidado.</h2>
       <p>Com todos os sensores ativos, o mapa mostra onde os chamados se concentram. As manchas azuis crescem nos prédios com mais chamados no período. Gire o mapa e passe o mouse nas colunas.</p>
@@ -824,7 +845,7 @@ footer .mono{font-size:11.5px}
     <h2 class="serif rv">Vamos levar o UniSense <em>para o campus</em>.</h2>
     <p class="lead rv">Começamos pela simulação de eventos no mapa real do Campus Prof. Pedro C. Fornari, sem hardware no primeiro dia.</p>
     <div class="hero-ctas rv" style="justify-content:center">
-      <a class="btn btn-primary" id="ctaMail" href="#contato">Falar com o projeto <svg><use href="#i-arrow"/></svg></a>
+      <a class="btn btn-primary" id="ctaMail" href="https://github.com/Buehno/unisense-landing" target="_blank" rel="noopener">Ver o projeto no GitHub <svg><use href="#i-arrow"/></svg></a>
       <a class="btn btn-ghost" href="#top">Rever o ciclo no mapa</a>
     </div>
   </div>
@@ -834,10 +855,12 @@ footer .mono{font-size:11.5px}
 <footer>
   <div class="wrap">
     <a href="#top" class="brand" aria-label="UniSense"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#13306B"/><circle cx="32" cy="32" r="30.5" fill="none" stroke="#2F5FB8" stroke-width="1"/><text x="27" y="42.5" text-anchor="middle" font-family="Geist,Arial,sans-serif" font-weight="700" font-size="25" letter-spacing="-1.4" fill="#fff">US</text><path d="M40.6 24.2 L45.2 18.4" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round"/><circle cx="46" cy="17.4" r="2.1" fill="#7FB2FF"/><path d="M46 12.6 A4.8 4.8 0 0 1 50.8 17.4" fill="none" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round"/><path d="M46 8.8 A8.6 8.6 0 0 1 54.6 17.4" fill="none" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round" opacity=".7"/></svg><span class="word">Uni<b>Sense</b></span></a>
-    <span>UniSense · Gestão operacional inteligente para o campus · Análise de requisitos por Igor Machado, novembro de 2026</span>
-    <span class="mono">Mapa: © OpenStreetMap · sensores simulados</span>
+    <nav class="foot-links" aria-label="Rodapé"><a href="#s1">Como funciona</a><a href="#niveis">Níveis</a><a href="#arquitetura">Arquitetura</a><a href="#roadmap">Roadmap</a><a href="https://github.com/Buehno/unisense-landing" target="_blank" rel="noopener">GitHub</a></nav>
+    <a href="#top" class="mono" style="font-size:11.5px">Voltar ao topo</a>
+    <div class="meta"><span>UniSense · Gestão operacional inteligente para o campus · Análise de requisitos por Igor Machado, novembro de 2026</span><span class="mono" style="font-size:11.5px">Mapa: © OpenStreetMap · sensores simulados</span></div>
   </div>
 </footer>
+<a href="#top" class="to-top" id="toTop" aria-label="Voltar ao topo"><svg><use href="#i-up"/></svg></a>
 
 <script>
 /* troque pelo e-mail do projeto */
@@ -867,12 +890,16 @@ window.UNISENSE_CONTACT = '';
 
   // nav current section
   const links=[...nl.querySelectorAll('a')];
-  const sio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('cur',a.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-45% 0px -50% 0px'});
+  const sio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const h=e.target.dataset.nav||'#'+e.target.id;links.forEach(a=>a.classList.toggle('cur',a.getAttribute('href')===h))}}),{rootMargin:'-45% 0px -50% 0px'});
   links.forEach(a=>{const s=document.querySelector(a.getAttribute('href'));if(s)sio.observe(s)});
+  document.querySelectorAll('[data-nav]').forEach(s=>sio.observe(s));
+  const hs=document.querySelector('.hero-step');new IntersectionObserver(es=>{if(es[0].isIntersecting)links.forEach(a=>a.classList.remove('cur'))},{rootMargin:'-45% 0px -50% 0px'}).observe(hs);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nl.classList.contains('open')){nl.classList.remove('open');mb.setAttribute('aria-expanded',false);mb.focus()}});
+  const tt=document.getElementById('toTop');const story=document.querySelector('.story');addEventListener('scroll',()=>tt.classList.toggle('on',story.getBoundingClientRect().bottom<0),{passive:true});
 
   // contact
   const c=window.UNISENSE_CONTACT,cta=document.getElementById('ctaMail');
-  if(c)cta.href='mailto:'+c+'?subject='+encodeURIComponent('Projeto UniSense');
+  if(c){cta.href='mailto:'+c+'?subject='+encodeURIComponent('Projeto UniSense');cta.firstChild.nodeValue='Falar com o projeto ';cta.removeAttribute('target');cta.removeAttribute('rel')}
 
   // level simulator
   const r=document.getElementById('simRange'),cnt=document.getElementById('simCount'),st=document.getElementById('simStatus');
@@ -936,7 +963,7 @@ const sensors=SPEC.map(([bn,label,code])=>{
   const off=[[-.22,-.18],[.22,.2],[-.18,.24],[.2,-.22]][(k-1)%4];
   const cand=[b.cx+off[0]*b.w,b.cz+off[1]*b.d];
   if(tot>1&&inside(cand,b.p)){x=cand[0];z=cand[1]}
-  const id=code||(bn.replace('Prédio ','P').replace('Prédio Administrativo','ADM').slice(0,3).toUpperCase().replace(' ','')+'-'+k);
+  const dg=bn.match(/\d/);const id=code||((dg?'P'+dg[0]:bn.normalize('NFD').replace(/[^A-Za-z]/g,'').slice(0,3).toUpperCase())+'-'+k);
   return {id,b,label,x,z,count:Math.floor(Math.random()*24),th:[20,30,45],online:true,buffer:0,offFor:0,ticket:null,level:'ok',rate:RATE[bn]||.6};
 }).filter(Boolean);
 const focus=sensors.find(s=>s.id==='P2-2F');focus.count=0;
@@ -1068,7 +1095,7 @@ if(renderer){
     }
     const hm=new THREE.Mesh(new THREE.CircleGeometry(1,56),new THREE.MeshBasicMaterial({color:0x3D8BFF,transparent:true,opacity:0,depthWrite:false,blending:THREE.AdditiveBlending}));
     hm.rotation.x=-Math.PI/2;hm.position.set(b.cx,.06,b.cz);hm.scale.setScalar(.01);scene.add(hm);b.heat=hm;
-    if(/^Prédio|Anfiteatro|Clínica/.test(b.n)){const el=document.createElement('div');el.className='blabel';el.textContent=b.n.replace('Prédio Administrativo','Administrativo');$('labels').appendChild(el);b.el=el}
+    if(['Prédio 1','Prédio 2','Prédio 3','Prédio 4','Prédio Administrativo','Anfiteatro','Clínica'].includes(b.n)){const el=document.createElement('div');el.className='blabel';el.textContent=b.n.replace('Prédio Administrativo','Administrativo');$('labels').appendChild(el);b.el=el}
   });
 
   // sensors

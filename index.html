@@ -1,10 +1,18 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>UniSense — Inteligência que cuida do seu campus</title>
-<meta name="description" content="UniSense: sensores contam cada entrada nos banheiros do campus, abrem chamados no limite certo e mostram tudo em um mapa 3D do Campus Prof. Pedro C. Fornari, da UniAnchieta.">
+<title>UniSense — Intelligence that takes care of your campus</title>
+<meta name="description" content="UniSense: sensors count every restroom entry on campus, open tickets at the right threshold and show it all on a 3D map of UniAnchieta's Prof. Pedro C. Fornari Campus.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="UniSense — Intelligence that takes care of your campus">
+<meta property="og:description" content="Sensors count every restroom entry on campus, open tickets at the right threshold and show it all on a 3D map.">
+<meta name="theme-color" content="#0A1430">
+<link rel="alternate" hreflang="en" href="https://buehno.github.io/unisense-landing/">
+<link rel="alternate" hreflang="pt-BR" href="https://buehno.github.io/unisense-landing/pt.html">
+<link rel="alternate" hreflang="x-default" href="https://buehno.github.io/unisense-landing/">
+<meta property="og:locale" content="en_US">
 <link rel="icon" href="logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,7 +65,20 @@ main,header,footer{position:relative;z-index:1}
 .brand .word b{font-weight:600;color:var(--brand-2)}
 .brand span:not(.word){font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;border-left:1px solid var(--line);padding-left:12px}
 .nav-links{display:flex;gap:26px;font-size:14px;color:var(--muted)}
-.nav-links a{transition:color .15s;padding:10px 0}
+.nav-links a{transition:color .15s;padding:10px 0;position:relative}
+.nav-links a.cur::after{content:"";position:absolute;left:0;right:0;bottom:4px;height:1px;background:var(--ink)}
+section[id],.step{scroll-margin-top:var(--nav)}
+.skip{position:absolute;left:16px;top:-60px;z-index:100;background:var(--ink);color:#fff;padding:10px 14px;border-radius:6px;font-size:14px;transition:top .2s}
+.skip:focus{top:12px}
+.lang{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;font-family:var(--mono);font-size:11px;letter-spacing:.06em;background:var(--surface)}
+.lang a,.lang span{display:inline-flex;align-items:center;justify-content:center;min-width:38px;min-height:36px;padding:0 8px;color:var(--muted);transition:color .15s,background .15s}
+.lang a:hover{color:var(--ink);background:var(--surface-2)}
+.lang span{color:#fff;background:var(--ink)}
+.foot-links{display:flex;gap:20px;flex-wrap:wrap;font-size:13px}
+.foot-links a:hover{color:var(--ink)}
+.to-top{position:fixed;right:20px;bottom:20px;z-index:40;width:44px;height:44px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .25s,transform .25s}
+.to-top.on{opacity:1;transform:none;pointer-events:auto}
+.to-top svg{width:18px;height:18px}
 .nav-links a:hover,.nav-links a.cur{color:var(--ink)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:6px;font-size:14px;font-weight:500;transition:background .18s,transform .12s,border-color .18s}
 .btn:active{transform:scale(.98)}
@@ -315,7 +336,8 @@ kbd{font-family:var(--mono);font-size:11.5px;border:1px solid var(--line);border
 .cta .lead{margin:0 auto 32px}
 .cta .eyebrow::before{display:none}
 footer{border-top:1px solid var(--line);padding:36px 0;font-size:13px;color:var(--muted)}
-footer .wrap{display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center}
+footer .wrap{display:grid;grid-template-columns:auto 1fr auto;gap:16px 32px;align-items:center}
+footer .meta{grid-column:1/-1;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:18px;border-top:1px solid var(--line)}
 footer .brand .mark{width:32px;height:32px}
 footer .mono{font-size:11.5px}
 
@@ -399,6 +421,7 @@ footer .mono{font-size:11.5px}
 </script>
 </head>
 <body>
+<a class="skip" href="#problema">Skip to content</a>
 <div class="ambient" aria-hidden="true"></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -424,134 +447,135 @@ footer .mono{font-size:11.5px}
 
 <header class="nav" id="nav">
   <div class="wrap">
-    <a href="#top" class="brand" aria-label="UniSense, início"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#13306B"/><circle cx="32" cy="32" r="30.5" fill="none" stroke="#2F5FB8" stroke-width="1"/><text x="27" y="42.5" text-anchor="middle" font-family="Geist,Arial,sans-serif" font-weight="700" font-size="25" letter-spacing="-1.4" fill="#fff">US</text><path d="M40.6 24.2 L45.2 18.4" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round"/><circle cx="46" cy="17.4" r="2.1" fill="#7FB2FF"/><path d="M46 12.6 A4.8 4.8 0 0 1 50.8 17.4" fill="none" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round"/><path d="M46 8.8 A8.6 8.6 0 0 1 54.6 17.4" fill="none" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round" opacity=".7"/></svg><span class="word">Uni<b>Sense</b></span><span>Campus Prof. Pedro C. Fornari</span></a>
-    <nav class="nav-links" id="navlinks" aria-label="Principal">
-      <a href="#problema">O problema</a>
-      <a href="#niveis">Níveis</a>
-      <a href="#arquitetura">Arquitetura</a>
-      <a href="#plataforma">Plataforma</a>
-      <a href="#jornadas">Jornadas</a>
+    <a href="#top" class="brand" aria-label="UniSense, home"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#13306B"/><circle cx="32" cy="32" r="30.5" fill="none" stroke="#2F5FB8" stroke-width="1"/><text x="27" y="42.5" text-anchor="middle" font-family="Geist,Arial,sans-serif" font-weight="700" font-size="25" letter-spacing="-1.4" fill="#fff">US</text><path d="M40.6 24.2 L45.2 18.4" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round"/><circle cx="46" cy="17.4" r="2.1" fill="#7FB2FF"/><path d="M46 12.6 A4.8 4.8 0 0 1 50.8 17.4" fill="none" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round"/><path d="M46 8.8 A8.6 8.6 0 0 1 54.6 17.4" fill="none" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round" opacity=".7"/></svg><span class="word">Uni<b>Sense</b></span><span>Campus Prof. Pedro C. Fornari</span></a>
+    <nav class="nav-links" id="navlinks" aria-label="Main">
+      <a href="#s1">How it works</a>
+      <a href="#niveis">Levels</a>
+      <a href="#arquitetura">Architecture</a>
+      <a href="#plataforma">Platform</a>
+      <a href="#jornadas">Journeys</a>
       <a href="#roadmap">Roadmap</a>
     </nav>
     <div style="display:flex;gap:8px;align-items:center">
-      <a href="#contato" class="btn btn-primary">Falar com o projeto</a>
-      <button class="menu-btn" id="menuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="navlinks"><svg><use href="#i-menu"/></svg></button>
+      <div class="lang" role="group" aria-label="Language"><span aria-current="true">EN</span><a href="pt.html" hreflang="pt-BR" lang="pt-BR" aria-label="Ver em português">PT</a></div>
+      <a href="#contato" class="btn btn-primary">Get in touch</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navlinks"><svg><use href="#i-menu"/></svg></button>
     </div>
   </div>
 </header>
 
 <main id="top">
 <!-- ===================== STORY ===================== -->
-<section class="story" aria-label="Apresentação do UniSense no mapa do campus">
+<section class="story" aria-label="UniSense walkthrough on the campus map">
   <div class="steps">
     <div class="step hero-step" data-step="0">
-      <span class="live-pill"><i></i>Projeto UniSense · 2026</span>
-      <h1>O campus avisa <em>antes</em> de alguém precisar reclamar.</h1>
-      <p class="sub">Sensores contam cada entrada nos banheiros. No limite certo, o UniSense abre o chamado, envia para a equipe responsável e mostra tudo em um mapa 3D do campus.</p>
+      <span class="live-pill"><i></i>UniSense project · 2026</span>
+      <h1>The campus speaks up <em>before</em> anyone has to complain.</h1>
+      <p class="sub">Sensors count every restroom entry. At the right threshold, UniSense opens a ticket, sends it to the responsible team and shows everything on a 3D map of the campus.</p>
       <div class="hero-ctas">
-        <a href="#s1" class="btn btn-primary">Ver como funciona <svg><use href="#i-arrow"/></svg></a>
-        <a href="#arquitetura" class="btn btn-ghost">Arquitetura do sistema</a>
+        <a href="#s1" class="btn btn-primary">See how it works <svg><use href="#i-arrow"/></svg></a>
+        <a href="#arquitetura" class="btn btn-ghost">System architecture</a>
       </div>
-      <div class="hero-meta"><div><b>20</b><span>atenção</span></div><div><b>30</b><span>chamado</span></div><div><b>45</b><span>prioridade</span></div></div>
-      <div class="scroll-cue"><span></span>Role para acompanhar um ciclo no mapa</div>
+      <div class="hero-meta"><div><b>20</b><span>attention</span></div><div><b>30</b><span>ticket</span></div><div><b>45</b><span>priority</span></div></div>
+      <div class="scroll-cue"><span></span>Scroll to follow one cycle on the map</div>
     </div>
 
-    <div class="step" data-step="1" id="s1">
-      <div class="k"><b>01</b><i></i>O sensor conta</div>
-      <h2>Cada entrada vira um evento.</h2>
-      <p>No Prédio 2, um sensor na porta do banheiro registra as entradas. Cada evento chega com data, horário e origem, e repetições do mesmo sensor são descartadas.</p>
-      <div class="facts"><div><span>Conta</span><span>entradas, não ocupação</span></div><div><span>Registra</span><span>data, horário, sensor</span></div><div><span>Requisitos</span><span class="mono">RF021 · RF022 · RN014</span></div></div>
+    <div class="step" data-step="1" id="s1" data-nav="#s1">
+      <div class="k"><b>01</b><i></i>The sensor counts</div>
+      <h2>Every entry becomes an event.</h2>
+      <p>In Building 2, a sensor at the restroom door records every entry. Each event arrives with date, time and source, and repeats from the same sensor are discarded.</p>
+      <div class="facts"><div><span>Counts</span><span>entries, not occupancy</span></div><div><span>Logs</span><span>date, time, sensor</span></div><div><span>Requirements</span><span class="mono">RF021 · RF022 · RN014</span></div></div>
     </div>
 
-    <div class="step" data-step="2">
-      <div class="k"><b>02</b><i></i>Nível 1 · 20 entradas</div>
-      <h2>O mapa fica amarelo. Ainda ninguém precisa correr.</h2>
-      <p>O ambiente se aproxima do limite de inspeção. O painel sinaliza em cor, ícone e texto, para que o estado seja claro mesmo para quem não distingue cores.</p>
-      <div class="facts"><div><span>Estado</span><span><span class="badge b-warn"><svg><use href="#i-warn"/></svg>Atenção</span></span></div><div><span>Ação</span><span>apenas sinalização</span></div></div>
+    <div class="step" data-step="2" data-nav="#s1">
+      <div class="k"><b>02</b><i></i>Level 1 · 20 entries</div>
+      <h2>The map turns yellow. Nobody needs to rush yet.</h2>
+      <p>The restroom is nearing its inspection threshold. The dashboard flags it with color, icon and text, so the status is clear even for people who cannot tell colors apart.</p>
+      <div class="facts"><div><span>Status</span><span><span class="badge b-warn"><svg><use href="#i-warn"/></svg>Attention</span></span></div><div><span>Action</span><span>flag only</span></div></div>
     </div>
 
-    <div class="step" data-step="3">
-      <div class="k"><b>03</b><i></i>Nível 2 · 30 entradas</div>
-      <h2>O chamado se abre sozinho e já sabe para quem vai.</h2>
-      <p>O UniSense cria o chamado com o sensor e o evento de origem, e direciona para a equipe responsável pelo prédio. A contagem continua correndo.</p>
-      <div class="facts"><div><span>Chamado</span><span class="mono">UNS-4127</span></div><div><span>Origem</span><span>sensor P2-2F, evento identificado</span></div><div><span>Destino</span><span>equipe responsável pelo Prédio 2</span></div></div>
+    <div class="step" data-step="3" data-nav="#s1">
+      <div class="k"><b>03</b><i></i>Level 2 · 30 entries</div>
+      <h2>The ticket opens itself and already knows where to go.</h2>
+      <p>UniSense creates the ticket with its source sensor and event, and routes it to the team responsible for the building. The count keeps running.</p>
+      <div class="facts"><div><span>Ticket</span><span class="mono">UNS-4127</span></div><div><span>Source</span><span>sensor P2-2F, event identified</span></div><div><span>Routed to</span><span>team responsible for Building 2</span></div></div>
     </div>
 
-    <div class="step" data-step="4">
-      <div class="k"><b>04</b><i></i>Nível 3 · 45 entradas</div>
-      <h2>Ninguém assumiu? A prioridade sobe.</h2>
-      <p>O mesmo chamado é escalado e a pendência fica destacada. Nenhum chamado duplicado nasce no mesmo ciclo, e a mudança de prioridade fica registrada com data, hora e motivo.</p>
-      <div class="facts"><div><span>Estado</span><span><span class="badge b-bad"><svg><use href="#i-up"/></svg>Prioridade elevada</span></span></div><div><span>Regra</span><span class="mono">RN007 · TC003</span></div></div>
+    <div class="step" data-step="4" data-nav="#s1">
+      <div class="k"><b>04</b><i></i>Level 3 · 45 entries</div>
+      <h2>Nobody picked it up? Priority goes up.</h2>
+      <p>The same ticket is escalated and the backlog is highlighted. No duplicate ticket is created in the same cycle, and the priority change is logged with date, time and reason.</p>
+      <div class="facts"><div><span>Status</span><span><span class="badge b-bad"><svg><use href="#i-up"/></svg>High priority</span></span></div><div><span>Rule</span><span class="mono">RN007 · TC003</span></div></div>
     </div>
 
-    <div class="step" data-step="5">
-      <div class="k"><b>05</b><i></i>Atendimento</div>
-      <h2>A contagem só zera quando o checklist é validado.</h2>
-      <p>O funcionário encontra o banheiro no mapa, assume o chamado e segue o checklist digital. Só depois da validação o ciclo recomeça.</p>
+    <div class="step" data-step="5" data-nav="#s1">
+      <div class="k"><b>05</b><i></i>Service</div>
+      <h2>The count only resets once the checklist is approved.</h2>
+      <p>The cleaner finds the restroom on the map, takes the ticket and follows the digital checklist. The cycle only restarts after approval.</p>
       <ul class="mini-check" id="storyCheck">
-        <li><span class="bx"><svg><use href="#i-ok"/></svg></span>Piso, bancadas e vasos</li>
-        <li><span class="bx"><svg><use href="#i-ok"/></svg></span>Papel higiênico e papel toalha</li>
-        <li><span class="bx"><svg><use href="#i-ok"/></svg></span>Sabonete e álcool em gel</li>
-        <li><span class="bx"><svg><use href="#i-ok"/></svg></span>Validação do supervisor</li>
+        <li><span class="bx"><svg><use href="#i-ok"/></svg></span>Floors, counters and toilets</li>
+        <li><span class="bx"><svg><use href="#i-ok"/></svg></span>Toilet paper and paper towels</li>
+        <li><span class="bx"><svg><use href="#i-ok"/></svg></span>Soap and hand sanitizer</li>
+        <li><span class="bx"><svg><use href="#i-ok"/></svg></span>Supervisor approval</li>
       </ul>
     </div>
 
-    <div class="step" data-step="6">
-      <div class="k"><b>06</b><i></i>Visão do gestor</div>
-      <h2>O campus inteiro, por onde ele mais precisa de cuidado.</h2>
-      <p>Com todos os sensores ativos, o mapa mostra onde os chamados se concentram. As manchas azuis crescem nos prédios com mais chamados no período. Gire o mapa e passe o mouse nas colunas.</p>
-      <div class="facts"><div><span>Mostra</span><span>status, chamados, prioridade</span></div><div><span>Atualiza</span><span>sem recarregar a página</span></div><div><span>Requisitos</span><span class="mono">RF061 · RF062 · RF063</span></div></div>
+    <div class="step" data-step="6" data-nav="#s1">
+      <div class="k"><b>06</b><i></i>Manager’s view</div>
+      <h2>The whole campus, by where it needs care the most.</h2>
+      <p>With every sensor live, the map shows where tickets pile up. The blue halos grow over the buildings with the most tickets in the period. Rotate the map and hover over the columns.</p>
+      <div class="facts"><div><span>Shows</span><span>status, tickets, priority</span></div><div><span>Updates</span><span>without reloading the page</span></div><div><span>Requirements</span><span class="mono">RF061 · RF062 · RF063</span></div></div>
     </div>
   </div>
 
   <div class="sticky" id="stage">
     <div class="scan" aria-hidden="true"></div>
-    <canvas id="gl" role="img" aria-label="Mapa 3D do Campus Prof. Pedro C. Fornari, da UniAnchieta, com sensores nos banheiros. O texto ao lado descreve cada etapa."></canvas>
+    <canvas id="gl" role="img" aria-label="3D map of UniAnchieta's Prof. Pedro C. Fornari Campus with restroom sensors. The text alongside describes each step."></canvas>
     <div id="labels"></div>
     <div class="callout" id="callout" aria-hidden="true">
-      <div class="t" id="coT">Prédio 2 · 2º andar</div>
-      <div class="s" id="coS">Banheiro feminino · sensor P2-2F</div>
+      <div class="t" id="coT">Building 2 · 2nd floor</div>
+      <div class="s" id="coS">Women’s restroom · sensor P2-2F</div>
       <span id="coB"></span>
-      <div class="cnt"><b id="coN">0</b><span>entradas no ciclo</span></div>
+      <div class="cnt"><b id="coN">0</b><span>entries this cycle</span></div>
       <div class="meter"><span id="coM" style="width:0"></span><i style="left:40%"></i><i style="left:60%"></i><i style="left:90%"></i></div>
       <div class="tk" id="coK"></div>
     </div>
     <div class="tip" id="tip"></div>
     <div class="hud-top">
-      <div class="place"><b>UniAnchieta · Campus Prof. Pedro C. Fornari</b>Jundiaí · SP · contornos reais dos prédios</div>
-      <div class="chips"><span class="chip" id="clock">--:--:--</span><span class="chip"><span id="cSens">0</span> <em>sensores</em></span><span class="chip"><span id="cOpen">0</span> <em>chamados</em></span></div>
+      <div class="place"><b>UniAnchieta · Prof. Pedro C. Fornari Campus</b>Jundiaí · Brazil · real building footprints</div>
+      <div class="chips"><span class="chip" id="clock">--:--:--</span><span class="chip"><span id="cSens">0</span> <em>sensors</em></span><span class="chip"><span id="cOpen">0</span> <em>tickets</em></span></div>
     </div>
     <div class="hud-bottom">
       <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
-        <div class="legend-mini" aria-label="Legenda">
-          <span><svg style="color:var(--ok)"><use href="#i-ok"/></svg>Monitorado</span>
-          <span><svg style="color:var(--warn)"><use href="#i-warn"/></svg>Nível 1 · Atenção</span>
-          <span><svg style="color:var(--bad)"><use href="#i-ticket"/></svg>Nível 2 · Chamado</span>
-          <span><svg style="color:var(--bad)"><use href="#i-up"/></svg>Nível 3 · Prioridade</span>
-          <span><svg style="color:var(--off)"><use href="#i-off"/></svg>Sem comunicação</span>
+        <div class="legend-mini" aria-label="Legend">
+          <span><svg style="color:var(--ok)"><use href="#i-ok"/></svg>Monitored</span>
+          <span><svg style="color:var(--warn)"><use href="#i-warn"/></svg>Level 1 · Attention</span>
+          <span><svg style="color:var(--bad)"><use href="#i-ticket"/></svg>Level 2 · Ticket</span>
+          <span><svg style="color:var(--bad)"><use href="#i-up"/></svg>Level 3 · Priority</span>
+          <span><svg style="color:var(--off)"><use href="#i-off"/></svg>Offline</span>
         </div>
-        <div class="attr">Prédios © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> · sensores simulados</div>
+        <div class="attr">Buildings © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> · simulated sensors</div>
       </div>
-      <div class="progress" id="prog" aria-label="Etapas"></div>
+      <div class="progress" id="prog" aria-label="Steps"></div>
     </div>
-    <div class="nogl" id="nogl">O navegador não ativou WebGL. As etapas ao lado descrevem o mesmo ciclo.</div>
+    <div class="nogl" id="nogl">Your browser did not enable WebGL. The steps alongside describe the same cycle.</div>
   </div>
 </section>
 
 <!-- ===================== PROBLEMA ===================== -->
 <section class="sec rule" id="problema">
   <div class="narrow">
-    <span class="eyebrow rv">O problema</span>
-    <h2 class="serif rv">A limpeza segue o relógio. <em>O uso, não.</em></h2>
-    <p class="lead rv">Banheiro de prédio com aula lotada e banheiro de corredor vazio recebem a mesma escala. A diferença só aparece quando alguém reclama.</p>
+    <span class="eyebrow rv">The problem</span>
+    <h2 class="serif rv">Cleaning follows the clock. <em>Usage does not.</em></h2>
+    <p class="lead rv">A restroom next to a packed lecture hall and one in an empty hallway get the same schedule. The difference only shows up when someone complains.</p>
     <div class="problem">
-      <article class="rv" style="--i:0"><div class="n">01</div><h3>A escala não sabe do intervalo</h3><p>Horários fixos não acompanham troca de turno, evento no anfiteatro ou dia de prova.</p></article>
-      <article class="rv" style="--i:1"><div class="n">02</div><h3>Quem avisa é quem reclama</h3><p>Falta de papel ou sabonete costuma ser descoberta pelo aluno, não pela equipe.</p></article>
-      <article class="rv" style="--i:2"><div class="n">03</div><h3>Sem registro, sem melhoria</h3><p>Sem histórico, ninguém sabe quanto tempo levou, quem atendeu ou o que foi reposto.</p></article>
+      <article class="rv" style="--i:0"><div class="n">01</div><h3>The schedule does not know about breaks</h3><p>Fixed schedules ignore shift changes, events in the amphitheater and exam days.</p></article>
+      <article class="rv" style="--i:1"><div class="n">02</div><h3>Whoever notices is whoever complains</h3><p>Running out of paper or soap is usually discovered by a student, not by the team.</p></article>
+      <article class="rv" style="--i:2"><div class="n">03</div><h3>No records, no improvement</h3><p>Without history, nobody knows how long it took, who handled it or what was restocked.</p></article>
     </div>
     <div class="quote rv">
-      <span class="eyebrow">Objetivo do sistema</span>
-      <blockquote>Quando o uso chega ao nível programado, a equipe recebe o alerta para inspecionar, limpar e repor, e tudo fica registrado.</blockquote>
+      <span class="eyebrow">System goal</span>
+      <blockquote>When usage reaches the configured level, the team gets an alert to inspect, clean and restock, and everything is logged.</blockquote>
     </div>
   </div>
 </section>
@@ -559,30 +583,30 @@ footer .mono{font-size:11.5px}
 <!-- ===================== NÍVEIS ===================== -->
 <section class="sec rule" id="niveis">
   <div class="narrow">
-    <span class="eyebrow rv">Regras de monitoramento</span>
-    <h2 class="serif rv">Três limites. <em>Nenhum chamado duplicado.</em></h2>
-    <p class="lead rv">Cada banheiro tem limites próprios, ajustados pelo administrador conforme o uso real. Abaixo, os valores padrão definidos no projeto.</p>
+    <span class="eyebrow rv">Monitoring rules</span>
+    <h2 class="serif rv">Three thresholds. <em>Zero duplicate tickets.</em></h2>
+    <p class="lead rv">Each restroom has its own thresholds, tuned by the administrator to real usage. Below are the project defaults.</p>
     <div class="levels-grid">
-      <article class="lvl rv" data-lvl="0" style="--i:0"><span class="badge b-ok"><svg><use href="#i-ok"/></svg>Verde</span><div class="num">0<small>a 19</small></div><h3>Monitorado</h3><p>Ambiente com sensor ativo e sem alerta pendente.</p></article>
-      <article class="lvl rv" data-lvl="1" style="--i:1"><span class="badge b-warn"><svg><use href="#i-warn"/></svg>Nível 1</span><div class="num">20<small>acessos</small></div><h3>Atenção</h3><p>Aproximando do limite de inspeção. Só sinaliza.</p></article>
-      <article class="lvl rv" data-lvl="2" style="--i:2"><span class="badge b-bad"><svg><use href="#i-ticket"/></svg>Nível 2</span><div class="num">30<small>acessos</small></div><h3>Inspeção</h3><p>Chamado aberto automaticamente para a equipe responsável.</p></article>
-      <article class="lvl rv" data-lvl="3" style="--i:3"><span class="badge b-bad"><svg><use href="#i-up"/></svg>Nível 3</span><div class="num">45<small>acessos</small></div><h3>Prioridade</h3><p>Se ninguém assumiu, o mesmo chamado sobe de prioridade.</p></article>
+      <article class="lvl rv" data-lvl="0" style="--i:0"><span class="badge b-ok"><svg><use href="#i-ok"/></svg>Green</span><div class="num">0<small>to 19</small></div><h3>Monitored</h3><p>Sensor online and no pending alert.</p></article>
+      <article class="lvl rv" data-lvl="1" style="--i:1"><span class="badge b-warn"><svg><use href="#i-warn"/></svg>Level 1</span><div class="num">20<small>entries</small></div><h3>Attention</h3><p>Nearing the inspection threshold. Flag only.</p></article>
+      <article class="lvl rv" data-lvl="2" style="--i:2"><span class="badge b-bad"><svg><use href="#i-ticket"/></svg>Level 2</span><div class="num">30<small>entries</small></div><h3>Inspection</h3><p>Ticket opened automatically for the responsible team.</p></article>
+      <article class="lvl rv" data-lvl="3" style="--i:3"><span class="badge b-bad"><svg><use href="#i-up"/></svg>Level 3</span><div class="num">45<small>entries</small></div><h3>Priority</h3><p>If nobody picked it up, the same ticket is escalated.</p></article>
     </div>
     <div class="sim-box rv">
-      <div class="counter" id="simCount">0<small>entradas no ciclo</small></div>
+      <div class="counter" id="simCount">0<small>entries this cycle</small></div>
       <div>
         <div class="track">
           <div class="marks" aria-hidden="true"><span style="left:40%">20</span><span style="left:60%">30</span><span style="left:90%">45</span></div>
-          <label for="simRange" class="sr">Simular quantidade de entradas</label>
+          <label for="simRange" class="sr">Simulate number of entries</label>
           <input type="range" id="simRange" min="0" max="50" value="0" aria-describedby="simStatus">
         </div>
         <div class="sim-status" id="simStatus" aria-live="polite"></div>
         <div class="sim-actions">
-          <button class="btn btn-ghost" id="simPlus">+1 entrada</button>
-          <button class="btn btn-ghost" id="simPlus5">+5 entradas</button>
-          <button class="btn btn-primary" id="simDone">Concluir checklist</button>
+          <button class="btn btn-ghost" id="simPlus">+1 entry</button>
+          <button class="btn btn-ghost" id="simPlus5">+5 entries</button>
+          <button class="btn btn-primary" id="simDone">Complete checklist</button>
         </div>
-        <p class="note"><svg><use href="#i-info"/></svg>Teste a regra: abrir o chamado não zera a contagem. Ela só reinicia depois do checklist concluído e validado.</p>
+        <p class="note"><svg><use href="#i-info"/></svg>Try the rule: opening a ticket does not reset the count. It only restarts after the checklist is completed and approved.</p>
       </div>
     </div>
   </div>
@@ -591,18 +615,18 @@ footer .mono{font-size:11.5px}
 <!-- ===================== NÚMEROS ===================== -->
 <section class="sec rule dotgrid">
   <div class="narrow">
-    <span class="eyebrow rv">Escopo do projeto</span>
-    <h2 class="serif rv">Um sistema pensado <em>ponta a ponta</em>.</h2>
-    <p class="lead rv">O levantamento de requisitos cobre do sensor ao relatório, com regras de negócio, governança e transparência documentadas.</p>
+    <span class="eyebrow rv">Project scope</span>
+    <h2 class="serif rv">A system designed <em>end to end</em>.</h2>
+    <p class="lead rv">The requirements cover everything from sensor to report, with documented business rules, governance and transparency.</p>
     <div class="nums rv">
-      <div><b data-n="68">0</b><span>Requisitos funcionais</span><small>RF001 a RF068</small></div>
-      <div><b data-n="39">0</b><span>Requisitos não funcionais</span><small>desempenho, segurança, resiliência</small></div>
-      <div><b data-n="15">0</b><span>Regras de negócio</span><small>RN001 a RN015</small></div>
-      <div><b data-n="20">0</b><span>Diretrizes de governança e transparência</span><small>GOV001 a GOV010 · TC001 a TC010</small></div>
-      <div><b data-n="5">0</b><span>Perfis de acesso</span><small>do administrador ao solicitante</small></div>
-      <div><b data-n="4">0</b><span>Jornadas de usuário</span><small>automática, solicitante, limpeza, gestor</small></div>
-      <div><b data-n="7">0</b><span>Fases de entrega</span><small>desenvolvimento incremental</small></div>
-      <div><b data-n="8">0</b><span>Atributos de qualidade</span><small>ISO/IEC 25010</small></div>
+      <div><b data-n="68">0</b><span>Functional requirements</span><small>RF001 to RF068</small></div>
+      <div><b data-n="39">0</b><span>Non-functional requirements</span><small>performance, security, resilience</small></div>
+      <div><b data-n="15">0</b><span>Business rules</span><small>RN001 to RN015</small></div>
+      <div><b data-n="20">0</b><span>Governance and transparency guidelines</span><small>GOV001 to GOV010 · TC001 to TC010</small></div>
+      <div><b data-n="5">0</b><span>Access roles</span><small>from administrator to requester</small></div>
+      <div><b data-n="4">0</b><span>User journeys</span><small>automated, requester, cleaning, manager</small></div>
+      <div><b data-n="7">0</b><span>Delivery phases</span><small>incremental development</small></div>
+      <div><b data-n="8">0</b><span>Quality attributes</span><small>ISO/IEC 25010</small></div>
     </div>
   </div>
 </section>
@@ -610,21 +634,21 @@ footer .mono{font-size:11.5px}
 <!-- ===================== ARQUITETURA ===================== -->
 <section class="sec rule" id="arquitetura">
   <div class="narrow">
-    <span class="eyebrow rv">Arquitetura conceitual</span>
-    <h2 class="serif rv">Orientado a eventos, <em>modular por natureza</em>.</h2>
-    <p class="lead rv">Cada módulo tem responsabilidade própria e conversa com os outros por interfaces padronizadas. Dá para desenvolver, testar e evoluir cada um separadamente.</p>
+    <span class="eyebrow rv">Conceptual architecture</span>
+    <h2 class="serif rv">Event-driven, <em>modular by design</em>.</h2>
+    <p class="lead rv">Each module owns one responsibility and talks to the others through standard interfaces, so each can be built, tested and evolved on its own.</p>
     <div class="arch">
-      <div class="node rv" style="--i:0"><span class="pk"></span><div class="dot"><svg><use href="#i-wave"/></svg></div><span class="k">01 · IOT</span><h3>Sensores</h3><ul><li>Contagem de entradas</li><li>Buffer local offline</li><li>Detecção de falha</li></ul></div>
-      <div class="node rv" style="--i:1"><span class="pk"></span><div class="dot"><svg><use href="#i-flow"/></svg></div><span class="k">02 · INGESTÃO</span><h3>Eventos</h3><ul><li>Data, hora e origem</li><li>Sem duplicidade</li><li>Reprocessamento</li></ul></div>
-      <div class="node rv" style="--i:2"><span class="pk"></span><div class="dot"><svg><use href="#i-warn"/></svg></div><span class="k">03 · REGRAS</span><h3>Níveis</h3><ul><li>Limites por banheiro</li><li>Atenção, chamado, prioridade</li><li>Ciclo de contagem</li></ul></div>
-      <div class="node rv" style="--i:3"><span class="pk"></span><div class="dot"><svg><use href="#i-ticket"/></svg></div><span class="k">04 · CHAMADOS</span><h3>Atendimento</h3><ul><li>Automáticos e manuais</li><li>Roteamento por equipe</li><li>Estados e histórico</li></ul></div>
-      <div class="node rv" style="--i:4"><span class="pk"></span><div class="dot"><svg><use href="#i-team"/></svg></div><span class="k">05 · OPERAÇÃO</span><h3>Equipes</h3><ul><li>Checklist digital</li><li>Insumos e estoque</li><li>Equipamentos</li></ul></div>
-      <div class="node rv" style="--i:5"><span class="pk"></span><div class="dot"><svg><use href="#i-cube"/></svg></div><span class="k">06 · VISÃO</span><h3>Painel 3D</h3><ul><li>Mapa do campus</li><li>Indicadores</li><li>Relatórios</li></ul></div>
+      <div class="node rv" style="--i:0"><span class="pk"></span><div class="dot"><svg><use href="#i-wave"/></svg></div><span class="k">01 · IOT</span><h3>Sensors</h3><ul><li>Entry counting</li><li>Offline local buffer</li><li>Failure detection</li></ul></div>
+      <div class="node rv" style="--i:1"><span class="pk"></span><div class="dot"><svg><use href="#i-flow"/></svg></div><span class="k">02 · INGESTION</span><h3>Events</h3><ul><li>Date, time and source</li><li>Deduplicated</li><li>Reprocessing</li></ul></div>
+      <div class="node rv" style="--i:2"><span class="pk"></span><div class="dot"><svg><use href="#i-warn"/></svg></div><span class="k">03 · RULES</span><h3>Levels</h3><ul><li>Per-restroom thresholds</li><li>Attention, ticket, priority</li><li>Counting cycle</li></ul></div>
+      <div class="node rv" style="--i:3"><span class="pk"></span><div class="dot"><svg><use href="#i-ticket"/></svg></div><span class="k">04 · TICKETS</span><h3>Service</h3><ul><li>Automatic and manual</li><li>Team routing</li><li>Status and history</li></ul></div>
+      <div class="node rv" style="--i:4"><span class="pk"></span><div class="dot"><svg><use href="#i-team"/></svg></div><span class="k">05 · OPERATIONS</span><h3>Teams</h3><ul><li>Digital checklist</li><li>Supplies and stock</li><li>Equipment</li></ul></div>
+      <div class="node rv" style="--i:5"><span class="pk"></span><div class="dot"><svg><use href="#i-cube"/></svg></div><span class="k">06 · VIEW</span><h3>3D dashboard</h3><ul><li>Campus map</li><li>Indicators</li><li>Reports</li></ul></div>
     </div>
     <div class="cross">
-      <div class="rv" style="--i:0"><b>Identidade e permissões</b>Login, recuperação de senha, cinco perfis e senhas com hash seguro.</div>
-      <div class="rv" style="--i:1"><b>Auditoria e LGPD</b>Histórico de ações, trilha de alterações e dados pessoais tratados conforme a LGPD.</div>
-      <div class="rv" style="--i:2"><b>Resiliência de dados</b>Backup automático, recuperação após falha e integridade dos registros.</div>
+      <div class="rv" style="--i:0"><b>Identity and permissions</b>Login, password recovery, five roles and securely hashed passwords.</div>
+      <div class="rv" style="--i:1"><b>Audit and privacy</b>Action history, change trail and personal data handled under Brazil's LGPD privacy law.</div>
+      <div class="rv" style="--i:2"><b>Data resilience</b>Automatic backups, recovery after failures and record integrity.</div>
     </div>
   </div>
 </section>
@@ -632,65 +656,65 @@ footer .mono{font-size:11.5px}
 <!-- ===================== PLATAFORMA ===================== -->
 <section class="sec rule" id="plataforma">
   <div class="narrow">
-    <span class="eyebrow rv">Plataforma</span>
-    <h2 class="serif rv">Sensores, pessoas, insumos e chamados <em>no mesmo lugar</em>.</h2>
+    <span class="eyebrow rv">Platform</span>
+    <h2 class="serif rv">Sensors, people, supplies and tickets <em>in one place</em>.</h2>
     <div class="bento">
       <article class="card c-4 rv" style="--i:0">
-        <span class="rf">RF029 a RF040</span>
+        <span class="rf">RF029 to RF040</span>
         <div class="ico" style="background:var(--bad-bg);color:var(--bad)"><svg><use href="#i-ticket"/></svg></div>
-        <h3>Chamados automáticos e manuais</h3>
-        <p>Abertos pelos sensores ou por quem encontrou um problema. Todo chamado tem equipe responsável, histórico e estado atual, e pode ser reaberto se o problema voltar.</p>
+        <h3>Automatic and manual tickets</h3>
+        <p>Opened by sensors or by whoever spotted a problem. Every ticket has a responsible team, history and current status, and can be reopened if the problem comes back.</p>
         <div class="states">
-          <div><span>Aberto</span><span class="badge b-info">automático ou manual</span></div>
-          <div><span>Aguardando atendimento</span><span class="badge b-off">na fila da equipe</span></div>
-          <div><span>Em atendimento</span><span class="badge b-warn">equipe assumiu</span></div>
-          <div><span>Aguardando insumos</span><span class="badge b-off">pausado</span></div>
-          <div><span>Concluído</span><span class="badge b-ok">checklist validado</span></div>
-          <div><span>Reaberto</span><span class="badge b-bad">problema persiste</span></div>
+          <div><span>Open</span><span class="badge b-info">automatic or manual</span></div>
+          <div><span>Waiting for service</span><span class="badge b-off">in the team queue</span></div>
+          <div><span>In progress</span><span class="badge b-warn">team took it</span></div>
+          <div><span>Waiting for supplies</span><span class="badge b-off">paused</span></div>
+          <div><span>Closed</span><span class="badge b-ok">checklist approved</span></div>
+          <div><span>Reopened</span><span class="badge b-bad">problem persists</span></div>
         </div>
       </article>
       <article class="card c-2 rv" style="--i:1">
-        <span class="rf">RF054 a RF060</span>
+        <span class="rf">RF054 to RF060</span>
         <div class="ico" style="background:var(--ok-bg);color:var(--ok)"><svg><use href="#i-list"/></svg></div>
-        <h3>Checklist digital</h3>
-        <p>Itens configuráveis por ambiente. Sem os obrigatórios, o chamado não pode ser concluído.</p>
+        <h3>Digital checklist</h3>
+        <p>Items configurable per restroom. Without the required ones, the ticket cannot be closed.</p>
         <ul class="mini-check">
-          <li><span class="bx on"><svg><use href="#i-ok"/></svg></span>Piso e bancadas</li>
-          <li><span class="bx on"><svg><use href="#i-ok"/></svg></span>Papel higiênico</li>
-          <li><span class="bx on"><svg><use href="#i-ok"/></svg></span>Sabonete</li>
-          <li><span class="bx"></span>Papel toalha</li>
+          <li><span class="bx on"><svg><use href="#i-ok"/></svg></span>Floors and counters</li>
+          <li><span class="bx on"><svg><use href="#i-ok"/></svg></span>Toilet paper</li>
+          <li><span class="bx on"><svg><use href="#i-ok"/></svg></span>Soap</li>
+          <li><span class="bx"></span>Paper towels</li>
         </ul>
       </article>
       <article class="card c-2 rv" style="--i:2">
-        <span class="rf">RF041 a RF048</span>
+        <span class="rf">RF041 to RF048</span>
         <div class="ico" style="background:var(--warn-bg);color:var(--warn)"><svg><use href="#i-box"/></svg></div>
-        <h3>Insumos e estoque</h3>
-        <p>Entradas, saídas, consumo por ambiente e equipe, e alerta antes de faltar.</p>
+        <h3>Supplies and stock</h3>
+        <p>Stock in and out, usage per restroom and team, and an alert before anything runs out.</p>
         <div class="stock">
-          <div><div class="l"><span>Papel toalha</span><span>abaixo do mínimo</span></div><div class="b"><i style="width:18%"></i><u style="left:25%"></u></div></div>
-          <div><div class="l"><span>Sabonete líquido</span><span>ok</span></div><div class="b"><i style="width:64%"></i><u style="left:25%"></u></div></div>
-          <div><div class="l"><span>Papel higiênico</span><span>ok</span></div><div class="b"><i style="width:47%"></i><u style="left:25%"></u></div></div>
+          <div><div class="l"><span>Paper towels</span><span>below minimum</span></div><div class="b"><i style="width:18%"></i><u style="left:25%"></u></div></div>
+          <div><div class="l"><span>Liquid soap</span><span>ok</span></div><div class="b"><i style="width:64%"></i><u style="left:25%"></u></div></div>
+          <div><div class="l"><span>Toilet paper</span><span>ok</span></div><div class="b"><i style="width:47%"></i><u style="left:25%"></u></div></div>
         </div>
       </article>
       <article class="card c-2 rv" style="--i:3">
-        <span class="rf">RF008 a RF013</span>
+        <span class="rf">RF008 to RF013</span>
         <div class="ico" style="background:var(--info-bg);color:var(--info)"><svg><use href="#i-team"/></svg></div>
-        <h3>Equipes e equipamentos</h3>
-        <p>Equipes ligadas a prédios e ambientes, com supervisores, disponibilidade e manutenção dos equipamentos.</p>
+        <h3>Teams and equipment</h3>
+        <p>Teams tied to buildings and restrooms, with supervisors, availability and equipment maintenance.</p>
       </article>
       <article class="card c-2 rv" style="--i:4">
-        <span class="rf">RF001 a RF007</span>
+        <span class="rf">RF001 to RF007</span>
         <div class="ico" style="background:var(--surface-2);color:var(--ink)"><svg><use href="#i-shield"/></svg></div>
-        <h3>Perfis e permissões</h3>
-        <p>Cada perfil vê e altera só o que pode. Ações ficam no histórico.</p>
-        <div class="kbd-row"><kbd>Administrador</kbd><kbd>Gestor</kbd><kbd>Supervisor</kbd><kbd>Limpeza</kbd><kbd>Solicitante</kbd></div>
+        <h3>Roles and permissions</h3>
+        <p>Each role sees and edits only what it is allowed to. Actions are logged.</p>
+        <div class="kbd-row"><kbd>Administrator</kbd><kbd>Manager</kbd><kbd>Supervisor</kbd><kbd>Cleaning</kbd><kbd>Requester</kbd></div>
       </article>
     </div>
     <div class="res">
-      <div class="rv" style="--i:0"><span class="k">RNF018</span><h3>A internet caiu?</h3><p>O dispositivo guarda os eventos e envia tudo quando a conexão volta, sem perder nem duplicar contagens.</p></div>
-      <div class="rv" style="--i:1"><span class="k">RNF014</span><h3>Sem contagem dupla</h3><p>Eventos repetidos do mesmo sensor não geram chamados duplicados.</p></div>
-      <div class="rv" style="--i:2"><span class="k">RNF020</span><h3>Um sensor falha, os outros seguem</h3><p>O painel mostra quais ambientes estão sem monitoramento e desde quando.</p></div>
-      <div class="rv" style="--i:3"><span class="k">RNF002</span><h3>Tempo real</h3><p>Indicadores atualizam sozinhos, no computador, tablet ou celular.</p></div>
+      <div class="rv" style="--i:0"><span class="k">RNF018</span><h3>Internet down?</h3><p>The device stores events and sends them when the connection returns, without losing or duplicating counts.</p></div>
+      <div class="rv" style="--i:1"><span class="k">RNF014</span><h3>No double counting</h3><p>Repeated events from the same sensor never create duplicate tickets.</p></div>
+      <div class="rv" style="--i:2"><span class="k">RNF020</span><h3>One sensor fails, the rest carry on</h3><p>The dashboard shows which restrooms are unmonitored and since when.</p></div>
+      <div class="rv" style="--i:3"><span class="k">RNF002</span><h3>Real time</h3><p>Indicators update on their own, on desktop, tablet or phone.</p></div>
     </div>
   </div>
 </section>
@@ -698,29 +722,29 @@ footer .mono{font-size:11.5px}
 <!-- ===================== JORNADAS ===================== -->
 <section class="sec rule" id="jornadas">
   <div class="narrow">
-    <span class="eyebrow rv">Jornadas do usuário</span>
-    <h2 class="serif rv">Feito para quem limpa, quem gere <em>e quem usa</em>.</h2>
-    <div class="tabs rv" role="tablist" aria-label="Jornadas">
-      <button class="tab" role="tab" aria-selected="true" aria-controls="p1" id="t1">Monitoramento automático</button>
-      <button class="tab" role="tab" aria-selected="false" aria-controls="p2" id="t2" tabindex="-1">Funcionário de limpeza</button>
-      <button class="tab" role="tab" aria-selected="false" aria-controls="p3" id="t3" tabindex="-1">Gestor operacional</button>
-      <button class="tab" role="tab" aria-selected="false" aria-controls="p4" id="t4" tabindex="-1">Aluno, professor ou servidor</button>
+    <span class="eyebrow rv">User journeys</span>
+    <h2 class="serif rv">Built for those who clean, those who manage <em>and those who use it</em>.</h2>
+    <div class="tabs rv" role="tablist" aria-label="Journeys">
+      <button class="tab" role="tab" aria-selected="true" aria-controls="p1" id="t1">Automated monitoring</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p2" id="t2" tabindex="-1">Cleaning staff</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p3" id="t3" tabindex="-1">Operations manager</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p4" id="t4" tabindex="-1">Student, professor or staff</button>
     </div>
     <div class="panel on" role="tabpanel" id="p1" aria-labelledby="t1">
-      <div><span class="who">Jornada 1 · Sistema</span><h3>O ciclo inteiro, sem ninguém precisar lembrar.</h3><p>Do primeiro evento do sensor ao registro da conclusão, cada passo acontece por regra e fica documentado.</p></div>
-      <ol class="olist"><li>Sensor registra os acessos</li><li>Nível 1: ambiente perto do limite</li><li>Nível 2: chamado aberto e equipe identificada</li><li>Nível 3: prioridade elevada se seguir pendente</li><li>Equipe recebe e executa o checklist</li><li>Registro de insumos e conclusão</li></ol>
+      <div><span class="who">Journey 1 · System</span><h3>The whole cycle, without anyone having to remember.</h3><p>From the first sensor event to the closing record, every step follows a rule and is documented.</p></div>
+      <ol class="olist"><li>Sensor logs the entries</li><li>Level 1: restroom near its threshold</li><li>Level 2: ticket opened and team identified</li><li>Level 3: escalated if still pending</li><li>Team receives it and runs the checklist</li><li>Supplies and completion are logged</li></ol>
     </div>
     <div class="panel" role="tabpanel" id="p2" aria-labelledby="t2" hidden>
-      <div><span class="who">Jornada 3 · Equipe de limpeza</span><h3>Sabe para onde ir e o que fazer lá.</h3><p>Recebe o chamado no celular, encontra o banheiro no mapa 3D e segue o checklist. Registra o que repôs e o que faltou.</p></div>
-      <ol class="olist"><li>Recebe a notificação do chamado</li><li>Consulta a localização no mapa 3D</li><li>Assume o atendimento</li><li>Executa o checklist digital</li><li>Registra reposição e ocorrências</li><li>Finaliza o atendimento</li></ol>
+      <div><span class="who">Journey 3 · Cleaning team</span><h3>Knows where to go and what to do there.</h3><p>Gets the ticket on the phone, finds the restroom on the 3D map and follows the checklist. Logs what was restocked and what was missing.</p></div>
+      <ol class="olist"><li>Gets the ticket notification</li><li>Checks the location on the 3D map</li><li>Takes the ticket</li><li>Runs the digital checklist</li><li>Logs restocking and incidents</li><li>Closes the job</li></ol>
     </div>
     <div class="panel" role="tabpanel" id="p3" aria-labelledby="t3" hidden>
-      <div><span class="who">Jornada 4 · Gestão</span><h3>O campus inteiro em uma tela.</h3><p>Chamados por status e prioridade, equipes disponíveis, consumo de insumos e tempo de atendimento. Relatórios por período, prédio, ambiente e equipe.</p></div>
-      <ol class="olist"><li>Acessa o dashboard geral</li><li>Vê ambientes e chamados pendentes</li><li>Acompanha equipes, prioridades e indicadores</li><li>Analisa produtividade, consumo e tempo</li><li>Ajusta a operação e acompanha o resultado</li></ol>
+      <div><span class="who">Journey 4 · Management</span><h3>The whole campus on one screen.</h3><p>Tickets by status and priority, available teams, supply usage and response time. Reports by period, building, restroom and team.</p></div>
+      <ol class="olist"><li>Opens the main dashboard</li><li>Sees restrooms and pending tickets</li><li>Tracks teams, priorities and indicators</li><li>Reviews productivity, usage and timing</li><li>Adjusts operations and tracks the results</li></ol>
     </div>
     <div class="panel" role="tabpanel" id="p4" aria-labelledby="t4" hidden>
-      <div><span class="who">Jornada 2 · Solicitante</span><h3>Viu um problema? Leva segundos.</h3><p>Escolhe o prédio e o banheiro, descreve a situação e pronto. O chamado vai para a equipe certa, independente da contagem do sensor.</p></div>
-      <ol class="olist"><li>Acessa o UniSense</li><li>Seleciona o prédio e o banheiro</li><li>Informa a irregularidade</li><li>O sistema registra e abre o chamado</li><li>A equipe responsável recebe</li><li>Acompanha o andamento</li></ol>
+      <div><span class="who">Journey 2 · Requester</span><h3>Spotted a problem? It takes seconds.</h3><p>Pick the building and restroom, describe the issue and you are done. The ticket goes to the right team, regardless of the sensor count.</p></div>
+      <ol class="olist"><li>Opens UniSense</li><li>Selects the building and restroom</li><li>Describes the issue</li><li>The system logs it and opens a ticket</li><li>The responsible team receives it</li><li>Follows the progress</li></ol>
     </div>
   </div>
 </section>
@@ -729,19 +753,19 @@ footer .mono{font-size:11.5px}
 <section class="sec rule" id="transparencia">
   <div class="narrow audit">
     <div>
-      <span class="eyebrow rv">Transparência e compliance</span>
-      <h2 class="serif rv">Cada chamado conta <em>a própria história</em>.</h2>
-      <p class="lead rv">Quantos acessos foram contados, quando o alerta disparou, quem atendeu, o que foi verificado e quais insumos saíram do estoque. Tudo verificável, conforme o perfil de quem consulta.</p>
-      <p class="principle rv">Toda ocorrência tem origem identificada, responsável pelo atendimento, histórico e situação atual.</p>
+      <span class="eyebrow rv">Transparency and compliance</span>
+      <h2 class="serif rv">Every ticket tells <em>its own story</em>.</h2>
+      <p class="lead rv">How many entries were counted, when the alert fired, who handled it, what was checked and which supplies left the stockroom. All verifiable, according to the viewer's role.</p>
+      <p class="principle rv">Every incident has an identified source, an owner, a history and a current status.</p>
     </div>
     <div class="trail rv" style="--i:2">
-      <div class="trail-head"><div><b>Prédio 2 · 2º andar · Feminino</b><div class="mono" style="font-size:11.5px;color:var(--muted)">exemplo de histórico de um ciclo</div></div><span class="badge b-ok"><svg><use href="#i-ok"/></svg>Concluído</span></div>
+      <div class="trail-head"><div><b>Building 2 · 2nd floor · Women’s</b><div class="mono" style="font-size:11.5px;color:var(--muted)">example history of one cycle</div></div><span class="badge b-ok"><svg><use href="#i-ok"/></svg>Closed</span></div>
       <ol>
-        <li><time>09:12</time><span class="dot"></span><div><strong>Nível 1 · Atenção</strong><span class="m">20 entradas contadas pelo sensor P2-2F</span></div></li>
-        <li><time>09:41</time><span class="dot"></span><div><strong>Chamado aberto automaticamente</strong><span class="m">30 entradas · origem: sensor P2-2F · equipe do Prédio 2</span></div></li>
-        <li><time>09:58</time><span class="dot"></span><div><strong>Atendimento assumido</strong><span class="m">Funcionário identificado · status: em atendimento</span></div></li>
-        <li><time>10:14</time><span class="dot"></span><div><strong>Checklist executado</strong><span class="m">4 de 4 itens · reposição: papel toalha e sabonete</span></div></li>
-        <li><time>10:20</time><span class="dot"></span><div><strong>Validado pelo supervisor</strong><span class="m">Contagem reiniciada para o próximo ciclo</span></div></li>
+        <li><time>09:12</time><span class="dot"></span><div><strong>Level 1 · Attention</strong><span class="m">20 entries counted by sensor P2-2F</span></div></li>
+        <li><time>09:41</time><span class="dot"></span><div><strong>Ticket opened automatically</strong><span class="m">30 entries · source: sensor P2-2F · Building 2 team</span></div></li>
+        <li><time>09:58</time><span class="dot"></span><div><strong>Ticket taken</strong><span class="m">Staff member identified · status: in progress</span></div></li>
+        <li><time>10:14</time><span class="dot"></span><div><strong>Checklist completed</strong><span class="m">4 of 4 items · restocked: paper towels and soap</span></div></li>
+        <li><time>10:20</time><span class="dot"></span><div><strong>Approved by the supervisor</strong><span class="m">Count reset for the next cycle</span></div></li>
       </ol>
     </div>
   </div>
@@ -750,17 +774,17 @@ footer .mono{font-size:11.5px}
 <!-- ===================== QUALIDADE ===================== -->
 <section class="sec rule">
   <div class="narrow">
-    <span class="eyebrow rv">Qualidade de software</span>
-    <h2 class="serif rv">Construído sobre a <em>ISO/IEC 25010</em>.</h2>
+    <span class="eyebrow rv">Software quality</span>
+    <h2 class="serif rv">Built on <em>ISO/IEC 25010</em>.</h2>
     <div class="iso">
-      <div class="rv" style="--i:0"><i>01</i><b>Adequação funcional</b><span>Todas as funcionalidades previstas entregues.</span></div>
-      <div class="rv" style="--i:1"><i>02</i><b>Confiabilidade</b><span>Operação consistente mesmo diante de falhas.</span></div>
-      <div class="rv" style="--i:2"><i>03</i><b>Eficiência</b><span>Eventos processados e painéis atualizados rápido.</span></div>
-      <div class="rv" style="--i:3"><i>04</i><b>Usabilidade</b><span>Fácil para cada perfil, com poucos cliques.</span></div>
-      <div class="rv" style="--i:4"><i>05</i><b>Segurança</b><span>Dados protegidos e permissões controladas.</span></div>
-      <div class="rv" style="--i:5"><i>06</i><b>Manutenibilidade</b><span>Código modular, orientado a objetos e documentado.</span></div>
-      <div class="rv" style="--i:6"><i>07</i><b>Compatibilidade</b><span>Integra sensores IoT e sistemas institucionais.</span></div>
-      <div class="rv" style="--i:7"><i>08</i><b>Portabilidade</b><span>Implantação em diferentes infraestruturas.</span></div>
+      <div class="rv" style="--i:0"><i>01</i><b>Functional suitability</b><span>Every planned feature delivered.</span></div>
+      <div class="rv" style="--i:1"><i>02</i><b>Reliability</b><span>Consistent operation even when things fail.</span></div>
+      <div class="rv" style="--i:2"><i>03</i><b>Efficiency</b><span>Events processed and dashboards updated fast.</span></div>
+      <div class="rv" style="--i:3"><i>04</i><b>Usability</b><span>Easy for every role, in a few clicks.</span></div>
+      <div class="rv" style="--i:4"><i>05</i><b>Security</b><span>Protected data and controlled permissions.</span></div>
+      <div class="rv" style="--i:5"><i>06</i><b>Maintainability</b><span>Modular, object-oriented, documented code.</span></div>
+      <div class="rv" style="--i:6"><i>07</i><b>Compatibility</b><span>Integrates IoT sensors and institutional systems.</span></div>
+      <div class="rv" style="--i:7"><i>08</i><b>Portability</b><span>Deploys on different infrastructures.</span></div>
     </div>
   </div>
 </section>
@@ -768,33 +792,33 @@ footer .mono{font-size:11.5px}
 <!-- ===================== ROADMAP ===================== -->
 <section class="sec rule" id="roadmap">
   <div class="narrow">
-    <span class="eyebrow rv">Desenvolvimento incremental</span>
-    <h2 class="serif rv">Sete fases. <em>Valor desde a primeira.</em></h2>
-    <p class="lead rv">A integração com sensores físicos começa por simulação de eventos, validando a lógica antes de investir em hardware.</p>
+    <span class="eyebrow rv">Incremental development</span>
+    <h2 class="serif rv">Seven phases. <em>Value from the first one.</em></h2>
+    <p class="lead rv">Physical sensors come in after event simulation, validating the logic before investing in hardware.</p>
     <div class="road">
-      <div class="ph mvp rv" style="--i:0"><span class="k">MVP · FASE 1</span><p>Usuários, permissões, prédios, banheiros e equipes</p></div>
-      <div class="ph rv" style="--i:1"><span class="k">FASE 2</span><p>Sensores simulados ou integrados e níveis de alerta</p></div>
-      <div class="ph rv" style="--i:2"><span class="k">FASE 3</span><p>Chamados automáticos e manuais</p></div>
-      <div class="ph rv" style="--i:3"><span class="k">FASE 4</span><p>Funcionários, checklists e encerramento</p></div>
-      <div class="ph rv" style="--i:4"><span class="k">FASE 5</span><p>Insumos, produtos e equipamentos</p></div>
-      <div class="ph rv" style="--i:5"><span class="k">FASE 6</span><p>Dashboard e visualização 3D</p></div>
-      <div class="ph rv" style="--i:6"><span class="k">FASE 7</span><p>Relatórios, auditoria, resiliência e testes</p></div>
+      <div class="ph mvp rv" style="--i:0"><span class="k">MVP · PHASE 1</span><p>Users, permissions, buildings, restrooms and teams</p></div>
+      <div class="ph rv" style="--i:1"><span class="k">PHASE 2</span><p>Simulated or integrated sensors and alert levels</p></div>
+      <div class="ph rv" style="--i:2"><span class="k">PHASE 3</span><p>Automatic and manual tickets</p></div>
+      <div class="ph rv" style="--i:3"><span class="k">PHASE 4</span><p>Staff, checklists and closing</p></div>
+      <div class="ph rv" style="--i:4"><span class="k">PHASE 5</span><p>Supplies, products and equipment</p></div>
+      <div class="ph rv" style="--i:5"><span class="k">PHASE 6</span><p>Dashboard and 3D view</p></div>
+      <div class="ph rv" style="--i:6"><span class="k">PHASE 7</span><p>Reports, audit, resilience and testing</p></div>
     </div>
     <div class="accept rv">
-      <div class="accept-head"><h3>Critérios de aceitação</h3><span class="mono" style="font-size:11.5px;color:var(--muted)">10 cenários</span></div>
+      <div class="accept-head"><h3>Acceptance criteria</h3><span class="mono" style="font-size:11.5px;color:var(--muted)">10 scenarios</span></div>
       <table>
-        <thead><tr><th>Cenário</th><th>Resultado esperado</th></tr></thead>
+        <thead><tr><th>Scenario</th><th>Expected result</th></tr></thead>
         <tbody>
-          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Sensor atinge nível 1</td><td>Painel sinaliza atenção</td></tr>
-          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Sensor atinge nível 2</td><td>Chamado automático é criado</td></tr>
-          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Sensor atinge nível 3</td><td>Prioridade do chamado existente aumenta</td></tr>
-          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Usuário identifica irregularidade</td><td>Chamado manual é registrado</td></tr>
-          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Funcionário assume chamado</td><td>Status muda para em atendimento</td></tr>
-          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Checklist é concluído</td><td>Sistema registra a execução</td></tr>
-          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Insumo é utilizado</td><td>Estoque é atualizado</td></tr>
-          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Sensor perde comunicação</td><td>Painel sinaliza indisponibilidade</td></tr>
-          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Servidor apresenta falha</td><td>Dados recuperáveis pela política de backup</td></tr>
-          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Usuário sem permissão tenta função restrita</td><td>Sistema bloqueia a operação</td></tr>
+          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Sensor reaches level 1</td><td>Dashboard flags attention</td></tr>
+          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Sensor reaches level 2</td><td>Automatic ticket is created</td></tr>
+          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Sensor reaches level 3</td><td>Existing ticket is escalated</td></tr>
+          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>User reports an issue</td><td>Manual ticket is logged</td></tr>
+          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Staff member takes a ticket</td><td>Status changes to in progress</td></tr>
+          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Checklist is completed</td><td>System logs the work</td></tr>
+          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>A supply is used</td><td>Stock is updated</td></tr>
+          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Sensor goes offline</td><td>Dashboard flags it as unavailable</td></tr>
+          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Server fails</td><td>Data recoverable under the backup policy</td></tr>
+          <tr><td><span class="ck"><svg><use href="#i-ok"/></svg></span>Unauthorized user tries a restricted action</td><td>System blocks the action</td></tr>
         </tbody>
       </table>
     </div>
@@ -804,15 +828,15 @@ footer .mono{font-size:11.5px}
 <!-- ===================== FAQ ===================== -->
 <section class="sec rule">
   <div class="narrow">
-    <span class="eyebrow rv">Perguntas frequentes</span>
-    <h2 class="serif rv">O que costumam perguntar.</h2>
+    <span class="eyebrow rv">FAQ</span>
+    <h2 class="serif rv">What people usually ask.</h2>
     <div class="faq rv">
-      <details><summary>O sensor conta pessoas dentro do banheiro ou entradas?<span class="pm" aria-hidden="true"></span></summary><p>Entradas. O objetivo é saber quantas vezes o ambiente foi usado desde a última limpeza, não quantas pessoas estão lá agora.</p></details>
-      <details><summary>Os limites de 20, 30 e 45 acessos são fixos?<span class="pm" aria-hidden="true"></span></summary><p>Não. O administrador ajusta os limites de cada banheiro individualmente, de acordo com o uso real, e as regras de abertura e escalonamento ficam documentadas.</p></details>
-      <details><summary>Quando a contagem volta a zero?<span class="pm" aria-hidden="true"></span></summary><p>Só depois que a equipe conclui o checklist e o atendimento é validado. Abrir o chamado não zera nada.</p></details>
-      <details><summary>E se um sensor parar de responder?<span class="pm" aria-hidden="true"></span></summary><p>O painel sinaliza o ambiente como sem comunicação e registra o período sem monitoramento. Os demais banheiros seguem funcionando.</p></details>
-      <details><summary>Precisa de hardware para começar?<span class="pm" aria-hidden="true"></span></summary><p>Não. O desenvolvimento começa com simulação de eventos para validar a lógica. Os sensores físicos entram depois, por interfaces padronizadas.</p></details>
-      <details><summary>Como os dados pessoais são tratados?<span class="pm" aria-hidden="true"></span></summary><p>Senhas com hash seguro, comunicação via HTTPS, acesso por perfil e trilha de auditoria. O tratamento de dados segue a LGPD.</p></details>
+      <details><summary>Does the sensor count people inside the restroom, or entries?<span class="pm" aria-hidden="true"></span></summary><p>Entries. The goal is to know how many times the restroom was used since the last cleaning, not how many people are inside right now.</p></details>
+      <details><summary>Are the 20, 30 and 45 thresholds fixed?<span class="pm" aria-hidden="true"></span></summary><p>No. The administrator tunes each restroom individually to its real usage, and the opening and escalation rules are documented.</p></details>
+      <details><summary>When does the count go back to zero?<span class="pm" aria-hidden="true"></span></summary><p>Only after the team completes the checklist and the work is approved. Opening a ticket resets nothing.</p></details>
+      <details><summary>What if a sensor stops responding?<span class="pm" aria-hidden="true"></span></summary><p>The dashboard flags the restroom as offline and logs the unmonitored period. All other restrooms keep working.</p></details>
+      <details><summary>Do we need hardware to get started?<span class="pm" aria-hidden="true"></span></summary><p>No. Development starts with event simulation to validate the logic. Physical sensors come later, through standard interfaces.</p></details>
+      <details><summary>How is personal data handled?<span class="pm" aria-hidden="true"></span></summary><p>Securely hashed passwords, HTTPS, role-based access and an audit trail. Data handling follows Brazil's LGPD privacy law.</p></details>
     </div>
   </div>
 </section>
@@ -820,12 +844,12 @@ footer .mono{font-size:11.5px}
 <!-- ===================== CTA ===================== -->
 <section class="cta" id="contato">
   <div class="narrow">
-    <span class="eyebrow rv">UniSense · Inteligência que cuida do seu campus</span>
-    <h2 class="serif rv">Vamos levar o UniSense <em>para o campus</em>.</h2>
-    <p class="lead rv">Começamos pela simulação de eventos no mapa real do Campus Prof. Pedro C. Fornari, sem hardware no primeiro dia.</p>
+    <span class="eyebrow rv">UniSense · Intelligence that takes care of your campus</span>
+    <h2 class="serif rv">Let’s bring UniSense <em>to the campus</em>.</h2>
+    <p class="lead rv">We start with event simulation on the real map of the Prof. Pedro C. Fornari Campus, with no hardware on day one.</p>
     <div class="hero-ctas rv" style="justify-content:center">
-      <a class="btn btn-primary" id="ctaMail" href="#contato">Falar com o projeto <svg><use href="#i-arrow"/></svg></a>
-      <a class="btn btn-ghost" href="#top">Rever o ciclo no mapa</a>
+      <a class="btn btn-primary" id="ctaMail" href="https://github.com/Buehno/unisense-landing" target="_blank" rel="noopener">View the project on GitHub <svg><use href="#i-arrow"/></svg></a>
+      <a class="btn btn-ghost" href="#top">Replay the cycle on the map</a>
     </div>
   </div>
 </section>
@@ -834,10 +858,12 @@ footer .mono{font-size:11.5px}
 <footer>
   <div class="wrap">
     <a href="#top" class="brand" aria-label="UniSense"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#13306B"/><circle cx="32" cy="32" r="30.5" fill="none" stroke="#2F5FB8" stroke-width="1"/><text x="27" y="42.5" text-anchor="middle" font-family="Geist,Arial,sans-serif" font-weight="700" font-size="25" letter-spacing="-1.4" fill="#fff">US</text><path d="M40.6 24.2 L45.2 18.4" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round"/><circle cx="46" cy="17.4" r="2.1" fill="#7FB2FF"/><path d="M46 12.6 A4.8 4.8 0 0 1 50.8 17.4" fill="none" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round"/><path d="M46 8.8 A8.6 8.6 0 0 1 54.6 17.4" fill="none" stroke="#7FB2FF" stroke-width="2.2" stroke-linecap="round" opacity=".7"/></svg><span class="word">Uni<b>Sense</b></span></a>
-    <span>UniSense · Gestão operacional inteligente para o campus · Análise de requisitos por Igor Machado, novembro de 2026</span>
-    <span class="mono">Mapa: © OpenStreetMap · sensores simulados</span>
+    <nav class="foot-links" aria-label="Footer"><a href="#s1">How it works</a><a href="#niveis">Levels</a><a href="#arquitetura">Architecture</a><a href="#roadmap">Roadmap</a><a href="https://github.com/Buehno/unisense-landing" target="_blank" rel="noopener">GitHub</a></nav>
+    <a href="#top" class="mono" style="font-size:11.5px">Back to top</a>
+    <div class="meta"><span>UniSense · Smart operations management for the campus · Requirements analysis by Igor Machado, November 2026</span><span class="mono" style="font-size:11.5px">Map: © OpenStreetMap · simulated sensors</span></div>
   </div>
 </footer>
+<a href="#top" class="to-top" id="toTop" aria-label="Back to top"><svg><use href="#i-up"/></svg></a>
 
 <script>
 /* troque pelo e-mail do projeto */
@@ -867,12 +893,16 @@ window.UNISENSE_CONTACT = '';
 
   // nav current section
   const links=[...nl.querySelectorAll('a')];
-  const sio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('cur',a.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-45% 0px -50% 0px'});
+  const sio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const h=e.target.dataset.nav||'#'+e.target.id;links.forEach(a=>a.classList.toggle('cur',a.getAttribute('href')===h))}}),{rootMargin:'-45% 0px -50% 0px'});
   links.forEach(a=>{const s=document.querySelector(a.getAttribute('href'));if(s)sio.observe(s)});
+  document.querySelectorAll('[data-nav]').forEach(s=>sio.observe(s));
+  const hs=document.querySelector('.hero-step');new IntersectionObserver(es=>{if(es[0].isIntersecting)links.forEach(a=>a.classList.remove('cur'))},{rootMargin:'-45% 0px -50% 0px'}).observe(hs);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nl.classList.contains('open')){nl.classList.remove('open');mb.setAttribute('aria-expanded',false);mb.focus()}});
+  const tt=document.getElementById('toTop');const story=document.querySelector('.story');addEventListener('scroll',()=>tt.classList.toggle('on',story.getBoundingClientRect().bottom<0),{passive:true});
 
   // contact
   const c=window.UNISENSE_CONTACT,cta=document.getElementById('ctaMail');
-  if(c)cta.href='mailto:'+c+'?subject='+encodeURIComponent('Projeto UniSense');
+  if(c){cta.href='mailto:'+c+'?subject='+encodeURIComponent('UniSense project');cta.firstChild.nodeValue='Talk to the team ';cta.removeAttribute('target');cta.removeAttribute('rel')}
 
   // level simulator
   const r=document.getElementById('simRange'),cnt=document.getElementById('simCount'),st=document.getElementById('simStatus');
@@ -883,19 +913,19 @@ window.UNISENSE_CONTACT = '';
     if(lvl>=2&&!ticket)ticket='UNS-'+(4100+Math.floor(Math.random()*800));
     if(ticket&&lvl<2)lvl=2;
     const msg=[
-      '<span class="badge b-ok"><svg><use href="#i-ok"/></svg>Monitorado</span><span>Uso dentro do esperado.</span>',
-      '<span class="badge b-warn"><svg><use href="#i-warn"/></svg>Nível 1 · Atenção</span><span>Aproximando do limite de inspeção.</span>',
-      '<span class="badge b-bad"><svg><use href="#i-ticket"/></svg>Chamado aberto</span><span>Chamado <b class="mono">'+ticket+'</b> enviado à equipe do prédio. A contagem continua.</span>',
-      '<span class="badge b-bad"><svg><use href="#i-up"/></svg>Prioridade elevada</span><span>O chamado <b class="mono">'+ticket+'</b> subiu de prioridade. Nenhum chamado novo foi criado.</span>'];
+      '<span class="badge b-ok"><svg><use href="#i-ok"/></svg>Monitored</span><span>Usage within the expected range.</span>',
+      '<span class="badge b-warn"><svg><use href="#i-warn"/></svg>Level 1 · Attention</span><span>Nearing the inspection threshold.</span>',
+      '<span class="badge b-bad"><svg><use href="#i-ticket"/></svg>Ticket open</span><span>Ticket <b class="mono">'+ticket+'</b> sent to the building team. The count keeps running.</span>',
+      '<span class="badge b-bad"><svg><use href="#i-up"/></svg>High priority</span><span>Ticket <b class="mono">'+ticket+'</b> was escalated. No new ticket was created.</span>'];
     st.innerHTML=msg[lvl];cards.forEach(c=>c.classList.toggle('active',+c.dataset.lvl===lvl));
   }
   r.addEventListener('input',render);
   document.getElementById('simPlus').onclick=()=>{r.value=Math.min(50,+r.value+1);render()};
   document.getElementById('simPlus5').onclick=()=>{r.value=Math.min(50,+r.value+5);render()};
   document.getElementById('simDone').onclick=()=>{
-    if(!ticket){st.innerHTML='<span class="badge b-info"><svg><use href="#i-info"/></svg>Sem chamado</span><span>Não há chamado para concluir. A contagem segue em '+r.value+'.</span>';return}
+    if(!ticket){st.innerHTML='<span class="badge b-info"><svg><use href="#i-info"/></svg>No ticket</span><span>There is no ticket to close. The count stays at '+r.value+'.</span>';return}
     const t=ticket;ticket=null;r.value=0;render();
-    st.innerHTML='<span class="badge b-ok"><svg><use href="#i-ok"/></svg>Concluído</span><span>Checklist de <b class="mono">'+t+'</b> validado. Contagem reiniciada.</span>';
+    st.innerHTML='<span class="badge b-ok"><svg><use href="#i-ok"/></svg>Closed</span><span>Checklist for <b class="mono">'+t+'</b> approved. Count reset.</span>';
   };
   render();
 })();
@@ -905,14 +935,14 @@ window.UNISENSE_CONTACT = '';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-const CAMPUS={"boundary":[[-23.5,-34.2],[-27.1,-19.8],[-26.2,-4.8],[-14.5,17.1],[-12.6,18.8],[-11.4,20.9],[-11.1,22.1],[-9.7,22.2],[-10.2,19.4],[-4.2,23.5],[8.2,32.2],[9.6,36.7],[11.3,39.5],[12.9,41.9],[14.6,44.1],[16.8,44.9],[19.3,45.3],[22.6,43.0],[25.2,41.7],[25.7,37.9],[30.4,9.4],[36.8,-4.9],[29.9,-8.4],[24.7,3.8],[21.8,3.5],[22.8,8.5],[19.7,8.0],[17.3,7.4],[14.1,5.1],[-2.9,-14.1],[-15.0,-28.7]],"b":[{"n":"Prédio 1","l":2,"p":[[6.6,2.5],[8.4,5.0],[9.5,4.1],[4.8,-1.9],[3.8,-1.1],[5.2,0.9],[4.8,1.2],[3.2,-0.8],[2.2,-0.1],[6.8,6.2],[8.0,5.3],[6.2,2.8]]},{"n":"Cantina","l":1,"p":[[2.9,-3.2],[0.6,-1.6],[0.0,-2.4],[2.1,-4.1]]},{"n":"Prédio Administrativo","l":1,"p":[[-1.5,-3.9],[1.6,-6.4],[2.3,-5.4],[-0.8,-2.9]]},{"n":"Edifício anexo","l":3,"p":[[-5.2,-13.5],[-3.2,-11.4],[-5.8,-9.1],[-7.9,-11.2]]},{"n":"Prédio 2","l":4,"p":[[-8.5,-18.6],[-4.9,-14.2],[-8.4,-11.3],[-12.0,-15.5],[-11.1,-16.4],[-11.4,-16.8],[-11.1,-17.1],[-11.0,-17.0],[-9.9,-17.9],[-9.9,-18.1],[-9.7,-18.3],[-9.3,-17.9]]},{"n":"Prédio 3","l":2,"p":[[-10.1,-8.0],[-7.0,-4.7],[-6.7,-4.8],[-6.0,-4.2],[-6.3,-3.8],[-3.5,-0.4],[-4.3,0.4],[-7.3,-2.9],[-7.9,-2.4],[-5.1,1.0],[-6.1,2.2],[-9.2,-1.3],[-9.2,-1.2],[-10.0,-2.0],[-9.8,-2.2],[-12.9,-5.3],[-11.8,-6.3],[-8.6,-3.3],[-8.0,-3.8],[-11.0,-7.2]]},{"n":"Cantina","l":1,"p":[[-5.7,1.8],[-4.4,3.3],[-5.5,4.3],[-6.7,2.8],[-6.1,2.2]]},{"n":"Prédio 4","l":2,"p":[[-17.3,-3.3],[-8.4,7.2],[-9.4,8.1],[-12.1,5.0],[-12.4,5.3],[-9.8,8.3],[-11.0,9.4],[-19.0,0.9],[-17.7,-0.3],[-16.1,1.6],[-15.6,1.0],[-18.4,-2.2]]},{"n":"Anfiteatro","l":1,"p":[[11.4,10.8],[7.2,11.9],[7.5,13.7],[11.8,12.8],[11.8,11.7]]},{"n":"Clínica","l":1,"p":[[31.7,3.0],[28.6,7.0],[29.4,7.5],[32.5,3.7]]},{"n":"Cantina","l":1,"p":[[-21.7,-12.1],[-21.3,-10.4],[-23.2,-10.0],[-23.6,-11.8]]},{"n":"Arquibancada","l":1,"p":[[11.8,15.6],[15.4,16.2],[14.9,19.4],[11.3,18.8]]}],"roads":[[[32.4,-2.2],[32.6,-3.6],[32.6,-4.2],[32.6,-4.9]],[[26.0,39.9],[25.3,40.1],[24.4,40.4],[22.4,41.5],[21.4,41.5],[20.1,41.1],[19.2,40.4],[17.0,37.9],[12.4,33.4],[11.7,32.3],[11.4,31.2],[11.3,28.9],[11.6,27.4],[12.7,25.5],[14.1,22.9],[15.0,21.2],[16.5,17.6],[16.6,16.6],[16.5,15.8],[16.1,15.3],[14.3,13.6]],[[37.6,-5.4],[37.2,-5.0],[36.0,-3.7]],[[-14.1,-25.3],[-13.3,-25.2],[-13.0,-25.1],[-12.6,-24.8],[-12.3,-24.6],[-11.8,-24.3],[-11.6,-24.2],[-11.3,-23.9],[-10.8,-23.4],[-10.1,-22.7],[-9.4,-21.9],[-8.0,-20.3],[-7.3,-18.5],[-4.9,-15.7],[-2.8,-13.2],[-1.9,-12.1],[-1.1,-11.3],[11.4,3.4],[13.0,5.1],[14.9,7.2],[16.9,8.5],[18.3,9.0],[19.9,9.4],[20.7,9.7],[21.8,9.8],[22.3,9.8],[22.9,9.6],[23.9,8.9],[25.0,7.7],[27.2,4.9],[29.1,2.8],[31.3,0.3],[31.9,-0.4],[32.2,-1.2],[32.3,-1.9],[32.4,-2.2]],[[33.7,-1.2],[33.2,-0.6],[32.2,0.5],[31.1,1.8],[28.1,5.0],[24.1,9.8],[23.3,10.7],[22.7,11.3],[22.3,11.6],[21.8,11.7],[21.1,11.8],[20.4,11.7],[19.5,11.5],[17.1,11.2],[16.6,11.1],[16.0,11.1],[15.2,11.1],[15.1,11.9],[14.8,12.7],[14.6,13.2],[14.3,13.6],[13.7,13.8],[12.5,14.4],[10.6,14.6],[8.4,14.9],[7.6,14.9],[6.4,15.2],[4.0,15.0],[2.6,14.3],[1.8,13.9],[0.9,13.3],[0.0,12.4],[-0.7,11.9],[-1.5,11.2],[-2.1,10.5],[-3.2,8.2],[-3.4,6.8],[-3.6,6.1],[-3.4,5.2],[-3.3,4.3],[-3.1,3.6],[-2.9,3.1],[-2.3,2.4],[-1.5,1.7],[-0.9,1.0],[-0.8,0.6],[-0.8,0.1],[-0.9,-0.5],[-1.2,-1.1],[-2.4,-2.8],[-3.7,-4.4],[-4.8,-5.6],[-7.4,-8.8],[-8.8,-10.3],[-9.6,-11.3],[-11.2,-13.1],[-12.3,-14.5],[-12.7,-15.2],[-12.9,-15.8],[-12.9,-16.3],[-12.6,-17.1]],[[-16.4,-24.9],[-17.0,-24.5],[-17.7,-23.8],[-18.3,-23.2],[-18.9,-22.3],[-19.6,-20.6],[-19.9,-18.6],[-20.0,-16.2],[-19.9,-13.9],[-19.6,-12.3],[-19.2,-11.2],[-18.7,-10.1],[-16.8,-7.0],[-15.9,-6.0],[-13.7,-3.1],[-10.9,0.3],[-8.8,3.0],[-8.2,3.7],[-7.3,5.4],[-6.9,5.8],[-6.6,7.3],[-6.6,9.4],[-6.8,10.8],[-7.2,13.3],[-7.2,15.2],[-7.2,16.1],[-6.7,17.3],[-6.0,18.4],[-4.7,19.9],[-3.2,21.3],[-1.6,22.2],[0.2,22.9],[2.6,23.6],[4.2,24.2],[5.1,24.6],[6.1,24.9],[7.2,25.7],[8.2,26.6],[9.3,27.5],[10.4,28.4],[11.3,28.9]],[[-12.6,-17.1],[-12.1,-17.9],[-11.5,-18.5],[-10.8,-18.8],[-10.0,-19.3],[-9.7,-19.7],[-9.5,-20.4],[-9.5,-20.7],[-9.7,-21.0],[-10.0,-21.4],[-10.4,-21.9],[-11.2,-22.8],[-11.9,-23.6],[-12.4,-24.0],[-13.0,-24.3],[-13.7,-24.3]],[[-15.0,-13.7],[-13.9,-12.6],[-12.5,-11.2],[-11.9,-10.3],[-11.7,-9.4],[-11.8,-8.9],[-12.2,-8.4],[-12.6,-8.4],[-13.5,-8.6],[-14.2,-9.3],[-14.6,-9.9],[-15.0,-11.1],[-15.0,-12.2],[-15.0,-13.7]],[[14.9,7.2],[14.1,9.9],[15.2,11.1]],[[-13.7,-19.0],[-14.1,-18.4],[-14.5,-17.3],[-15.0,-15.1],[-15.0,-13.7]],[[-16.4,-24.9],[-16.0,-23.7],[-15.8,-23.1],[-15.6,-22.6],[-15.5,-22.2],[-15.3,-21.7],[-15.0,-21.0],[-14.7,-20.5],[-14.3,-19.9],[-13.7,-19.0]],[[-11.8,-20.9],[-11.9,-21.1],[-12.1,-21.5],[-12.4,-22.1],[-12.7,-22.6],[-13.1,-23.3],[-13.5,-24.0],[-13.7,-24.3]],[[-13.7,-19.0],[-12.3,-20.1],[-11.8,-20.6],[-11.8,-20.7],[-11.8,-20.9]],[[-14.1,-25.3],[-14.7,-25.3],[-15.4,-25.2],[-16.4,-24.9]],[[-13.7,-24.3],[-14.1,-25.3]],[[22.7,11.3],[22.6,10.8],[22.4,10.3],[22.3,9.8]],[[36.0,-3.7],[35.4,-3.0],[34.9,-2.5],[33.7,-1.2]],[[32.4,-2.2],[32.7,-1.9],[33.2,-1.6],[33.7,-1.2]],[[36.0,-3.7],[36.0,-4.4],[35.7,-5.0],[35.2,-5.5],[34.5,-5.7],[33.8,-5.7],[33.1,-5.5],[32.6,-4.9]],[[32.6,-4.9],[31.6,-8.7]],[[-12.6,-17.1],[-11.9,-17.7],[-11.4,-18.0],[-10.9,-18.3],[-10.4,-18.6],[-9.9,-18.9],[-9.6,-19.0],[-9.2,-19.1],[-8.8,-19.2],[-8.4,-19.2],[-7.8,-18.9],[-7.3,-18.5]],[[4.0,15.0],[3.1,15.9],[1.6,17.6],[1.0,19.0],[0.5,21.2]],[[0.9,9.2],[2.2,7.7],[3.8,6.6]],[[0.9,9.2],[0.3,9.7],[-1.5,11.2]],[[0.0,12.4],[0.7,10.1],[0.9,9.2]],[[25.0,7.7],[25.1,6.4],[25.3,5.1],[30.4,-4.2]],[[-3.1,-10.3],[-4.6,-8.9],[-1.3,-5.1]],[[-3.1,-10.3],[-2.6,-9.8],[-1.1,-8.4]],[[-1.1,-11.3],[-2.6,-9.8]],[[6.4,15.2],[6.2,12.7],[6.1,11.6],[6.3,11.0],[6.8,10.4],[10.1,7.6],[13.0,5.1]]],"areas":[{"k":"pitch","p":[[18.5,19.1],[16.5,28.8],[23.4,30.2],[25.2,20.6]]},{"k":"swimming_pool","p":[[6.5,21.6],[8.7,22.3],[8.1,23.4],[6.1,22.7]]},{"k":"pitch","p":[[8.1,15.7],[7.8,17.2],[10.5,17.7],[10.9,16.2]]},{"k":"track","p":[[24.4,30.1],[26.0,20.6],[25.9,19.5],[25.5,18.7],[24.7,17.8],[23.8,17.2],[22.9,16.7],[22.0,16.4],[20.9,16.4],[19.7,16.7],[18.8,17.1],[18.1,18.0],[17.7,19.0],[16.0,28.8],[16.1,30.0],[16.5,30.9],[17.3,31.5],[17.9,32.0],[18.8,32.4],[19.8,32.7],[20.7,32.6],[21.9,32.4],[23.2,31.8],[23.9,31.0]]}]};
+const CAMPUS={"boundary":[[-23.5,-34.2],[-27.1,-19.8],[-26.2,-4.8],[-14.5,17.1],[-12.6,18.8],[-11.4,20.9],[-11.1,22.1],[-9.7,22.2],[-10.2,19.4],[-4.2,23.5],[8.2,32.2],[9.6,36.7],[11.3,39.5],[12.9,41.9],[14.6,44.1],[16.8,44.9],[19.3,45.3],[22.6,43.0],[25.2,41.7],[25.7,37.9],[30.4,9.4],[36.8,-4.9],[29.9,-8.4],[24.7,3.8],[21.8,3.5],[22.8,8.5],[19.7,8.0],[17.3,7.4],[14.1,5.1],[-2.9,-14.1],[-15.0,-28.7]],"b":[{"n":"Building 1","l":2,"p":[[6.6,2.5],[8.4,5.0],[9.5,4.1],[4.8,-1.9],[3.8,-1.1],[5.2,0.9],[4.8,1.2],[3.2,-0.8],[2.2,-0.1],[6.8,6.2],[8.0,5.3],[6.2,2.8]]},{"n":"Cafeteria","l":1,"p":[[2.9,-3.2],[0.6,-1.6],[0.0,-2.4],[2.1,-4.1]]},{"n":"Administration building","l":1,"p":[[-1.5,-3.9],[1.6,-6.4],[2.3,-5.4],[-0.8,-2.9]]},{"n":"Annex","l":3,"p":[[-5.2,-13.5],[-3.2,-11.4],[-5.8,-9.1],[-7.9,-11.2]]},{"n":"Building 2","l":4,"p":[[-8.5,-18.6],[-4.9,-14.2],[-8.4,-11.3],[-12.0,-15.5],[-11.1,-16.4],[-11.4,-16.8],[-11.1,-17.1],[-11.0,-17.0],[-9.9,-17.9],[-9.9,-18.1],[-9.7,-18.3],[-9.3,-17.9]]},{"n":"Building 3","l":2,"p":[[-10.1,-8.0],[-7.0,-4.7],[-6.7,-4.8],[-6.0,-4.2],[-6.3,-3.8],[-3.5,-0.4],[-4.3,0.4],[-7.3,-2.9],[-7.9,-2.4],[-5.1,1.0],[-6.1,2.2],[-9.2,-1.3],[-9.2,-1.2],[-10.0,-2.0],[-9.8,-2.2],[-12.9,-5.3],[-11.8,-6.3],[-8.6,-3.3],[-8.0,-3.8],[-11.0,-7.2]]},{"n":"Cafeteria","l":1,"p":[[-5.7,1.8],[-4.4,3.3],[-5.5,4.3],[-6.7,2.8],[-6.1,2.2]]},{"n":"Building 4","l":2,"p":[[-17.3,-3.3],[-8.4,7.2],[-9.4,8.1],[-12.1,5.0],[-12.4,5.3],[-9.8,8.3],[-11.0,9.4],[-19.0,0.9],[-17.7,-0.3],[-16.1,1.6],[-15.6,1.0],[-18.4,-2.2]]},{"n":"Amphitheater","l":1,"p":[[11.4,10.8],[7.2,11.9],[7.5,13.7],[11.8,12.8],[11.8,11.7]]},{"n":"Clinic","l":1,"p":[[31.7,3.0],[28.6,7.0],[29.4,7.5],[32.5,3.7]]},{"n":"Cafeteria","l":1,"p":[[-21.7,-12.1],[-21.3,-10.4],[-23.2,-10.0],[-23.6,-11.8]]},{"n":"Grandstand","l":1,"p":[[11.8,15.6],[15.4,16.2],[14.9,19.4],[11.3,18.8]]}],"roads":[[[32.4,-2.2],[32.6,-3.6],[32.6,-4.2],[32.6,-4.9]],[[26.0,39.9],[25.3,40.1],[24.4,40.4],[22.4,41.5],[21.4,41.5],[20.1,41.1],[19.2,40.4],[17.0,37.9],[12.4,33.4],[11.7,32.3],[11.4,31.2],[11.3,28.9],[11.6,27.4],[12.7,25.5],[14.1,22.9],[15.0,21.2],[16.5,17.6],[16.6,16.6],[16.5,15.8],[16.1,15.3],[14.3,13.6]],[[37.6,-5.4],[37.2,-5.0],[36.0,-3.7]],[[-14.1,-25.3],[-13.3,-25.2],[-13.0,-25.1],[-12.6,-24.8],[-12.3,-24.6],[-11.8,-24.3],[-11.6,-24.2],[-11.3,-23.9],[-10.8,-23.4],[-10.1,-22.7],[-9.4,-21.9],[-8.0,-20.3],[-7.3,-18.5],[-4.9,-15.7],[-2.8,-13.2],[-1.9,-12.1],[-1.1,-11.3],[11.4,3.4],[13.0,5.1],[14.9,7.2],[16.9,8.5],[18.3,9.0],[19.9,9.4],[20.7,9.7],[21.8,9.8],[22.3,9.8],[22.9,9.6],[23.9,8.9],[25.0,7.7],[27.2,4.9],[29.1,2.8],[31.3,0.3],[31.9,-0.4],[32.2,-1.2],[32.3,-1.9],[32.4,-2.2]],[[33.7,-1.2],[33.2,-0.6],[32.2,0.5],[31.1,1.8],[28.1,5.0],[24.1,9.8],[23.3,10.7],[22.7,11.3],[22.3,11.6],[21.8,11.7],[21.1,11.8],[20.4,11.7],[19.5,11.5],[17.1,11.2],[16.6,11.1],[16.0,11.1],[15.2,11.1],[15.1,11.9],[14.8,12.7],[14.6,13.2],[14.3,13.6],[13.7,13.8],[12.5,14.4],[10.6,14.6],[8.4,14.9],[7.6,14.9],[6.4,15.2],[4.0,15.0],[2.6,14.3],[1.8,13.9],[0.9,13.3],[0.0,12.4],[-0.7,11.9],[-1.5,11.2],[-2.1,10.5],[-3.2,8.2],[-3.4,6.8],[-3.6,6.1],[-3.4,5.2],[-3.3,4.3],[-3.1,3.6],[-2.9,3.1],[-2.3,2.4],[-1.5,1.7],[-0.9,1.0],[-0.8,0.6],[-0.8,0.1],[-0.9,-0.5],[-1.2,-1.1],[-2.4,-2.8],[-3.7,-4.4],[-4.8,-5.6],[-7.4,-8.8],[-8.8,-10.3],[-9.6,-11.3],[-11.2,-13.1],[-12.3,-14.5],[-12.7,-15.2],[-12.9,-15.8],[-12.9,-16.3],[-12.6,-17.1]],[[-16.4,-24.9],[-17.0,-24.5],[-17.7,-23.8],[-18.3,-23.2],[-18.9,-22.3],[-19.6,-20.6],[-19.9,-18.6],[-20.0,-16.2],[-19.9,-13.9],[-19.6,-12.3],[-19.2,-11.2],[-18.7,-10.1],[-16.8,-7.0],[-15.9,-6.0],[-13.7,-3.1],[-10.9,0.3],[-8.8,3.0],[-8.2,3.7],[-7.3,5.4],[-6.9,5.8],[-6.6,7.3],[-6.6,9.4],[-6.8,10.8],[-7.2,13.3],[-7.2,15.2],[-7.2,16.1],[-6.7,17.3],[-6.0,18.4],[-4.7,19.9],[-3.2,21.3],[-1.6,22.2],[0.2,22.9],[2.6,23.6],[4.2,24.2],[5.1,24.6],[6.1,24.9],[7.2,25.7],[8.2,26.6],[9.3,27.5],[10.4,28.4],[11.3,28.9]],[[-12.6,-17.1],[-12.1,-17.9],[-11.5,-18.5],[-10.8,-18.8],[-10.0,-19.3],[-9.7,-19.7],[-9.5,-20.4],[-9.5,-20.7],[-9.7,-21.0],[-10.0,-21.4],[-10.4,-21.9],[-11.2,-22.8],[-11.9,-23.6],[-12.4,-24.0],[-13.0,-24.3],[-13.7,-24.3]],[[-15.0,-13.7],[-13.9,-12.6],[-12.5,-11.2],[-11.9,-10.3],[-11.7,-9.4],[-11.8,-8.9],[-12.2,-8.4],[-12.6,-8.4],[-13.5,-8.6],[-14.2,-9.3],[-14.6,-9.9],[-15.0,-11.1],[-15.0,-12.2],[-15.0,-13.7]],[[14.9,7.2],[14.1,9.9],[15.2,11.1]],[[-13.7,-19.0],[-14.1,-18.4],[-14.5,-17.3],[-15.0,-15.1],[-15.0,-13.7]],[[-16.4,-24.9],[-16.0,-23.7],[-15.8,-23.1],[-15.6,-22.6],[-15.5,-22.2],[-15.3,-21.7],[-15.0,-21.0],[-14.7,-20.5],[-14.3,-19.9],[-13.7,-19.0]],[[-11.8,-20.9],[-11.9,-21.1],[-12.1,-21.5],[-12.4,-22.1],[-12.7,-22.6],[-13.1,-23.3],[-13.5,-24.0],[-13.7,-24.3]],[[-13.7,-19.0],[-12.3,-20.1],[-11.8,-20.6],[-11.8,-20.7],[-11.8,-20.9]],[[-14.1,-25.3],[-14.7,-25.3],[-15.4,-25.2],[-16.4,-24.9]],[[-13.7,-24.3],[-14.1,-25.3]],[[22.7,11.3],[22.6,10.8],[22.4,10.3],[22.3,9.8]],[[36.0,-3.7],[35.4,-3.0],[34.9,-2.5],[33.7,-1.2]],[[32.4,-2.2],[32.7,-1.9],[33.2,-1.6],[33.7,-1.2]],[[36.0,-3.7],[36.0,-4.4],[35.7,-5.0],[35.2,-5.5],[34.5,-5.7],[33.8,-5.7],[33.1,-5.5],[32.6,-4.9]],[[32.6,-4.9],[31.6,-8.7]],[[-12.6,-17.1],[-11.9,-17.7],[-11.4,-18.0],[-10.9,-18.3],[-10.4,-18.6],[-9.9,-18.9],[-9.6,-19.0],[-9.2,-19.1],[-8.8,-19.2],[-8.4,-19.2],[-7.8,-18.9],[-7.3,-18.5]],[[4.0,15.0],[3.1,15.9],[1.6,17.6],[1.0,19.0],[0.5,21.2]],[[0.9,9.2],[2.2,7.7],[3.8,6.6]],[[0.9,9.2],[0.3,9.7],[-1.5,11.2]],[[0.0,12.4],[0.7,10.1],[0.9,9.2]],[[25.0,7.7],[25.1,6.4],[25.3,5.1],[30.4,-4.2]],[[-3.1,-10.3],[-4.6,-8.9],[-1.3,-5.1]],[[-3.1,-10.3],[-2.6,-9.8],[-1.1,-8.4]],[[-1.1,-11.3],[-2.6,-9.8]],[[6.4,15.2],[6.2,12.7],[6.1,11.6],[6.3,11.0],[6.8,10.4],[10.1,7.6],[13.0,5.1]]],"areas":[{"k":"pitch","p":[[18.5,19.1],[16.5,28.8],[23.4,30.2],[25.2,20.6]]},{"k":"swimming_pool","p":[[6.5,21.6],[8.7,22.3],[8.1,23.4],[6.1,22.7]]},{"k":"pitch","p":[[8.1,15.7],[7.8,17.2],[10.5,17.7],[10.9,16.2]]},{"k":"track","p":[[24.4,30.1],[26.0,20.6],[25.9,19.5],[25.5,18.7],[24.7,17.8],[23.8,17.2],[22.9,16.7],[22.0,16.4],[20.9,16.4],[19.7,16.7],[18.8,17.1],[18.1,18.0],[17.7,19.0],[16.0,28.8],[16.1,30.0],[16.5,30.9],[17.3,31.5],[17.9,32.0],[18.8,32.4],[19.8,32.7],[20.7,32.6],[21.9,32.4],[23.2,31.8],[23.9,31.0]]}]};
 
 
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $=id=>document.getElementById(id);
 const stage=$('stage'),canvas=$('gl');
-const LV={ok:{c:0x4FD08A,cls:'b-ok',ico:'i-ok',txt:'Monitorado'},l1:{c:0xF5B83D,cls:'b-warn',ico:'i-warn',txt:'Atenção'},
-  l2:{c:0xFF5A4E,cls:'b-bad',ico:'i-ticket',txt:'Chamado aberto'},l3:{c:0xFF2E5B,cls:'b-bad',ico:'i-up',txt:'Prioridade elevada'},off:{c:0x5D6B8F,cls:'b-off',ico:'i-off',txt:'Sem comunicação'}};
+const LV={ok:{c:0x4FD08A,cls:'b-ok',ico:'i-ok',txt:'Monitored'},l1:{c:0xF5B83D,cls:'b-warn',ico:'i-warn',txt:'Attention'},
+  l2:{c:0xFF5A4E,cls:'b-bad',ico:'i-ticket',txt:'Ticket open'},l3:{c:0xFF2E5B,cls:'b-bad',ico:'i-up',txt:'High priority'},off:{c:0x5D6B8F,cls:'b-off',ico:'i-off',txt:'Offline'}};
 const badge=l=>`<span class="badge ${LV[l].cls}"><svg><use href="#${LV[l].ico}"/></svg>${LV[l].txt}</span>`;
 const FH=1.35;
 
@@ -923,12 +953,12 @@ const byName=n=>B.find(b=>b.n===n);
 function inside(pt,poly){let c=false;for(let i=0,j=poly.length-1;i<poly.length;j=i++){const[xi,zi]=poly[i],[xj,zj]=poly[j];if(((zi>pt[1])!==(zj>pt[1]))&&(pt[0]<(xj-xi)*(pt[1]-zi)/(zj-zi)+xi))c=!c}return c}
 
 /* sensors on real buildings */
-const SPEC=[['Prédio 1','Térreo · Fem.'],['Prédio 1','Térreo · Masc.'],['Prédio 1','2º andar · Acessível'],
-  ['Prédio 2','Térreo · Masc.'],['Prédio 2','2º andar · Fem.','P2-2F'],['Prédio 2','3º andar · Masc.'],['Prédio 2','4º andar · Fem.'],
-  ['Prédio 3','Térreo · Fem.'],['Prédio 3','Térreo · Masc.'],['Prédio 3','2º andar · Misto'],
-  ['Prédio 4','Térreo · Fem.'],['Prédio 4','Térreo · Masc.'],['Prédio 4','2º andar · Acessível'],
-  ['Prédio Administrativo','Térreo · Misto'],['Edifício anexo','2º andar · Misto'],['Anfiteatro','Foyer · Fem.'],['Anfiteatro','Foyer · Masc.'],['Clínica','Recepção · Misto']];
-const RATE={'Prédio 1':1,'Prédio 2':1.3,'Prédio 3':1.1,'Prédio 4':1.2,'Prédio Administrativo':.4,'Edifício anexo':.5,'Anfiteatro':.8,'Clínica':.5};
+const SPEC=[['Building 1','Ground floor · Women’s'],['Building 1','Ground floor · Men’s'],['Building 1','2nd floor · Accessible'],
+  ['Building 2','Ground floor · Men’s'],['Building 2','2nd floor · Women’s','P2-2F'],['Building 2','3rd floor · Men’s'],['Building 2','4th floor · Women’s'],
+  ['Building 3','Ground floor · Women’s'],['Building 3','Ground floor · Men’s'],['Building 3','2nd floor · All-gender'],
+  ['Building 4','Ground floor · Women’s'],['Building 4','Ground floor · Men’s'],['Building 4','2nd floor · Accessible'],
+  ['Administration building','Ground floor · All-gender'],['Annex','2nd floor · All-gender'],['Amphitheater','Foyer · Women’s'],['Amphitheater','Foyer · Men’s'],['Clinic','Reception · All-gender']];
+const RATE={'Building 1':1,'Building 2':1.3,'Building 3':1.1,'Building 4':1.2,'Administration building':.4,'Annex':.5,'Amphitheater':.8,'Clinic':.5};
 const per={};
 const sensors=SPEC.map(([bn,label,code])=>{
   const b=byName(bn);if(!b)return null;const k=per[bn]=(per[bn]||0)+1;
@@ -937,7 +967,7 @@ const sensors=SPEC.map(([bn,label,code])=>{
   const off=[[-.22,-.18],[.22,.2],[-.18,.24],[.2,-.22]][(k-1)%4];
   const cand=[b.cx+off[0]*b.w,b.cz+off[1]*b.d];
   if(tot>1&&inside(cand,b.p)){x=cand[0];z=cand[1]}
-  const id=code||(bn.replace('Prédio ','P').replace('Prédio Administrativo','ADM').slice(0,3).toUpperCase().replace(' ','')+'-'+k);
+  const dg=bn.match(/\d/);const id=code||((dg?'P'+dg[0]:bn.normalize('NFD').replace(/[^A-Za-z]/g,'').slice(0,3).toUpperCase())+'-'+k);
   return {id,b,label,x,z,count:Math.floor(Math.random()*24),th:[20,30,45],online:true,buffer:0,offFor:0,ticket:null,level:'ok',rate:RATE[bn]||.6};
 }).filter(Boolean);
 const focus=sensors.find(s=>s.id==='P2-2F');focus.count=0;
@@ -969,8 +999,8 @@ function tick(){
   const burst=step===6||step===0?3:1;
   for(let k=0;k<burst;k++){const s=weighted[Math.floor(Math.random()*weighted.length)];if(s.online){s.count++;evaluate(s)}else s.buffer++}
   tickets.slice().forEach(tk=>{if(tk.s===focus)return;tk.age++;
-    if(tk.status==='Aguardando'&&tk.age>5&&Math.random()<.07)tk.status='Em atendimento';
-    else if(tk.status==='Em atendimento'&&Math.random()<.12)closeT(tk.s)});
+    if(tk.status==='Aguardando'&&tk.age>5&&Math.random()<.07)tk.status='In progress';
+    else if(tk.status==='In progress'&&Math.random()<.12)closeT(tk.s)});
   sensors.forEach(s=>{if(!s.online&&--s.offFor<=0){s.online=true;s.count+=s.buffer;s.buffer=0;evaluate(s)}});
   if(ticks%30===10){const c=sensors.filter(s=>s!==focus&&s.online&&!s.ticket);const s=c[Math.floor(Math.random()*c.length)];if(s){s.online=false;s.offFor=10+Math.floor(Math.random()*6)}}
   // focus sensor driven by story
@@ -978,7 +1008,7 @@ function tick(){
   if(tgt!==null){
     if(step===5){ // attending: tick checklist then reset
       checkT++;const n=Math.min(4,Math.floor(checkT/2));checks.forEach((c,i)=>c.classList.toggle('on',i<n));
-      if(focus.ticket)focus.ticket.status='Em atendimento';
+      if(focus.ticket)focus.ticket.status='In progress';
       if(n>=4&&checkT>9){setFocusTicket(false);focus.count=0}
     }else{
       checkT=0;checks.forEach(c=>c.classList.remove('on'));
@@ -999,14 +1029,14 @@ function updateCallout(){
   $('coM').style.width=Math.min(100,focus.count/50*100)+'%';
   $('coB').innerHTML=badge(focus.level);
   const k=$('coK');
-  if(step===5&&!focus.ticket&&focus.count===0){k.innerHTML='Checklist validado · contagem reiniciada';k.classList.add('on')}
-  else if(focus.ticket){k.innerHTML=`<b class="mono">${focus.ticket.id}</b> · ${focus.ticket.status==='Em atendimento'?'em atendimento':'aguardando equipe'} · prioridade ${focus.ticket.prio.toLowerCase()}`;k.classList.add('on')}
+  if(step===5&&!focus.ticket&&focus.count===0){k.innerHTML='Checklist approved · count reset';k.classList.add('on')}
+  else if(focus.ticket){k.innerHTML=`<b class="mono">${focus.ticket.id}</b> · ${focus.ticket.status==='In progress'?'in progress':'waiting for team'} · ${focus.ticket.prio==='Elevada'?'high':'normal'} priority`;k.classList.add('on')}
   else k.classList.remove('on');
 }
 
 /* step observer */
 const prog=$('prog');
-for(let i=0;i<STEP_COUNT;i++){const b=document.createElement('button');b.textContent=String(i).padStart(2,'0');b.setAttribute('aria-label','Ir para etapa '+i);
+for(let i=0;i<STEP_COUNT;i++){const b=document.createElement('button');b.textContent=String(i).padStart(2,'0');b.setAttribute('aria-label','Go to step '+i);
   b.onclick=()=>document.querySelector(`.step[data-step="${i}"]`).scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});prog.appendChild(b)}
 function setStep(n){step=n;[...prog.children].forEach((b,i)=>b.classList.toggle('on',i===n));
   if(n>=1&&n<=4){const tg=FOCUS_TARGET[n];focus.count=Math.max(Math.min(focus.count,tg),tg-6);}
@@ -1069,7 +1099,7 @@ if(renderer){
     }
     const hm=new THREE.Mesh(new THREE.CircleGeometry(1,56),new THREE.MeshBasicMaterial({color:0x3D8BFF,transparent:true,opacity:0,depthWrite:false,blending:THREE.AdditiveBlending}));
     hm.rotation.x=-Math.PI/2;hm.position.set(b.cx,.06,b.cz);hm.scale.setScalar(.01);scene.add(hm);b.heat=hm;
-    if(/^Prédio|Anfiteatro|Clínica/.test(b.n)){const el=document.createElement('div');el.className='blabel';el.textContent=b.n.replace('Prédio Administrativo','Administrativo');$('labels').appendChild(el);b.el=el}
+    if(['Building 1','Building 2','Building 3','Building 4','Administration building','Amphitheater','Clinic'].includes(b.n)){const el=document.createElement('div');el.className='blabel';el.textContent=b.n.replace('Administration building','Administration');$('labels').appendChild(el);b.el=el}
   });
 
   // sensors
@@ -1087,13 +1117,13 @@ if(renderer){
   });
 
   // dispatch arc: team base (Administrativo) -> focus
-  const adm=byName('Prédio Administrativo')||B[0];
+  const adm=byName('Administration building')||B[0];
   const a0=new THREE.Vector3(adm.cx,adm.top+.2,adm.cz),a1=new THREE.Vector3(focus.x,focus.b.top+.2,focus.z);
   const mid=a0.clone().lerp(a1,.5);mid.y+=9;
   const curve=new THREE.QuadraticBezierCurve3(a0,mid,a1);
   const arc=new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(60)),new THREE.LineDashedMaterial({color:0x8FC1FF,dashSize:.5,gapSize:.35,transparent:true,opacity:0}));arc.computeLineDistances();scene.add(arc);
   const runner=new THREE.Mesh(new THREE.SphereGeometry(.28,12,10),new THREE.MeshBasicMaterial({color:0xBFDBFF,transparent:true,opacity:0}));scene.add(runner);
-  const teamEl=document.createElement('div');teamEl.className='blabel';teamEl.style.color='#8FC1FF';teamEl.textContent='Equipe responsável';$('labels').appendChild(teamEl);
+  const teamEl=document.createElement('div');teamEl.className='blabel';teamEl.style.color='#8FC1FF';teamEl.textContent='Responsible team';$('labels').appendChild(teamEl);
 
   // camera presets
   const allX=B.map(b=>b.cx),allZ=B.map(b=>b.cz);
@@ -1116,7 +1146,7 @@ if(renderer){
   const ray=new THREE.Raycaster(),mp=new THREE.Vector2(),tip=$('tip');
   canvas.addEventListener('pointermove',e=>{const r=canvas.getBoundingClientRect();mp.x=((e.clientX-r.left)/r.width)*2-1;mp.y=-((e.clientY-r.top)/r.height)*2+1;ray.setFromCamera(mp,cam);
     const h=ray.intersectObjects(pick)[0];
-    if(h){const s=h.object.userData.s;tip.innerHTML=`<b>${s.b.n} · ${s.label}</b><div class="mono" style="font-size:11px;color:var(--muted);margin:2px 0 8px">sensor ${s.id} · ${s.online?s.count+' entradas':'buffer: '+s.buffer+' eventos'}</div>${badge(s.level)}`;
+    if(h){const s=h.object.userData.s;tip.innerHTML=`<b>${s.b.n} · ${s.label}</b><div class="mono" style="font-size:11px;color:var(--muted);margin:2px 0 8px">sensor ${s.id} · ${s.online?s.count+' entries':'buffer: '+s.buffer+' events'}</div>${badge(s.level)}`;
       let x=e.clientX-r.left+14,y=e.clientY-r.top+14;if(x+230>r.width)x-=250;if(y+100>r.height)y-=110;tip.style.transform=`translate(${x}px,${y}px)`;tip.classList.add('on');canvas.style.cursor='pointer'}
     else{tip.classList.remove('on');canvas.style.cursor=''}});
   canvas.addEventListener('pointerleave',()=>tip.classList.remove('on'));
